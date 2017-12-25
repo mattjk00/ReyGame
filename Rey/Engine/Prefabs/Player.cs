@@ -17,6 +17,7 @@ public enum PlayerAttackState
 {
     None,
     MeleeAttack,
+    MagicAttack,
     Dead
 }
 
@@ -28,6 +29,8 @@ namespace Rey.Engine.Prefabs
         // player variables
         KeyboardState keyboard;
         KeyboardState lastKeyboard;
+        MouseState mouse;
+        MouseState lastMouse;
         float speed = 0.6f;
         ChildObject arm = new ChildObject(); // the player's arm
         ChildObject weapon = new ChildObject();
@@ -41,6 +44,12 @@ namespace Rey.Engine.Prefabs
 
         // timers for attacking
         float meleeAttackTimer = 0;
+        float magicAttackTimer = 0;
+
+        Texture2D defaultBody;
+        Texture2D magicAttackBody;
+
+        ProjectileManager projectileManager = new ProjectileManager();
 
         /// <summary>
         /// Set the player's properties
@@ -51,7 +60,9 @@ namespace Rey.Engine.Prefabs
             this.EntityStats = new EntityStats();
             this.lastKeyboard = Keyboard.GetState();
 
-            this.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/Player/default_body.png"); // load the player texture
+            this.defaultBody = AssetLoader.LoadTexture("Assets/Textures/Player/default_body.png"); // load the player texture
+            this.magicAttackBody = AssetLoader.LoadTexture("Assets/Textures/Player/default_magic_body.png"); // load the player texture
+            this.Sprite.Texture = this.defaultBody;
             this.AddDefaultBoundingBox();
             this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
             this.BoundingBoxes.Add(new Rectangle(0, 0, 0, 0));
@@ -89,8 +100,11 @@ namespace Rey.Engine.Prefabs
             // handle melee attacking if attacking
             if (this.AttackState == PlayerAttackState.MeleeAttack && this.AttackState != PlayerAttackState.Dead)
                 this.HandleMeleeAttack();
+            else if (this.AttackState == PlayerAttackState.MagicAttack && this.AttackState != PlayerAttackState.Dead)
+                this.HandleMagicAttack();
             else if (this.AttackState == PlayerAttackState.Dead)
                 this.HandleDeath();
+           
 
             base.Update(); // important so velocity works
 
@@ -99,6 +113,7 @@ namespace Rey.Engine.Prefabs
             this.weapon.Update(this);
             this.legs.Update(this);
             this.head.Update(this);
+            this.projectileManager.Update();
 
             // animate the legs if the velocity is greater than 1
             if (Math.Abs(this.Transform.VelX) > 1 || Math.Abs(this.Transform.VelY) > 1)
@@ -122,12 +137,12 @@ namespace Rey.Engine.Prefabs
         void HandleInput()
         {
             this.keyboard = Keyboard.GetState();
+            this.mouse = Mouse.GetState();
 
             /* movement input */
             if (this.keyboard.IsKeyDown(Keys.D))
             {
                 this.Transform.VelX += speed;
-                this.direction = Direction.MovingRight;
                 this.arm.LocalPosition = new Vector2(13, 40);
             }
             if (this.keyboard.IsKeyDown(Keys.A))
@@ -141,13 +156,54 @@ namespace Rey.Engine.Prefabs
             if (this.keyboard.IsKeyDown(Keys.S))
                 this.Transform.VelY += speed;
 
+            if (this.mouse.Position.X > this.Transform.Position.X)
+                this.direction = Direction.MovingRight;
+            else
+                this.direction = Direction.MovingLeft;
+
+
             /* attack input */
             if (this.keyboard.IsKeyDown(Keys.Space) && this.lastKeyboard.IsKeyDown(Keys.Space) == false)
             {
                 this.StartMeleeAttack(); // start attacking
             }
 
+            /* Magic/Ranged input */
+            if (this.mouse.LeftButton == ButtonState.Pressed && this.lastMouse.LeftButton == ButtonState.Released)
+            {
+                this.StartMagicAttack();
+            }
+
             lastKeyboard = this.keyboard;
+            lastMouse = this.mouse;
+        }
+
+        /// <summary>
+        /// Initiates the magic attack
+        /// </summary>
+        void StartMagicAttack()
+        {
+            // if the player is ready to attack
+            if (this.magicAttackTimer == 0 && this.AttackState == PlayerAttackState.None)
+            {
+                this.projectileManager.ShootNew(this.Transform.Position, new Vector2(mouse.Position.X, mouse.Position.Y)); // shoot a new projectile
+                this.AttackState = PlayerAttackState.MagicAttack;
+                this.LandedMeleeHit = false;
+            }
+        }
+
+        /// <summary>
+        /// Handles the magic attack
+        /// </summary>
+        void HandleMagicAttack()
+        {
+            // handle the timer stuff
+            this.magicAttackTimer++;
+            if (this.magicAttackTimer >= this.EntityStats.MagicSpeed)
+            {
+                this.magicAttackTimer = 0;
+                this.AttackState = PlayerAttackState.None;
+            }
         }
 
         /// <summary>
@@ -224,21 +280,35 @@ namespace Rey.Engine.Prefabs
 
             if (this.direction == Direction.MovingRight)
             {
-                sb.Draw(this.Sprite.Texture, this.Transform.Position, null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.None, 0);
-                this.weapon.LocalPosition = new Vector2(20, 65);
-                sb.Draw(this.weapon.Sprite.Texture, this.weapon.Transform.Position, null, this.weapon.Sprite.Color, this.weapon.Transform.Rotation, this.weapon.Transform.Origin, 1.0f, SpriteEffects.None, 0);
+                if (this.AttackState == PlayerAttackState.MeleeAttack || this.AttackState == PlayerAttackState.None)
+                {
+                    sb.Draw(this.Sprite.Texture, this.Transform.Position, null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.None, 0);
+                    this.weapon.LocalPosition = new Vector2(20, 65);
+                    sb.Draw(this.weapon.Sprite.Texture, this.weapon.Transform.Position, null, this.weapon.Sprite.Color, this.weapon.Transform.Rotation, this.weapon.Transform.Origin, 1.0f, SpriteEffects.None, 0);
+                }
+                else if (this.AttackState == PlayerAttackState.MagicAttack)
+                {
+                    sb.Draw(this.magicAttackBody, this.Transform.Position + new Vector2(0, 0), null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
+                }
             }
             else if (this.direction == Direction.MovingLeft)
             {
-                sb.Draw(this.Sprite.Texture, this.Transform.Position, null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
-                this.weapon.LocalPosition = new Vector2(-37, 65);
-                sb.Draw(this.weapon.Sprite.Texture, this.weapon.Transform.Position, null, this.weapon.Sprite.Color, this.weapon.Transform.Rotation, this.weapon.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
+                if (this.AttackState == PlayerAttackState.MeleeAttack || this.AttackState == PlayerAttackState.None)
+                {
+                    sb.Draw(this.Sprite.Texture, this.Transform.Position, null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
+                    this.weapon.LocalPosition = new Vector2(-37, 65);
+                    sb.Draw(this.weapon.Sprite.Texture, this.weapon.Transform.Position, null, this.weapon.Sprite.Color, this.weapon.Transform.Rotation, this.weapon.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
+                }
+                else if (this.AttackState == PlayerAttackState.MagicAttack)
+                {
+                    sb.Draw(this.magicAttackBody, this.Transform.Position + new Vector2(-60, 0), null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.None, 0);
+                }
             }
 
             sb.Draw(head.Sprite.Texture, head.Transform.Position, Color.White);
 
             this.arm.Draw(sb);
-            
+            this.projectileManager.Draw(sb);
 
         }
 

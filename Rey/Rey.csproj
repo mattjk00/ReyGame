@@ -50,7 +50,9 @@
     <Compile Include="Engine\Prefabs\Enemy.cs" />
     <Compile Include="Engine\Prefabs\Player.cs" />
     <Compile Include="Engine\Prefabs\PlayerArm.cs" />
+    <Compile Include="Engine\Prefabs\Projectile.cs" />
     <Compile Include="Engine\Prefabs\Trapdoor.cs" />
+    <Compile Include="Engine\ProjectileManager.cs" />
     <Compile Include="Engine\Scene.cs" />
     <Compile Include="Engine\SceneManager.cs" />
     <Compile Include="Engine\Scenes\TestScene.cs" />

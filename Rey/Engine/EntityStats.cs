@@ -13,6 +13,7 @@ namespace Rey.Engine
         public int AttackLevel { get; set; }
         public int DefenceLevel { get; set; }
         public int AttackSpeed { get; set; }
+        public int MagicSpeed { get; set; }
 
         /// <summary>
         /// Default constructor, set to base values
@@ -24,6 +25,7 @@ namespace Rey.Engine
             this.AttackLevel = 1;
             this.DefenceLevel = 1;
             this.AttackSpeed = 25;
+            this.MagicSpeed = 25;
         }
     }
 }
