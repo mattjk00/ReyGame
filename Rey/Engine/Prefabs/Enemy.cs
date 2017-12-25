@@ -247,6 +247,7 @@ namespace Rey.Engine.Prefabs
             float x = 0;
             float y = 0;
 
+
             x = new Random().Next((int)this.Transform.Position.X - 100, (int)this.Transform.Position.X + 100);
             y = new Random().Next((int)this.Transform.Position.Y - 95, (int)this.Transform.Position.Y + 95);
 
@@ -262,6 +263,12 @@ namespace Rey.Engine.Prefabs
             this.target = new Vector2(x, y);
 
             this.interval = new Random().Next(100, 250);
+        }
+
+        //
+        public void SetInterval(int interv)
+        {
+            this.interval = interv;
         }
 
         void HandleDeath()

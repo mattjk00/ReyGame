@@ -15,11 +15,13 @@ namespace Rey
 
         SceneManager sceneManager = new SceneManager();
 
+        Texture2D mouseTexture;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.IsMouseVisible = true;
+            this.IsMouseVisible = false;
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.IsFullScreen = false;
@@ -37,6 +39,7 @@ namespace Rey
             AssetLoader.Graphics = this.graphics;
             AssetLoader.LoadFont(Content);
 
+
             base.Initialize();
         }
 
@@ -48,6 +51,8 @@ namespace Rey
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            mouseTexture = AssetLoader.LoadTexture("Assets/Textures/Player/mouse.png");
 
             this.sceneManager.Load();
         }
@@ -86,6 +91,8 @@ namespace Rey
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
             this.sceneManager.Draw(spriteBatch);
+
+            spriteBatch.Draw(mouseTexture, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -35,6 +35,8 @@ namespace Rey.Engine.Scenes
 
 
             base.Load();
+            enemy.SetInterval(1000);
+
         }
 
         public TestScene():base() { }

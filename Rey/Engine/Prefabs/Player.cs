@@ -36,6 +36,7 @@ namespace Rey.Engine.Prefabs
         ChildObject weapon = new ChildObject();
         ChildAnimation legs = new ChildAnimation(48, 6, 3);
         ChildObject head = new ChildObject();
+        ChildObject shadow = new ChildObject();
         
         public Direction direction = Direction.MovingRight;
         public PlayerAttackState AttackState { get; set; } // the attacking state of the player
@@ -83,6 +84,10 @@ namespace Rey.Engine.Prefabs
             this.head.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/default_head.png");
             this.head.Load();
             this.head.LocalPosition = new Vector2(5, -42);
+
+            this.shadow.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/shadow.png");
+            this.shadow.Sprite.Color = new Color(255, 255, 255) * 0.3f;
+            this.shadow.LocalPosition = new Vector2(0, 88);
         }
 
         /// <summary>
@@ -113,6 +118,7 @@ namespace Rey.Engine.Prefabs
             this.weapon.Update(this);
             this.legs.Update(this);
             this.head.Update(this);
+            this.shadow.Update(this);
             this.projectileManager.Update();
 
             // animate the legs if the velocity is greater than 1
@@ -276,6 +282,9 @@ namespace Rey.Engine.Prefabs
             // draw hp
             sb.DrawString(AssetLoader.Font, this.EntityStats.HP.ToString() + "/" + this.EntityStats.MaxHP.ToString(), 
                 new Vector2(this.Transform.Position.X, this.Transform.Position.Y - 20 - this.Transform.Origin.Y), Color.LightGreen);
+
+            sb.Draw(shadow.Sprite.Texture, shadow.Transform.Position, shadow.Sprite.Color);
+
             this.legs.Draw(sb);
 
             if (this.direction == Direction.MovingRight)
