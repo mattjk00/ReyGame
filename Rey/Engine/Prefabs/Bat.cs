@@ -18,13 +18,15 @@ namespace Rey.Engine.Prefabs
             this.Name = "bat";
             this.EntityStats = new EntityStats();
             this.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/Enemies/bats/bat_head.png"); // load the player texture
-            
+
+            this.speed = 0.15f;
             this.State = EnemyState.Idle;
             this.AddDefaultBoundingBox();
             this.IsEnemy = true;
             this.Transform.Origin = new Vector2(this.Sprite.Texture.Width / 2, this.Sprite.Texture.Height / 2);
             this.EntityStats.HP = 10;
-            this.EntityStats.AttackSpeed = 25;
+            this.EntityStats.AttackSpeed = 50;
+            this.EntityStats.Aggressive = true;
             this.ChooseNewTargetAndInterval();
             this.BoundingBoxes.Add(new Rectangle(0, 0, 0, 0));
 
@@ -44,20 +46,42 @@ namespace Rey.Engine.Prefabs
         {
             base.Update();
 
-            this.BoundingBoxes[0] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X), (int)(this.Transform.Position.Y - this.Transform.Origin.Y), 100, 100);
-            this.body.Update(this);
-            this.body.Animate();
-            this.legs.Update(this);
+            // update only when the bat is alive
+            if (this.State != EnemyState.Dead)
+            {
+                this.BoundingBoxes[0] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X), (int)(this.Transform.Position.Y - this.Transform.Origin.Y), 100, 100);
+                this.body.Update(this);
+                this.body.Animate();
+                this.legs.Update(this);
+            }
+            /*else if (this.State == EnemyState.Dead)
+            {
+                this.HandleDeath();
+            }*/
+            
         }
 
         public override void Draw(SpriteBatch sb)
         {
             sb.Draw(shadow.Sprite.Texture, shadow.Transform.Position, shadow.Sprite.Color);
 
-            sb.Draw(legs.Sprite.Texture, legs.Transform.Position, Color.White);
+            sb.Draw(legs.Sprite.Texture, legs.Transform.Position, this.Sprite.Color);
             this.body.Draw(sb);
-            sb.Draw(this.Sprite.Texture, this.Transform.Position, Color.White);
+            sb.Draw(this.Sprite.Texture, this.Transform.Position, this.Sprite.Color);
             
+        }
+
+        /// <summary>
+        /// Handle what happens when the bat dies
+        /// </summary>
+        protected override void HandleDeath()
+        {
+            this.Sprite.Color *= 0.9f;
+            this.body.Sprite.Color *= 0.9f;
+            this.shadow.Sprite.Color *= 0.9f;
+            // check to destroy the object when it fully dissapears
+            if (this.Sprite.Color.A <= 0)
+                this.ToBeDestroyed = true;
         }
     }
 }

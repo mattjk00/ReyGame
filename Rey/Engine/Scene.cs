@@ -18,6 +18,7 @@ namespace Rey.Engine
         public Texture2D Background { get; protected set; }
         public string Name { get; protected set; }
         protected CollisionManager collisionManager = new CollisionManager();
+        public bool CombatScene { get; set; } = true;
 
         public Scene() { this.gameObjects = new List<GameObject>();  }
         public Scene(string name)
@@ -74,13 +75,46 @@ namespace Rey.Engine
         {
             foreach (GameObject go in this.gameObjects)
                 go.Update();
-            this.CheckForAttackCollisions();
+            this.gameObjects.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
+
+            if (this.CombatScene)
+            {
+                this.CheckForAttackCollisions();
+                this.CheckToSeeIfAllAreDead();
+            }
+        }
+
+        // turns monsters aggressive
+        void Agro(Player player)
+        {
+            // find all the enemies
+            foreach (var go in this.gameObjects.FindAll(x => x.IsEnemy))
+            {
+                Enemy enemy = go as Enemy; // convert the game object to an enemy
+                if (enemy.EntityStats.Aggressive && enemy.State != EnemyState.Dead)
+                    enemy.StartAttack(player); // start the attackl
+            }
+        }
+        /// <summary>
+        /// Checks to see if every monster in the room is dead
+        /// </summary>
+        void CheckToSeeIfAllAreDead()
+        {
+            // if there are no enemies left
+            if (this.gameObjects.FindAll(x => x.IsEnemy).Count == 0)
+            {
+                // find the trapdoor
+                var trapdoor = this.gameObjects.Find(x => x.Name == "trapdoor") as Trapdoor;
+                trapdoor.Open = true; // open the trapdoor
+            }
         }
 
         // checks for collisions such as the player stabbing an enemy
         void CheckForAttackCollisions()
         {
             var player = this.gameObjects.First(x => x.Name == "player") as Player; // find the player
+            this.Agro(player);
+
             /*if (player.AttackState == PlayerAttackState.MeleeAttack && player.LandedMeleeHit == false) // if player is attacking and it hasnt already been registered
             {
                 // iterate over all the gameobjects
@@ -121,7 +155,7 @@ namespace Rey.Engine
             // add this back later
             //
 
-            /*foreach (GameObject gameObject in this.gameObjects)
+            foreach (GameObject gameObject in this.gameObjects)
             {
                 if (gameObject.IsEnemy)
                 {
@@ -135,14 +169,35 @@ namespace Rey.Engine
                             enemy.LandedMeleeHit = true;
                             player.GetHit(enemy.EntityStats);
                             if (player.Transform.Position.X > enemy.Transform.Position.X)
-                                player.Bounce(new Vector2(10, 0)); // bounces player based on direction of incoming hit
+                            {
+                                player.Bounce(new Vector2(7, 0)); // bounces player based on direction of incoming hit
+                                enemy.Bounce(new Vector2(-7, 0));
+                            }
                             else
-                                player.Bounce(new Vector2(-10, 0));
+                            {
+                                player.Bounce(new Vector2(-7, 0));
+                                enemy.Bounce(new Vector2(7, 0));
+                            }
+                        }
+                    }
+                    else if (enemy.BoundingBoxes[0].Intersects(player.BoundingBoxes[0]))
+                    {
+                        enemy.LandedMeleeHit = true;
+                        player.GetHit(enemy.EntityStats);
+                        if (player.Transform.Position.X > enemy.Transform.Position.X)
+                        {
+                            player.Bounce(new Vector2(9, 0)); // bounces player based on direction of incoming hit
+                            enemy.Bounce(new Vector2(-9, 0));
+                        }
+                        else
+                        {
+                            player.Bounce(new Vector2(-9, 0));
+                            enemy.Bounce(new Vector2(9, 0));
                         }
                     }
 
                 }
-            }*/
+            }
 
             foreach (GameObject gameObject in this.gameObjects)
             {

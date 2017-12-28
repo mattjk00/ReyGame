@@ -19,6 +19,7 @@ namespace Rey.Engine
         public Sprite Sprite { get; set; }
         public List<Rectangle> BoundingBoxes { get; set; }
         public bool IsEnemy { get; protected set; }
+        public bool ToBeDestroyed { get; set; } // the status of the game object
 
         public GameObject()
         {

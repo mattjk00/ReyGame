@@ -281,7 +281,7 @@ namespace Rey.Engine.Prefabs
         {
             // draw hp
             sb.DrawString(AssetLoader.Font, this.EntityStats.HP.ToString() + "/" + this.EntityStats.MaxHP.ToString(), 
-                new Vector2(this.Transform.Position.X, this.Transform.Position.Y - 20 - this.Transform.Origin.Y), Color.LightGreen);
+                new Vector2(this.Transform.Position.X - 10, this.Transform.Position.Y - 60 - this.Transform.Origin.Y), Color.LightGreen);
 
             sb.Draw(shadow.Sprite.Texture, shadow.Transform.Position, shadow.Sprite.Color);
 

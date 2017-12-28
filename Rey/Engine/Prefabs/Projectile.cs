@@ -13,7 +13,7 @@ namespace Rey.Engine.Prefabs
     public class Projectile : GameObject
     {
         public bool MagicType { get; set; } = true;
-        public int Damage { get; private set; } = 4;
+        public int Damage { get; private set; } = 3;
         public bool ToBeDestroyed { get; set; } = false;
 
         // make sure to call this after loading a texture

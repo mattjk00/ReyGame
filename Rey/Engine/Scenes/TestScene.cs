@@ -33,8 +33,12 @@ namespace Rey.Engine.Scenes
             this.AddGameObject(enemy2);*/
 
             Bat bat = new Bat();
-            bat.Transform.Position = new Vector2(200, 200);
+            bat.Transform.Position = new Vector2(0, 0);
             this.AddGameObject(bat);
+
+            Bat bat2 = new Bat();
+            bat2.Transform.Position = new Vector2(100, 720);
+            this.AddGameObject(bat2);
 
             Player player = new Player();
             this.AddGameObject(player);

@@ -29,7 +29,7 @@ namespace Rey.Engine.Prefabs
         public EntityStats EntityStats { get; set; } // the player's stats
         public EnemyState State { get; protected set; } // the enemy's state
         
-
+        
 
         // timers for attacking
         protected float meleeAttackTimer = 0;
@@ -92,7 +92,7 @@ namespace Rey.Engine.Prefabs
             else if (this.direction == Direction.MovingLeft)
                 this.BoundingBoxes[1] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X) - 55, (int)(this.Transform.Position.Y - this.Transform.Origin.Y), 55, this.Sprite.Texture.Height);
 
-            if (this.EntityStats.HP <= 0)
+            if (this.EntityStats.HP <= 0 && this.State != EnemyState.Dead)
                 Die();
 
             this.Transform.Position += this.velocity; // update position based on velocity
@@ -190,7 +190,7 @@ namespace Rey.Engine.Prefabs
         protected virtual void HandleAttackMovement()
         {
             // if the target player is to the right
-            if (this.playerTarget.Transform.Position.X - this.playerTarget.Sprite.Texture.Width - this.playerTarget.Transform.Origin.X*2 > this.Transform.Position.X)
+            if (this.playerTarget.Transform.Position.X - this.playerTarget.Sprite.Texture.Width - (this.playerTarget.Transform.Origin.X*2) > this.Transform.Position.X)
             {
                 this.direction = Direction.MovingRight;
                 this.velocity += new Vector2(this.speed * 2, 0);
@@ -295,7 +295,7 @@ namespace Rey.Engine.Prefabs
         protected virtual void HandleDeath()
         {
             //this.Sprite.Color = new Color(this.Sprite.Color.R, this.Sprite.Color.G, this.Sprite.Color.B, this.Sprite.Color.A - 100);
-            this.Sprite.Color = Color.Beige;
+            //this.Sprite.Color = Color.Beige;
         }
 
         /// <summary>
