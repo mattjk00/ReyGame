@@ -22,20 +22,25 @@ namespace Rey.Engine.Scenes
             Trapdoor trapdoor = new Trapdoor();
             this.AddGameObject(trapdoor);
 
-            Player player = new Player();
-            this.AddGameObject(player);
+            
 
-            Enemy enemy = new Enemy();
+            /*Enemy enemy = new Enemy();
             enemy.Transform.Position = new Vector2(500, 500);
             this.AddGameObject(enemy);
 
             Enemy enemy2 = new Enemy();
             enemy2.Transform.Position = new Vector2(800, 200);
-            this.AddGameObject(enemy2);
+            this.AddGameObject(enemy2);*/
 
+            Bat bat = new Bat();
+            bat.Transform.Position = new Vector2(200, 200);
+            this.AddGameObject(bat);
+
+            Player player = new Player();
+            this.AddGameObject(player);
 
             base.Load();
-            enemy.SetInterval(1000);
+            //enemy.SetInterval(1000);
 
         }
 

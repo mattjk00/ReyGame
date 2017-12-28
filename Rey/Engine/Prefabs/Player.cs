@@ -34,7 +34,7 @@ namespace Rey.Engine.Prefabs
         float speed = 0.6f;
         ChildObject arm = new ChildObject(); // the player's arm
         ChildObject weapon = new ChildObject();
-        ChildAnimation legs = new ChildAnimation(48, 6, 3);
+        ChildAnimation legs = new ChildAnimation(48, 50, 6, 3);
         ChildObject head = new ChildObject();
         ChildObject shadow = new ChildObject();
         
@@ -50,7 +50,7 @@ namespace Rey.Engine.Prefabs
         Texture2D defaultBody;
         Texture2D magicAttackBody;
 
-        ProjectileManager projectileManager = new ProjectileManager();
+        public ProjectileManager projectileManager { get; protected set; } = new ProjectileManager();
 
         /// <summary>
         /// Set the player's properties

@@ -17,6 +17,7 @@ namespace Rey.Engine
         public List<GameObject> gameObjects { get; protected set; }
         public Texture2D Background { get; protected set; }
         public string Name { get; protected set; }
+        protected CollisionManager collisionManager = new CollisionManager();
 
         public Scene() { this.gameObjects = new List<GameObject>();  }
         public Scene(string name)
@@ -80,7 +81,7 @@ namespace Rey.Engine
         void CheckForAttackCollisions()
         {
             var player = this.gameObjects.First(x => x.Name == "player") as Player; // find the player
-            if (player.AttackState == PlayerAttackState.MeleeAttack && player.LandedMeleeHit == false) // if player is attacking and it hasnt already been registered
+            /*if (player.AttackState == PlayerAttackState.MeleeAttack && player.LandedMeleeHit == false) // if player is attacking and it hasnt already been registered
             {
                 // iterate over all the gameobjects
                 foreach (GameObject gameObject in this.gameObjects)
@@ -114,9 +115,13 @@ namespace Rey.Engine
                     }
                 }
 
-            }
+            }*/
 
-            foreach (GameObject gameObject in this.gameObjects)
+            // -> -> -> -> -> -> -> -> ->-> -> -> -> -> -> -> -> ->-> -> -> -> -> -> -> -> ->-> -> -> -> -> -> -> -> ->
+            // add this back later
+            //
+
+            /*foreach (GameObject gameObject in this.gameObjects)
             {
                 if (gameObject.IsEnemy)
                 {
@@ -137,6 +142,22 @@ namespace Rey.Engine
                     }
 
                 }
+            }*/
+
+            foreach (GameObject gameObject in this.gameObjects)
+            {
+                if (gameObject.IsEnemy)
+                {
+                    this.collisionManager.HandlePlayerAttackEnemyCollision(player, gameObject as Enemy);
+
+                    // check in the projectiles being fired by the player
+                    foreach (Projectile proj in player.projectileManager.Projectiles)
+                    {
+                        this.collisionManager.HandlePlayerProjectileAttackEnemyCollision(player, proj, gameObject as Enemy);
+                    }
+                }
+
+                
             }
         }
 

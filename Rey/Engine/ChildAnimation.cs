@@ -11,9 +11,9 @@ namespace Rey.Engine
     {
         public Vector2 LocalPosition { get; set; }
 
-        public ChildAnimation(int frameSize, int frameCount, int animeSpeed) : base(frameSize, frameCount, animeSpeed)
+        public ChildAnimation(int frameSizeX, int frameSizeY, int frameCount, int animeSpeed) : base(frameSizeX, frameSizeY, frameCount, animeSpeed)
         {
-            this.FrameSize = frameSize;
+            this.FrameSize = new Vector2(frameSizeX, frameSizeY);
             this.FrameCount = frameCount;
             this.AnimationSpeed = animeSpeed;
         }

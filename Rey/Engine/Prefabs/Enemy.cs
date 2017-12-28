@@ -18,28 +18,30 @@ namespace Rey.Engine.Prefabs
 
     public class Enemy : GameObject
     {
-        float speed = 0.2f;
-        Vector2 velocity = new Vector2();
-        PlayerArm arm = new PlayerArm(); // the player's arm
-        ChildObject weapon = new ChildObject();
+        protected float speed = 0.2f;
+        protected Vector2 velocity = new Vector2();
+        protected PlayerArm arm = new PlayerArm(); // the player's arm
+        protected ChildObject weapon = new ChildObject();
+        protected ChildObject shadow = new ChildObject();
 
-        Direction direction = Direction.MovingRight;
+        protected Direction direction = Direction.MovingRight;
         public PlayerAttackState AttackState { get; set; } // the attacking state of the player
         public EntityStats EntityStats { get; set; } // the player's stats
-        public EnemyState State { get; private set; } // the enemy's state
+        public EnemyState State { get; protected set; } // the enemy's state
+        
 
 
         // timers for attacking
-        float meleeAttackTimer = 0;
-        float meleeIntervalTimer = 0;
+        protected float meleeAttackTimer = 0;
+        protected float meleeIntervalTimer = 0;
         protected float meleeAttackInterval = 15;
-        float movementTimer = 0;
-        float interval = 1000;
-        private Player playerTarget; // the targeted player
+        protected float movementTimer = 0;
+        protected float interval = 1000;
+        protected Player playerTarget; // the targeted player
 
         // for idle movement
-        bool moving = false;
-        Vector2 target;
+        protected bool moving = false;
+        protected Vector2 target;
 
         public bool LandedMeleeHit { get; set; }
 
@@ -65,6 +67,10 @@ namespace Rey.Engine.Prefabs
             this.EntityStats.AttackSpeed = 25;
             this.ChooseNewTargetAndInterval();
             this.BoundingBoxes.Add(new Rectangle(0, 0, 0, 0));
+
+            this.shadow.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/shadow.png");
+            this.shadow.Sprite.Color = new Color(255, 255, 255) * 0.3f;
+            this.shadow.LocalPosition = new Vector2(0, 88);
         }
 
         public override void Update()
@@ -97,10 +103,12 @@ namespace Rey.Engine.Prefabs
 
             this.arm.Transform.Position = this.Transform.Position + this.arm.LocalPosition - this.Transform.Origin;
             this.weapon.Transform.Position = this.Transform.Position + this.weapon.LocalPosition - this.Transform.Origin;
+            this.shadow.Update(this);
+
         }
 
         // handles the movement
-        void HandleIdleMovement()
+        protected virtual void HandleIdleMovement()
         {
             // if the enemy is waiting to move again
             if (moving == false)
@@ -157,7 +165,7 @@ namespace Rey.Engine.Prefabs
         /// </summary>
         /// <param name="playerStats"></param>
         /// <returns></returns>
-        public int GetHit(EntityStats playerStats)
+        public virtual int GetHitMelee(EntityStats playerStats)
         {
             int damageDealt = playerStats.AttackLevel;
             //this.Sprite.Color = Color.Red;
@@ -165,8 +173,21 @@ namespace Rey.Engine.Prefabs
             return damageDealt;
         }
 
+        /// <summary>
+        /// Use to handle taking damage from the attacking magic player
+        /// </summary>
+        /// <param name="playerStats"></param>
+        /// <returns></returns>
+        public virtual int GetHitMagic(EntityStats playerStats, Projectile projectile)
+        {
+            int damageDealt = (playerStats.MagicSpeed/100) + projectile.Damage;
+            //this.Sprite.Color = Color.Red;
+            this.EntityStats.HP -= damageDealt; // deal damage to the enemy
+            return damageDealt;
+        }
+
         // handles movement when attacking
-        void HandleAttackMovement()
+        protected virtual void HandleAttackMovement()
         {
             // if the target player is to the right
             if (this.playerTarget.Transform.Position.X - this.playerTarget.Sprite.Texture.Width - this.playerTarget.Transform.Origin.X*2 > this.Transform.Position.X)
@@ -208,7 +229,7 @@ namespace Rey.Engine.Prefabs
         /// <summary>
         /// handles the animation and such for the attack
         /// </summary>
-        void HandleMeleeAttack()
+        protected virtual void HandleMeleeAttack()
         {
             this.meleeAttackTimer++;
             // rotate arm based on direction the player is facing
@@ -239,7 +260,7 @@ namespace Rey.Engine.Prefabs
         /// <summary>
         /// Chooses the new target and interval for waiting
         /// </summary>
-        void ChooseNewTargetAndInterval()
+        protected virtual void ChooseNewTargetAndInterval()
         {
             this.movementTimer = 0;
 
@@ -271,7 +292,7 @@ namespace Rey.Engine.Prefabs
             this.interval = interv;
         }
 
-        void HandleDeath()
+        protected virtual void HandleDeath()
         {
             //this.Sprite.Color = new Color(this.Sprite.Color.R, this.Sprite.Color.G, this.Sprite.Color.B, this.Sprite.Color.A - 100);
             this.Sprite.Color = Color.Beige;
@@ -280,7 +301,7 @@ namespace Rey.Engine.Prefabs
         /// <summary>
         /// Kills the enemy
         /// </summary>
-        void Die()
+        protected virtual void Die()
         {
             this.State = EnemyState.Dead;
             this.Sprite.Color = new Color(255, 0, 0, 80);

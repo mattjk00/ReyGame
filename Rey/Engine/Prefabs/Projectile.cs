@@ -13,7 +13,8 @@ namespace Rey.Engine.Prefabs
     public class Projectile : GameObject
     {
         public bool MagicType { get; set; } = true;
-        
+        public int Damage { get; private set; } = 4;
+        public bool ToBeDestroyed { get; set; } = false;
 
         // make sure to call this after loading a texture
         public override void Load()
@@ -34,6 +35,9 @@ namespace Rey.Engine.Prefabs
             Vector2 dir = new Vector2((float)Math.Cos(this.Transform.Rotation), (float)Math.Sin(this.Transform.Rotation));
             dir.Normalize();
             this.Transform.Position += dir * 10;
+
+            this.BoundingBoxes[0] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X), 
+                (int)(this.Transform.Position.Y - this.Transform.Origin.Y), this.Sprite.Texture.Width, this.Sprite.Texture.Height);
 
             base.Update();
         }

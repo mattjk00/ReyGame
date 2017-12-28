@@ -45,8 +45,10 @@
     <Compile Include="Engine\AssetLoader.cs" />
     <Compile Include="Engine\ChildAnimation.cs" />
     <Compile Include="Engine\ChildObject.cs" />
+    <Compile Include="Engine\CollisionManager.cs" />
     <Compile Include="Engine\EntityStats.cs" />
     <Compile Include="Engine\GameObject.cs" />
+    <Compile Include="Engine\Prefabs\Bat.cs" />
     <Compile Include="Engine\Prefabs\Enemy.cs" />
     <Compile Include="Engine\Prefabs\Player.cs" />
     <Compile Include="Engine\Prefabs\PlayerArm.cs" />

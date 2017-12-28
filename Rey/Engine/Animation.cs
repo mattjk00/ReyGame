@@ -9,15 +9,15 @@ namespace Rey.Engine
 {
     public class Animation : GameObject
     {
-        public int FrameSize { get; set; }
+        public Vector2 FrameSize { get; set; }
         public int AnimationSpeed { get; set; }
         public int FrameCount { get; set; }
         private int timer = 0;
         private int currentFrame = 0;
 
-        public Animation(int frameSize, int frameCount, int animeSpeed)
+        public Animation(int frameSizeX, int frameSizeY, int frameCount, int animeSpeed)
         {
-            this.FrameSize = frameSize;
+            this.FrameSize = new Vector2(frameSizeX, frameSizeY);
             this.FrameCount = frameCount;
             this.AnimationSpeed = animeSpeed;
         }
@@ -43,14 +43,14 @@ namespace Rey.Engine
                 this.timer = 0;
             }
 
-            this.Transform.Bounds = new Rectangle(this.currentFrame * this.FrameSize, 0, this.FrameSize, this.FrameSize); // set the sprite bounds to match the animation
+            this.Transform.Bounds = new Rectangle(this.currentFrame * (int)this.FrameSize.X, 0, (int)this.FrameSize.X, (int)this.FrameSize.Y); // set the sprite bounds to match the animation
         }
 
         // sets to a certain frame
         public void SetFrame(int frame)
         {
             this.currentFrame = frame;
-            this.Transform.Bounds = new Rectangle(this.currentFrame * this.FrameSize, 0, this.FrameSize, this.FrameSize); // set the sprite bounds to match the animation
+            this.Transform.Bounds = new Rectangle(this.currentFrame * (int)this.FrameSize.X, 0, (int)this.FrameSize.X, (int)this.FrameSize.Y); // set the sprite bounds to match the animation
         }
 
         public override void Update()

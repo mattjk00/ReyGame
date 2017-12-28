@@ -32,6 +32,7 @@ namespace Rey.Engine
                 proj.Update();
                 proj.UpdateDefaultBox(0);
             }
+            this.Projectiles.RemoveAll(x => x.ToBeDestroyed == true); // remove all projectiles that need to be destroyed
         }
 
         public void Draw(SpriteBatch sb)
