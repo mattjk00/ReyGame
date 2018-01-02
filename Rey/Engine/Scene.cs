@@ -72,7 +72,8 @@ namespace Rey.Engine
         /// <param name="sb"></param>
         public virtual void Draw(SpriteBatch sb)
         {
-            sb.Draw(this.Background, Vector2.Zero, Color.White);
+            if (this.Background != null)
+                sb.Draw(this.Background, Vector2.Zero, Color.White);
             foreach (GameObject go in this.gameObjects)
                 go.Draw(sb);
             foreach (Frame frame in this.frames)
@@ -89,12 +90,21 @@ namespace Rey.Engine
             this.gameObjects.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
 
             foreach (Frame frame in this.frames)
+            {
                 frame.Update();
+            }
 
             if (this.CombatScene)
             {
                 this.CheckForAttackCollisions();
                 this.CheckToSeeIfAllAreDead();
+            }
+
+            // if this is true
+            if (SceneManager.StartingNewCombatScene == true)
+            {
+                this.SetTrapdoorState(false);
+                SceneManager.StartingNewCombatScene = false; // let the scene manager know that it is prepared to start new scene
             }
         }
 
@@ -117,9 +127,7 @@ namespace Rey.Engine
             // if there are no enemies left
             if (this.gameObjects.FindAll(x => x.IsEnemy).Count == 0)
             {
-                // find the trapdoor
-                var trapdoor = this.gameObjects.Find(x => x.Name == "trapdoor") as Trapdoor;
-                trapdoor.Open = true; // open the trapdoor
+                this.SetTrapdoorState(true);
             }
         }
 
@@ -228,6 +236,17 @@ namespace Rey.Engine
 
                 
             }
+        }
+
+        void SetTrapdoorState(bool open)
+        {
+            // find the trapdoor
+            var trapdoor = this.gameObjects.Find(x => x.Name == "trapdoor") as Trapdoor;
+            trapdoor.Open = open; // open the trapdoor
+
+            // find the go button and activate it
+            var gobutton = this.frames.Find(x => x.Name == "gameui").Find("gobutton") as Button;
+            gobutton.IsActive = open;
         }
 
     }

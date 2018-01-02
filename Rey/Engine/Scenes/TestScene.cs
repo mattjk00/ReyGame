@@ -11,6 +11,8 @@ namespace Rey.Engine.Scenes
 {
     public class TestScene : Scene
     {
+        Player player;
+
         public override void Load()
         {
 
@@ -36,11 +38,11 @@ namespace Rey.Engine.Scenes
             bat.Transform.Position = new Vector2(0, 0);
             this.AddGameObject(bat);
 
-            Bat bat2 = new Bat();
-            bat2.Transform.Position = new Vector2(100, 720);
-            this.AddGameObject(bat2);
+            BabyFishDemon fish = new BabyFishDemon();
+            fish.Transform.Position = new Vector2(100, 720);
+            this.AddGameObject(fish);
 
-            Player player = new Player();
+            player = new Player();
             this.AddGameObject(player);
 
             TestUIFrame testUIframe = new TestUIFrame();
@@ -53,5 +55,35 @@ namespace Rey.Engine.Scenes
 
         public TestScene():base() { }
         
+        /// <summary>
+        /// Moves to the next floor of the dungeon
+        /// </summary>
+        public void NextFloor()
+        {
+            //this.gameObjects.RemoveAll(x => x.IsEnemy); // remove everything except the player
+            /*Bat bat = new Bat();
+            
+            bat.Transform.Position = new Vector2(0, 0);
+            bat.Load();
+            this.AddGameObject(bat);*/
+
+            player.Reset();
+
+            Random r = new Random();
+            for (int i = 0; i < 10; i++)
+            {
+                var rand = r.Next(0, 100);
+                if (rand <= 25)
+                {
+                    Bat bat = new Bat();
+                    bat.Transform.Position = new Vector2(r.Next(200, 1000), r.Next(100, 600));
+                    bat.Load();
+                    this.AddGameObject(bat);
+                }
+            }
+
+            // load the scene again
+            SceneManager.StartingNewCombatScene = true;
+        }
     }
 }

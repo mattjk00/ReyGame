@@ -15,18 +15,19 @@ namespace Rey.Engine
         /// </summary>
         /// <param name="player"></param>
         /// <param name="bat"></param>
-        public void HandlePlayerAttackEnemyCollision(Player player, Enemy bat)
+        public void HandlePlayerAttackEnemyCollision(Player player, Enemy enemy)
         {
             /* Melee Attacks */
             if (player.AttackState == PlayerAttackState.MeleeAttack && player.LandedMeleeHit == false)
             {
                 // if player weapon intersects bat cumulative bounding box
-                switch (bat.Name)
+                switch (enemy.Name)
                 {
                     // if it's a bat just check the regular bounding box
                     case "bat":
-                        if (player.BoundingBoxes[1].Intersects(bat.BoundingBoxes[0]))
-                            this.HandleEnemyGettingHitByMelee(player, bat, new Vector2(2, 0));
+                    case "babyfishdemon":
+                        if (player.BoundingBoxes[1].Intersects(enemy.BoundingBoxes[0]))
+                            this.HandleEnemyGettingHitByMelee(player, enemy, new Vector2(2, 0));
                         break;
                 }
             }
@@ -44,8 +45,9 @@ namespace Rey.Engine
             {
                 // if it's a bat just check the regular bounding box
                 case "bat":
+                case "babyfishdemon":
                     if (projectile.BoundingBoxes[0].Intersects(enemy.BoundingBoxes[0]))
-                        HandleEnemyGettingHitByProjectile(player, projectile, enemy as Bat, new Vector2(5, 0));
+                        HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(5, 0));
                     break;
             }
         }

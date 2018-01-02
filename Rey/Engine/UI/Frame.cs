@@ -15,6 +15,7 @@ namespace Rey.Engine.UI
         public int Height { get; set; }
         protected MouseState mouse;
         protected MouseState oldMouse;
+        public string Name { get; set; } = "";
 
         protected List<UIObject> objects = new List<UIObject>();
 
@@ -25,6 +26,7 @@ namespace Rey.Engine.UI
             // update the ui objects
             foreach (UIObject ui in this.objects)
             {
+                ui.Update();
                 ui.UpdateUI(mouse, oldMouse);
             }
             // update old mouse
@@ -35,13 +37,20 @@ namespace Rey.Engine.UI
         {
             foreach (UIObject ui in this.objects)
             {
-                ui.Draw(sb);
+                if (ui.IsActive)
+                    ui.Draw(sb);
             }
         }
 
         public virtual void Load()
         {
 
+        }
+
+        public UIObject Find(string name)
+        {
+            var ui = this.objects.Find(x => x.Name == name);
+            return ui;
         }
     }
 }

@@ -26,8 +26,8 @@ namespace Rey.Engine.Prefabs
 
         protected Direction direction = Direction.MovingRight;
         public PlayerAttackState AttackState { get; set; } // the attacking state of the player
-        public EntityStats EntityStats { get; set; } // the player's stats
-        public EnemyState State { get; protected set; } // the enemy's state
+        public EntityStats EntityStats { get; set; } = new EntityStats(); // the player's stats
+        public EnemyState State { get; protected set; } = EnemyState.Idle; // the enemy's state
         
         
 

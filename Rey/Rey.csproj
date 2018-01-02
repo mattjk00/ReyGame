@@ -48,6 +48,7 @@
     <Compile Include="Engine\CollisionManager.cs" />
     <Compile Include="Engine\EntityStats.cs" />
     <Compile Include="Engine\GameObject.cs" />
+    <Compile Include="Engine\Prefabs\BabyFishDemon.cs" />
     <Compile Include="Engine\Prefabs\Bat.cs" />
     <Compile Include="Engine\Prefabs\Enemy.cs" />
     <Compile Include="Engine\Prefabs\Player.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Engine\Scene.cs" />
     <Compile Include="Engine\SceneManager.cs" />
     <Compile Include="Engine\Scenes\TestScene.cs" />
+    <Compile Include="Engine\Scenes\TransitionScene.cs" />
     <Compile Include="Engine\Sprite.cs" />
     <Compile Include="Engine\Transform.cs" />
     <Compile Include="Engine\UI\Button.cs" />

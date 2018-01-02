@@ -11,12 +11,12 @@ namespace Rey.Engine.UI
     {
         public Texture2D normalTexture { get; protected set; }
         public Texture2D hoverTexture { get; protected set; }
-        public string Text { get; set; }
+        public string Text { get; set; } = "";
 
         /// <summary>
         /// Set up the default button actions
         /// </summary>
-        public Button()
+        public Button(string name) : base(name)
         {
             this.OnHover += () =>
             {
@@ -27,6 +27,7 @@ namespace Rey.Engine.UI
                 this.Sprite.Texture = this.normalTexture;
             };
             this.OnClick += () => { };
+            
         }
 
         /// <summary>

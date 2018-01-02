@@ -8,35 +8,71 @@ using System.Threading.Tasks;
 
 namespace Rey.Engine
 {
-    public class SceneManager
+    public static class SceneManager
     {
-        private string currentScene = "test"; // the current scene being displayed
-        private List<Scene> scenes = new List<Scene>(); // the list of all scenes in the game
+        static private string currentScene = "test"; // the current scene being displayed
+        static private List<Scene> scenes = new List<Scene>(); // the list of all scenes in the game
 
-        TestScene testScene;
+        static private TestScene testScene;
+        static private TransitionScene transitionScene;
+
+        public static bool StartingNewCombatScene = false;
 
         /// <summary>
         /// Create and load some scenes
         /// </summary>
-        public void Load()
+        public static void Load()
         {
             // load a test scene
-            this.testScene = new TestScene();
+            testScene = new TestScene();
             testScene.Load();
-            this.scenes.Add(testScene);
+            scenes.Add(testScene);
             // done with test scene
+
+            transitionScene = new TransitionScene();
+            transitionScene.Load();
+            scenes.Add(transitionScene);
         }
 
         // Update the currently running scene
-        public void Update()
+        public static void Update()
         {
-            this.scenes.First(x => x.Name == this.currentScene).Update();   
+            scenes.First(x => x.Name == currentScene).Update();
         }
 
         // draw the current scene
-        public void Draw(SpriteBatch sb)
+        public static void Draw(SpriteBatch sb)
         {
-            this.scenes.First(x => x.Name == this.currentScene).Draw(sb);
+            scenes.First(x => x.Name == currentScene).Draw(sb);
+        }
+
+        /// <summary>
+        /// Attempts to go the next floor
+        /// </summary>
+        public static void TryToGoToNextFloor()
+        {
+            // check if it's a combat scene. Test for now
+            if (currentScene == "test")
+            {
+                // find the current scene and get it as the combat scene
+                var scene = scenes.Find(x => x.Name == currentScene) as TestScene;
+
+                // go to the next floor
+                scene.NextFloor();
+
+                TransitionToScene("test");
+            }
+        }
+
+        public static void SetScene(string sceneName)
+        {
+            currentScene = sceneName;
+        }
+
+        public static void TransitionToScene(string sceneName)
+        {
+            currentScene = "transition";
+            transitionScene.LoadNewTransition(sceneName);
         }
     }
 }

@@ -17,13 +17,16 @@ namespace Rey.Engine.UI
         public Action OnMouseLeave;
 
         protected bool isMouseOn = false;
+        public bool IsActive { get; set; } = true;
+        public string Name { get; set; } = "";
 
-        public UIObject()
+        public UIObject(string name)
         {
             // add some default delegates
             this.OnClick += () => { };
             this.OnHover += () => { };
             this.OnMouseLeave += () => { };
+            this.Name = name;
         }
 
         // rescale the ui object
@@ -40,38 +43,43 @@ namespace Rey.Engine.UI
         public void UpdateUI(MouseState mouse, MouseState oldMouse)
         {
             // create a hitbox for the mouse
-            Rectangle mouseBox = new Rectangle(mouse.Position, new Point(1, 1)); 
-            
-            // check all bounding boxes
-            foreach(Rectangle boundingBox in this.BoundingBoxes)
-            {
-                // if the button and the mouse intersect
-                if (boundingBox.Intersects(mouseBox))
-                {
-                    // trigger the hover method
-                    if (this.isMouseOn == false)
-                    {
-                        this.OnHover();
-                        this.isMouseOn = true;
-                    }
+            Rectangle mouseBox = new Rectangle(mouse.Position, new Point(1, 1));
 
-                    // if clicked
-                    if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released)
-                    {
-                        // trigger the click event
-                        this.OnClick(); 
-                    }
-                }
-                else
+            
+            
+            if (this.IsActive)
+            {
+                // check all bounding boxes
+                foreach (Rectangle boundingBox in this.BoundingBoxes)
                 {
-                    // if the mouse leaves the button, trigger the on mouse leave event
-                    if (this.isMouseOn == true)
+                    // if the button and the mouse intersect
+                    if (boundingBox.Intersects(mouseBox))
                     {
-                        this.OnMouseLeave();
-                        this.isMouseOn = false;
+                        // trigger the hover method
+                        if (this.isMouseOn == false)
+                        {
+                            this.OnHover();
+                            this.isMouseOn = true;
+                        }
+
+                        // if clicked
+                        if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released)
+                        {
+                            // trigger the click event
+                            this.OnClick();
+                        }
+                    }
+                    else
+                    {
+                        // if the mouse leaves the button, trigger the on mouse leave event
+                        if (this.isMouseOn == true)
+                        {
+                            this.OnMouseLeave();
+                            this.isMouseOn = false;
+                        }
                     }
                 }
-            }
-        }
+
+            }        }
     }
 }

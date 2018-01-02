@@ -13,7 +13,7 @@ namespace Rey
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        SceneManager sceneManager = new SceneManager();
+        //SceneManager sceneManager = new SceneManager();
 
         Texture2D mouseTexture;
 
@@ -54,7 +54,7 @@ namespace Rey
 
             mouseTexture = AssetLoader.LoadTexture("Assets/Textures/Player/mouse.png");
 
-            this.sceneManager.Load();
+            SceneManager.Load();
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Rey
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            this.sceneManager.Update();
+            SceneManager.Update();
 
             base.Update(gameTime);
         }
@@ -87,10 +87,10 @@ namespace Rey
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
-            this.sceneManager.Draw(spriteBatch);
+            SceneManager.Draw(spriteBatch);
 
             spriteBatch.Draw(mouseTexture, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);
             spriteBatch.End();

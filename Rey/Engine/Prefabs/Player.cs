@@ -354,5 +354,18 @@ namespace Rey.Engine.Prefabs
             this.Sprite.Color = new Color(255, 0, 0, 80);
             this.Transform.Rotation = MathHelper.ToRadians(90);
         }
+
+        /// <summary>
+        /// Removes projectiles and resets the player's attack state and position
+        /// </summary>
+        public void Reset()
+        {
+            //this.AttackState = PlayerAttackState.None;
+            this.meleeAttackTimer = 0;
+            this.magicAttackTimer = 0;
+            this.LandedMeleeHit = false;
+            this.projectileManager.Projectiles.Clear();
+            this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
+        }
     }
 }
