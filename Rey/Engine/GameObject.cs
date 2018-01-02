@@ -60,6 +60,7 @@ namespace Rey.Engine
         public virtual void Update()
         {
             this.Transform.Position += this.Transform.Velocity;
+            
         }
 
         /// <summary>

@@ -53,6 +53,7 @@
     <Compile Include="Engine\Prefabs\Player.cs" />
     <Compile Include="Engine\Prefabs\PlayerArm.cs" />
     <Compile Include="Engine\Prefabs\Projectile.cs" />
+    <Compile Include="Engine\Prefabs\TestUIFrame.cs" />
     <Compile Include="Engine\Prefabs\Trapdoor.cs" />
     <Compile Include="Engine\ProjectileManager.cs" />
     <Compile Include="Engine\Scene.cs" />
@@ -60,6 +61,9 @@
     <Compile Include="Engine\Scenes\TestScene.cs" />
     <Compile Include="Engine\Sprite.cs" />
     <Compile Include="Engine\Transform.cs" />
+    <Compile Include="Engine\UI\Button.cs" />
+    <Compile Include="Engine\UI\Frame.cs" />
+    <Compile Include="Engine\UI\UIObject.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

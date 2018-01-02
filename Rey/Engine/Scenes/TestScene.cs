@@ -43,6 +43,9 @@ namespace Rey.Engine.Scenes
             Player player = new Player();
             this.AddGameObject(player);
 
+            TestUIFrame testUIframe = new TestUIFrame();
+            this.AddFrame(testUIframe);
+
             base.Load();
             //enemy.SetInterval(1000);
 

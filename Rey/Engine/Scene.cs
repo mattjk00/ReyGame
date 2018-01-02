@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Rey.Engine.Prefabs;
+using Rey.Engine.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Rey.Engine
     public class Scene
     {
         public List<GameObject> gameObjects { get; protected set; }
+        public List<Frame> frames { get; protected set; } = new List<Frame>();
         public Texture2D Background { get; protected set; }
         public string Name { get; protected set; }
         protected CollisionManager collisionManager = new CollisionManager();
@@ -39,6 +41,11 @@ namespace Rey.Engine
             this.gameObjects.Add(go);
         }
 
+        public void AddFrame(Frame frame)
+        {
+            this.frames.Add(frame);
+        }
+
         /// <summary>
         /// Put loading logic in here
         /// </summary>
@@ -46,6 +53,8 @@ namespace Rey.Engine
         {
             foreach (GameObject go in this.gameObjects)
                 go.Load();
+            foreach (Frame frame in this.frames)
+                frame.Load();
         }
 
         /// <summary>
@@ -66,6 +75,8 @@ namespace Rey.Engine
             sb.Draw(this.Background, Vector2.Zero, Color.White);
             foreach (GameObject go in this.gameObjects)
                 go.Draw(sb);
+            foreach (Frame frame in this.frames)
+                frame.Draw(sb);
         }
 
         /// <summary>
@@ -76,6 +87,9 @@ namespace Rey.Engine
             foreach (GameObject go in this.gameObjects)
                 go.Update();
             this.gameObjects.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
+
+            foreach (Frame frame in this.frames)
+                frame.Update();
 
             if (this.CombatScene)
             {
