@@ -10,13 +10,17 @@ namespace Rey.Engine
 {
     public static class SceneManager
     {
-        static private string currentScene = "test"; // the current scene being displayed
+        static private string currentScene = "mainmenu"; // the current scene being displayed
+        static private string lastScene = "";
         static private List<Scene> scenes = new List<Scene>(); // the list of all scenes in the game
 
         static private TestScene testScene;
         static private TransitionScene transitionScene;
+        static private MainMenuScene mainMenuScene;
 
         public static bool StartingNewCombatScene = false;
+        static public bool DrawLastScene = false; // if this is true, the scene manager will draw the last scene as well as the current scene. can be used for transitions
+        public static bool Quit = false;
 
         /// <summary>
         /// Create and load some scenes
@@ -29,9 +33,15 @@ namespace Rey.Engine
             scenes.Add(testScene);
             // done with test scene
 
+            // transition
             transitionScene = new TransitionScene();
             transitionScene.Load();
             scenes.Add(transitionScene);
+
+            // main menu
+            mainMenuScene = new MainMenuScene();
+            mainMenuScene.Load();
+            scenes.Add(mainMenuScene);
         }
 
         // Update the currently running scene
@@ -43,6 +53,11 @@ namespace Rey.Engine
         // draw the current scene
         public static void Draw(SpriteBatch sb)
         {
+            // if drawing the last scene, find and draw the last scene
+            if (DrawLastScene)
+                scenes.Find(x => x.Name == lastScene).Draw(sb);
+
+            // draw the current scene
             scenes.First(x => x.Name == currentScene).Draw(sb);
         }
 
@@ -66,13 +81,17 @@ namespace Rey.Engine
 
         public static void SetScene(string sceneName)
         {
+            lastScene = currentScene;
             currentScene = sceneName;
         }
 
         public static void TransitionToScene(string sceneName)
         {
-            currentScene = "transition";
+            SetScene("transition");
+            DrawLastScene = true; // draw the last scene while transitioning
             transitionScene.LoadNewTransition(sceneName);
         }
+
+       
     }
 }

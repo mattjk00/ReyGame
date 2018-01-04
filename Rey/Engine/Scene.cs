@@ -105,6 +105,7 @@ namespace Rey.Engine
             {
                 this.SetTrapdoorState(false);
                 SceneManager.StartingNewCombatScene = false; // let the scene manager know that it is prepared to start new scene
+                
             }
         }
 
@@ -247,6 +248,8 @@ namespace Rey.Engine
             // find the go button and activate it
             var gobutton = this.frames.Find(x => x.Name == "gameui").Find("gobutton") as Button;
             gobutton.IsActive = open;
+
+            
         }
 
     }

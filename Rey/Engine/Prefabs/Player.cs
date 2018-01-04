@@ -360,7 +360,9 @@ namespace Rey.Engine.Prefabs
         /// </summary>
         public void Reset()
         {
-            //this.AttackState = PlayerAttackState.None;
+            this.AttackState = PlayerAttackState.None;
+            this.direction = Direction.MovingRight;
+            this.Transform.Velocity = Vector2.Zero;
             this.meleeAttackTimer = 0;
             this.magicAttackTimer = 0;
             this.LandedMeleeHit = false;

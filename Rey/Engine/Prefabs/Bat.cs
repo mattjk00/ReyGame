@@ -67,6 +67,7 @@ namespace Rey.Engine.Prefabs
                 sb.Draw(shadow.Sprite.Texture, shadow.Transform.Position, shadow.Sprite.Color);
 
             sb.Draw(legs.Sprite.Texture, legs.Transform.Position, this.Sprite.Color);
+            //this.legs.Draw(sb);
             this.body.Draw(sb);
             sb.Draw(this.Sprite.Texture, this.Transform.Position, this.Sprite.Color);
             

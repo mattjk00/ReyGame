@@ -55,6 +55,9 @@ namespace Rey.Engine
         /// </summary>
         public virtual void Load()
         {
+            // create default bounds
+            if (this.Sprite.Texture != null)
+                this.Transform.Bounds = new Rectangle(0, 0, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
         }
 
         public virtual void Update()

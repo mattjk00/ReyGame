@@ -52,5 +52,10 @@ namespace Rey.Engine.UI
             var ui = this.objects.Find(x => x.Name == name);
             return ui;
         }
+
+        public void AddObject(UIObject ui)
+        {
+            this.objects.Add(ui);
+        }
     }
 }

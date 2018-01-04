@@ -12,6 +12,9 @@ namespace Rey.Engine.Scenes
     public class TestScene : Scene
     {
         Player player;
+        GameObject fadeScreen;
+
+        protected bool transitioning; // if the scene is in a state of transitiong
 
         public override void Load()
         {
@@ -45,6 +48,11 @@ namespace Rey.Engine.Scenes
             player = new Player();
             this.AddGameObject(player);
 
+            fadeScreen = new GameObject("fade");
+            fadeScreen.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/UI/fade.png");
+            fadeScreen.Sprite.Color = Color.White * 0; // make the screen invisible
+            this.AddGameObject(fadeScreen);
+
             TestUIFrame testUIframe = new TestUIFrame();
             this.AddFrame(testUIframe);
 
@@ -54,7 +62,12 @@ namespace Rey.Engine.Scenes
         }
 
         public TestScene():base() { }
-        
+
+        public override void Update()
+        {
+            base.Update();
+        }
+
         /// <summary>
         /// Moves to the next floor of the dungeon
         /// </summary>

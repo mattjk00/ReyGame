@@ -59,6 +59,7 @@
     <Compile Include="Engine\ProjectileManager.cs" />
     <Compile Include="Engine\Scene.cs" />
     <Compile Include="Engine\SceneManager.cs" />
+    <Compile Include="Engine\Scenes\MainMenuScene.cs" />
     <Compile Include="Engine\Scenes\TestScene.cs" />
     <Compile Include="Engine\Scenes\TransitionScene.cs" />
     <Compile Include="Engine\Sprite.cs" />
