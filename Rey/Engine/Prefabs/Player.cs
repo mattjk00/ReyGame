@@ -37,6 +37,7 @@ namespace Rey.Engine.Prefabs
         ChildAnimation legs = new ChildAnimation(48, 50, 6, 3);
         ChildObject head = new ChildObject();
         ChildObject shadow = new ChildObject();
+        Healthbar healthbar = new Healthbar();
         
         public Direction direction = Direction.MovingRight;
         public PlayerAttackState AttackState { get; set; } // the attacking state of the player
@@ -88,6 +89,11 @@ namespace Rey.Engine.Prefabs
             this.shadow.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/shadow.png");
             this.shadow.Sprite.Color = new Color(255, 255, 255) * 0.3f;
             this.shadow.LocalPosition = new Vector2(0, 88);
+
+            // load the healthbar and set the stats
+            this.healthbar.Load();
+            this.healthbar.AssignStats(this.EntityStats);
+            this.healthbar.LocalPosition = new Vector2(-10, -50);
         }
 
         /// <summary>
@@ -120,6 +126,7 @@ namespace Rey.Engine.Prefabs
             this.head.Update(this);
             this.shadow.Update(this);
             this.projectileManager.Update();
+            this.healthbar.Update(this);
 
             // animate the legs if the velocity is greater than 1
             if (Math.Abs(this.Transform.VelX) > 1 || Math.Abs(this.Transform.VelY) > 1)
@@ -169,13 +176,13 @@ namespace Rey.Engine.Prefabs
 
 
             /* attack input */
-            if (this.keyboard.IsKeyDown(Keys.Space) && this.lastKeyboard.IsKeyDown(Keys.Space) == false)
+            if (this.keyboard.IsKeyDown(Keys.Space) && this.lastKeyboard.IsKeyDown(Keys.Space) == false && this.AttackState != PlayerAttackState.MagicAttack)
             {
                 this.StartMeleeAttack(); // start attacking
             }
 
             /* Magic/Ranged input */
-            if (this.mouse.LeftButton == ButtonState.Pressed && this.lastMouse.LeftButton == ButtonState.Released)
+            if (this.mouse.LeftButton == ButtonState.Pressed && this.lastMouse.LeftButton == ButtonState.Released && this.AttackState != PlayerAttackState.MeleeAttack)
             {
                 this.StartMagicAttack();
             }
@@ -280,8 +287,10 @@ namespace Rey.Engine.Prefabs
         public override void Draw(SpriteBatch sb)
         {
             // draw hp
-            sb.DrawString(AssetLoader.Font, this.EntityStats.HP.ToString() + "/" + this.EntityStats.MaxHP.ToString(), 
-                new Vector2(this.Transform.Position.X - 10, this.Transform.Position.Y - 60 - this.Transform.Origin.Y), Color.LightGreen);
+            /*sb.DrawString(AssetLoader.Font, this.EntityStats.HP.ToString() + "/" + this.EntityStats.MaxHP.ToString(), 
+                new Vector2(this.Transform.Position.X - 10, this.Transform.Position.Y - 60 - this.Transform.Origin.Y), Color.LightGreen);*/
+
+            this.healthbar.Draw(sb);
 
             sb.Draw(shadow.Sprite.Texture, shadow.Transform.Position, shadow.Sprite.Color);
 

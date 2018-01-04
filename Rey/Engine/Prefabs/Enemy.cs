@@ -23,6 +23,7 @@ namespace Rey.Engine.Prefabs
         protected PlayerArm arm = new PlayerArm(); // the player's arm
         protected ChildObject weapon = new ChildObject();
         protected ChildObject shadow = new ChildObject();
+        protected Healthbar healthbar = new Healthbar();
 
         protected Direction direction = Direction.MovingRight;
         public PlayerAttackState AttackState { get; set; } // the attacking state of the player
@@ -71,6 +72,11 @@ namespace Rey.Engine.Prefabs
             this.shadow.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/shadow.png");
             this.shadow.Sprite.Color = new Color(255, 255, 255) * 0.3f;
             this.shadow.LocalPosition = new Vector2(0, 88);
+
+            // load the healthbar and set the stats
+            this.healthbar.Load();
+            this.healthbar.AssignStats(this.EntityStats);
+            this.healthbar.LocalPosition = new Vector2(-10, -40);
         }
 
         public override void Update()
@@ -104,7 +110,7 @@ namespace Rey.Engine.Prefabs
             this.arm.Transform.Position = this.Transform.Position + this.arm.LocalPosition - this.Transform.Origin;
             this.weapon.Transform.Position = this.Transform.Position + this.weapon.LocalPosition - this.Transform.Origin;
             this.shadow.Update(this);
-
+            this.healthbar.Update(this);
         }
 
         // handles the movement
@@ -317,8 +323,9 @@ namespace Rey.Engine.Prefabs
         public override void Draw(SpriteBatch sb)
         {
             // draw hp
-            sb.DrawString(AssetLoader.Font, this.EntityStats.HP.ToString() + "/" + this.EntityStats.MaxHP.ToString(), 
-                new Vector2(this.Transform.Position.X, this.Transform.Position.Y - 20 - this.Transform.Origin.Y), Color.LightGreen);
+            /*sb.DrawString(AssetLoader.Font, this.EntityStats.HP.ToString() + "/" + this.EntityStats.MaxHP.ToString(), 
+                new Vector2(this.Transform.Position.X, this.Transform.Position.Y - 20 - this.Transform.Origin.Y), Color.LightGreen);*/
+            this.healthbar.Draw(sb);
 
             if (this.direction == Direction.MovingRight)
             {

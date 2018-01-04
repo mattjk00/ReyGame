@@ -24,7 +24,7 @@ namespace Rey
             this.IsMouseVisible = false;
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
-            this.graphics.IsFullScreen = true;
+            this.graphics.IsFullScreen = false;
         }
 
         /// <summary>

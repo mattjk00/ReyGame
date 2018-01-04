@@ -23,6 +23,7 @@ namespace Rey.Engine.Prefabs
             this.IsEnemy = true;
             this.Transform.Origin = new Vector2(this.Sprite.Texture.Width / 2, this.Sprite.Texture.Height / 2);
             this.EntityStats.HP = 25;
+            this.EntityStats.MaxHP = 25;
             this.EntityStats.AttackSpeed = 50;
             this.EntityStats.Aggressive = true;
             this.ChooseNewTargetAndInterval();
@@ -36,6 +37,11 @@ namespace Rey.Engine.Prefabs
             this.aura.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/Enemies/demons/fish_demon_aura.png");
             this.aura.LocalPosition = new Vector2(12, 30);
             this.aura.Sprite.Color = Color.White * 0.4f;
+
+            // load the healthbar and set the stats
+            this.healthbar.Load();
+            this.healthbar.AssignStats(this.EntityStats);
+            this.healthbar.LocalPosition = new Vector2(10, 0);
         }
 
         public override void Update()
@@ -58,6 +64,8 @@ namespace Rey.Engine.Prefabs
 
         public override void Draw(SpriteBatch sb)
         {
+            this.healthbar.Draw(sb);
+
             if (shadow.Sprite.Texture != null)
                 sb.Draw(shadow.Sprite.Texture, shadow.Transform.Position, shadow.Sprite.Color);
 

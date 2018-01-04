@@ -12,7 +12,7 @@ namespace Rey.Engine.Scenes
     {
         GameObject screen = new GameObject("screen");
         private string nextScene = "";
-        private int colorMultiplier = 7; // what to add to the color
+        private int colorMultiplier = 9; // what to add to the color
         private float fadeDelay = 1;
         private float fadeTimer = 0;
 

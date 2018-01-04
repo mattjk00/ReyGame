@@ -24,6 +24,7 @@ namespace Rey.Engine.Prefabs
             this.AddDefaultBoundingBox();
             this.IsEnemy = true;
             this.Transform.Origin = new Vector2(this.Sprite.Texture.Width / 2, this.Sprite.Texture.Height / 2);
+            this.EntityStats.MaxHP = 10;
             this.EntityStats.HP = 10;
             this.EntityStats.AttackSpeed = 50;
             this.EntityStats.Aggressive = true;
@@ -40,6 +41,11 @@ namespace Rey.Engine.Prefabs
             this.shadow.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/shadow.png");
             this.shadow.Sprite.Color = new Color(255, 255, 255) * 0.3f;
             this.shadow.LocalPosition = new Vector2(25, 120);
+
+            // load the healthbar and set the stats
+            this.healthbar.Load();
+            this.healthbar.AssignStats(this.EntityStats);
+            this.healthbar.LocalPosition = new Vector2(5, -5);
         }
 
         public override void Update()
@@ -63,6 +69,8 @@ namespace Rey.Engine.Prefabs
 
         public override void Draw(SpriteBatch sb)
         {
+            this.healthbar.Draw(sb);
+
             if (shadow.Sprite.Texture != null)
                 sb.Draw(shadow.Sprite.Texture, shadow.Transform.Position, shadow.Sprite.Color);
 
