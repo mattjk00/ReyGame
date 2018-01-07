@@ -45,9 +45,9 @@ namespace Rey.Engine
         }
 
         // Update the currently running scene
-        public static void Update()
+        public static void Update(Camera2D camera)
         {
-            scenes.First(x => x.Name == currentScene).Update();
+            scenes.First(x => x.Name == currentScene).Update(camera);
         }
 
         // draw the current scene

@@ -83,7 +83,7 @@ namespace Rey.Engine
         /// <summary>
         /// Default updating
         /// </summary>
-        public virtual void Update()
+        public virtual void Update(Camera2D camera)
         {
             foreach (GameObject go in this.gameObjects)
                 go.Update();
@@ -98,6 +98,9 @@ namespace Rey.Engine
             {
                 this.CheckForAttackCollisions();
                 this.CheckToSeeIfAllAreDead();
+
+                var player = this.gameObjects.First(x => x.Name == "player") as Player; // find the player
+                camera.Position = new Vector2(player.Transform.Position.X - 1280/2, player.Transform.Position.Y - 720/2);
             }
 
             // if this is true

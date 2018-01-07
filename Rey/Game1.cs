@@ -16,6 +16,7 @@ namespace Rey
         //SceneManager sceneManager = new SceneManager();
 
         Texture2D mouseTexture;
+        Camera2D camera = new Camera2D();
 
         public Game1()
         {
@@ -39,6 +40,7 @@ namespace Rey
             AssetLoader.Graphics = this.graphics;
             AssetLoader.LoadFont(Content);
 
+            
 
             base.Initialize();
         }
@@ -79,7 +81,7 @@ namespace Rey
             if (SceneManager.Quit)
                 Exit();
 
-            SceneManager.Update();
+            SceneManager.Update(camera);
 
             base.Update(gameTime);
         }
@@ -92,7 +94,7 @@ namespace Rey
         {
             GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice));
             SceneManager.Draw(spriteBatch);
 
             spriteBatch.Draw(mouseTexture, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);

@@ -40,7 +40,7 @@ namespace Rey.Engine.Scenes
 
         }
 
-        public override void Update()
+        public override void Update(Camera2D camera)
         {
             //screen.Sprite.Color *= 0.97f;
             //screen.Sprite.Color = new Color(255, 255, 255, screen.Sprite.Color.A + this.colorMultiplier);
@@ -71,7 +71,7 @@ namespace Rey.Engine.Scenes
                 this.colorMultiplier = Math.Abs(this.colorMultiplier); // reset color adder
             }
 
-            base.Update();
+            base.Update(camera);
         }
 
         public override void Draw(SpriteBatch sb)

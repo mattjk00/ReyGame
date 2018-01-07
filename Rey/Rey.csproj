@@ -43,10 +43,12 @@
   <ItemGroup>
     <Compile Include="Engine\Animation.cs" />
     <Compile Include="Engine\AssetLoader.cs" />
+    <Compile Include="Engine\Camera2D.cs" />
     <Compile Include="Engine\ChildAnimation.cs" />
     <Compile Include="Engine\ChildObject.cs" />
     <Compile Include="Engine\CollisionManager.cs" />
     <Compile Include="Engine\EntityStats.cs" />
+    <Compile Include="Engine\GameData.cs" />
     <Compile Include="Engine\GameObject.cs" />
     <Compile Include="Engine\Prefabs\BabyFishDemon.cs" />
     <Compile Include="Engine\Prefabs\Bat.cs" />

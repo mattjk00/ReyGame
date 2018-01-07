@@ -13,6 +13,7 @@ namespace Rey.Engine.Scenes
     {
         Player player;
         GameObject fadeScreen;
+        GameObject upperWall;
 
         protected bool transitioning; // if the scene is in a state of transitiong
 
@@ -53,6 +54,10 @@ namespace Rey.Engine.Scenes
             fadeScreen.Sprite.Color = Color.White * 0; // make the screen invisible
             this.AddGameObject(fadeScreen);
 
+            upperWall = new GameObject("upperwall");
+            upperWall.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/blocks/stone_block.png");
+            this.AddGameObject(upperWall);
+
             TestUIFrame testUIframe = new TestUIFrame();
             this.AddFrame(testUIframe);
 
@@ -63,9 +68,9 @@ namespace Rey.Engine.Scenes
 
         public TestScene():base() { }
 
-        public override void Update()
+        public override void Update(Camera2D camera)
         {
-            base.Update();
+            base.Update(camera);
         }
 
         /// <summary>
@@ -79,6 +84,10 @@ namespace Rey.Engine.Scenes
             bat.Transform.Position = new Vector2(0, 0);
             bat.Load();
             this.AddGameObject(bat);*/
+
+            // the enemies to spawn
+            var enemiesSpawning = new int[] { 1, 2 };
+            var maxEnemiesToSpawn = 3;
 
             player.Reset();
 
