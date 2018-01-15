@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Rey.Engine.UI
 {
@@ -19,6 +20,8 @@ namespace Rey.Engine.UI
         protected bool isMouseOn = false;
         public bool IsActive { get; set; } = true;
         public string Name { get; set; } = "";
+
+        public Vector2 LocalPosition { get; set; }
 
         public UIObject(string name)
         {
@@ -35,17 +38,26 @@ namespace Rey.Engine.UI
             // actually do this sometime
         }
 
+        public virtual void DrawUI(SpriteBatch sb, Frame frame)
+        {
+            Rectangle bounds = new Rectangle(0, 0, 0, 0);
+            if (this.Transform.Position.Y + this.Sprite.Texture.Height  < frame.Position.Y + frame.Height && this.Transform.Position.Y > frame.Position.Y)
+                bounds = new Rectangle(0, 0, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
+            sb.Draw(this.Sprite.Texture, this.Transform.Position, bounds, Color.White);
+        }
+
         /// <summary>
         /// Update the UI with the given mouse coordinates
         /// </summary>
         /// <param name="mouseX"></param>
         /// <param name="mouseY"></param>
-        public void UpdateUI(MouseState mouse, MouseState oldMouse)
+        public void UpdateUI(MouseState mouse, MouseState oldMouse, Frame frame)
         {
             // create a hitbox for the mouse
-            Rectangle mouseBox = new Rectangle(mouse.Position, new Point(1, 1));
+            Rectangle mouseBox = new Rectangle(InputHelper.MousePosition.ToPoint(), new Point(1, 1));
 
-            
+            // set the UI's position based off the local position, the position of the parent frame, and the scroll
+            this.Transform.Position = this.LocalPosition + frame.Position + new Vector2(0, frame.ScrollDistance);
             
             if (this.IsActive)
             {

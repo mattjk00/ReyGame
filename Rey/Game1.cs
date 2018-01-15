@@ -17,6 +17,8 @@ namespace Rey
 
         Texture2D mouseTexture;
         Camera2D camera = new Camera2D();
+        MouseState mouse;
+        KeyboardState keyboard;
 
         public Game1()
         {
@@ -26,6 +28,8 @@ namespace Rey
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
             this.graphics.IsFullScreen = false;
+
+            this.camera.Zoom = 0.8f;
         }
 
         /// <summary>
@@ -75,11 +79,14 @@ namespace Rey
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            mouse = Mouse.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             if (SceneManager.Quit)
                 Exit();
+
+            InputHelper.MousePosition = Vector2.Transform(mouse.Position.ToVector2(), Matrix.Invert(camera.GetTransformation(GraphicsDevice)));
 
             SceneManager.Update(camera);
 
@@ -97,7 +104,7 @@ namespace Rey
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice));
             SceneManager.Draw(spriteBatch);
 
-            spriteBatch.Draw(mouseTexture, new Vector2(Mouse.GetState().Position.X, Mouse.GetState().Position.Y), Color.White);
+            spriteBatch.Draw(mouseTexture, InputHelper.MousePosition, Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);

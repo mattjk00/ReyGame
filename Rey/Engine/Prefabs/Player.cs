@@ -199,7 +199,7 @@ namespace Rey.Engine.Prefabs
             // if the player is ready to attack
             if (this.magicAttackTimer == 0 && this.AttackState == PlayerAttackState.None)
             {
-                this.projectileManager.ShootNew(this.Transform.Position, new Vector2(mouse.Position.X, mouse.Position.Y)); // shoot a new projectile
+                this.projectileManager.ShootNew(this.Transform.Position, InputHelper.MousePosition); // shoot a new projectile
                 this.AttackState = PlayerAttackState.MagicAttack;
                 this.LandedMeleeHit = false;
             }

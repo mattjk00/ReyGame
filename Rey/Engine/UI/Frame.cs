@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,14 @@ namespace Rey.Engine.UI
     {
         public int Width { get; set; }
         public int Height { get; set; }
+        public Vector2 Position { get; set; }
         protected MouseState mouse;
         protected MouseState oldMouse;
         public string Name { get; set; } = "";
+        public int ScrollDistance { get; set; } = 0;
+        public bool Scrollable { get; set; } = false;
+        private int previousScrollValue;
+        public Texture2D Background { get; set; }
 
         protected List<UIObject> objects = new List<UIObject>();
 
@@ -23,11 +29,16 @@ namespace Rey.Engine.UI
         {
             // get the mouse state
             mouse = Mouse.GetState();
+
+            // if scrollable, scroll
+            if (this.Scrollable)
+                this.HandleScroll();
+
             // update the ui objects
             foreach (UIObject ui in this.objects)
             {
                 ui.Update();
-                ui.UpdateUI(mouse, oldMouse);
+                ui.UpdateUI(mouse, oldMouse, this);
             }
             // update old mouse
             oldMouse = mouse;
@@ -35,10 +46,16 @@ namespace Rey.Engine.UI
 
         public virtual void Draw(SpriteBatch sb)
         {
+            // draw the backgroundif possible
+            if (this.Background != null)
+            {
+                sb.Draw(Background, this.Position, null, Color.White, 0, Vector2.Zero,
+                    new Vector2((float)this.Width / (float)Background.Width, (float)this.Height / (float)Background.Height), SpriteEffects.None, 0);
+            }
             foreach (UIObject ui in this.objects)
             {
                 if (ui.IsActive)
-                    ui.Draw(sb);
+                    ui.DrawUI(sb, this);
             }
         }
 
@@ -56,6 +73,26 @@ namespace Rey.Engine.UI
         public void AddObject(UIObject ui)
         {
             this.objects.Add(ui);
+        }
+
+        /// <summary>
+        /// Handles the scrolling action
+        /// </summary>
+        void HandleScroll()
+        {
+            // create a bounding box of the frame itself
+            Rectangle frameBox = new Rectangle(this.Position.ToPoint(), new Point(this.Width, this.Height));
+
+            if (mouse.ScrollWheelValue != this.previousScrollValue)
+            {
+                // how much to move the object based on scroll
+                var offset = (mouse.ScrollWheelValue - previousScrollValue)/4;
+                // update the scroll distance of the frame
+                this.ScrollDistance += offset; 
+            }
+
+            // remember the last scroll wheel value
+            previousScrollValue = mouse.ScrollWheelValue;
         }
     }
 }

@@ -50,10 +50,11 @@ namespace Rey.Engine.UI
             base.Update();
         }
 
-        public override void Draw(SpriteBatch sb)
+        public override void DrawUI(SpriteBatch sb, Frame frame)
         {
-            sb.Draw(this.Sprite.Texture, this.Transform.Position, this.Sprite.Color);
+            base.DrawUI(sb, frame);
             sb.DrawString(AssetLoader.Font, this.Text, this.Transform.Position, this.Sprite.Color);
+            
         }
     }
 }

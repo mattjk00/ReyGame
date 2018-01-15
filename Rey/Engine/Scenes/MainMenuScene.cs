@@ -24,12 +24,17 @@ namespace Rey.Engine.Scenes
             this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/main_menu.png");
 
             this.ui = new Frame();
+            this.ui.Scrollable = true;
+            this.ui.Position = new Vector2(640, 260);
+            this.ui.Width = 200;
+            this.ui.Height = 400;
+            this.ui.Background = AssetLoader.LoadTexture("Assets/Textures/UI/ui_back.png");
 
             // the start button
             this.startButton = new Button("start");
             this.startButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal.png", "Assets/Textures/UI/main_menu_button_hover.png");
             this.startButton.Text = "Start!";
-            this.startButton.Transform.Position = new Vector2(640, 360);
+            this.startButton.LocalPosition = new Vector2(0, 100);
             this.startButton.OnClick += () =>
             {
                 SceneManager.TransitionToScene("test");
@@ -39,7 +44,7 @@ namespace Rey.Engine.Scenes
             this.quitButton = new Button("quit");
             this.quitButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal.png", "Assets/Textures/UI/main_menu_button_hover.png");
             this.quitButton.Text = "Quit!";
-            this.quitButton.Transform.Position = new Vector2(640, 420);
+            this.quitButton.LocalPosition = new Vector2(0, 160);
             this.quitButton.OnClick += () =>
             {
                 SceneManager.Quit = true;
