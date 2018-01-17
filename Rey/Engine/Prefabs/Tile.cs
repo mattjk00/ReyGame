@@ -20,6 +20,7 @@ namespace Rey.Engine.Prefabs
     /// <summary>
     /// a world tile
     /// </summary>
+    [Serializable]
     public class Tile : GameObject
     {
         public TileType TileType { get; protected set; }

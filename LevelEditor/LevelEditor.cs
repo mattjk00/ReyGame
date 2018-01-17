@@ -22,9 +22,12 @@ namespace LevelEditor
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            this.graphics.PreferredBackBufferWidth = 1280;
-            this.graphics.PreferredBackBufferHeight = 720;
+            this.graphics.PreferredBackBufferWidth = 1920;
+            this.graphics.PreferredBackBufferHeight = 1080;
             this.IsMouseVisible = true;
+            this.Window.AllowUserResizing = true;
+
+            camera.Zoom = 1.0f;
         }
 
         /// <summary>

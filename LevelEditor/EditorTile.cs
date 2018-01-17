@@ -16,12 +16,14 @@ namespace LevelEditor
         bool On { get; set; }
         MouseState mouse;
         MouseState previousMouse;
+        public Vector2 StartingPosition;
 
         bool clickedThisLoop = false;
 
         public EditorTile(Vector2 position, Texture2D texture, TileType typ) : base(position, texture, typ)
         {
             this.AddDefaultBoundingBox();
+            this.StartingPosition = position;
         }
 
         public override void Update()

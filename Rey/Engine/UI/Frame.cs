@@ -24,7 +24,9 @@ namespace Rey.Engine.UI
         public Texture2D Background { get; set; }
         public Vector2 ScrollLimits { get; set; } = new Vector2(0, 0); // The limit of the scrolling X = min, Y = max
 
-        protected List<UIObject> objects = new List<UIObject>();
+        public List<UIObject> objects = new List<UIObject>();
+
+        
 
         public virtual void Update()
         {
@@ -70,6 +72,8 @@ namespace Rey.Engine.UI
             var ui = this.objects.Find(x => x.Name == name);
             return ui;
         }
+
+        
 
         public void AddObject(UIObject ui)
         {

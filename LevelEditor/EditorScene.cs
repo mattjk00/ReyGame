@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Rey.Engine;
 using Rey.Engine.Prefabs;
 using Rey.Engine.UI;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace LevelEditor
 {
@@ -14,7 +16,9 @@ namespace LevelEditor
     {
         Frame ui;
         GameObject currentTile;
-        Frame fileManagerFrame;
+        FileManagerFrame fileManagerFrame;
+        KeyboardState keyboard;
+        Vector2 mapPosition = new Vector2(); // the position of the map
 
         public override void Load()
         {
@@ -28,65 +32,61 @@ namespace LevelEditor
             ui.Scrollable = true;
             ui.ScrollLimits = new Vector2(75, 1000);
 
-            ui.Background = AssetLoader.LoadTexture("Textures/ui.png");
+            ui.Background = AssetLoader.LoadTexture("Textures/ui/ui.png");
 
-            var delButtonn = new Button("ui_tile")
+            // get how many files are in the textures.
+            var files = System.IO.Directory.GetFiles("Textures");
+            int row = 0; // row to put tiles in 
+            int column = 0;
+
+            for (int i = 0; i < files.Length; i++)
             {
-                LocalPosition = new Vector2(25, 25)
-            };
-            delButtonn.LoadTextures("Textures/delete.png", "Textures/delete.png");
-            delButtonn.OnClick += () =>
+                // create a button in the right row
+                var button = new Button(files[i].Split('.')[0].Replace("Textures\\", ""))
+                {
+                    LocalPosition = new Vector2((column * 60) + 25, (row * 60) + 25)
+                };
+                // load the texture
+                button.LoadTextures(files[i], files[i]);
+                button.OnClick += () =>
+                {
+                    EditorManager.currentTile = new Tile(Vector2.Zero, button.normalTexture, TileType.Normal);
+                };
+                ui.AddObject(button);
+
+                column++;
+
+                // prevetn overlap, every 3 squares go to the next row
+                if (column > 3)
+                {
+                    column = 0;
+                    row++;
+                }
+            }
+
+            // remove the default tile
+            this.ui.objects.RemoveAll(x => x.Name == "default_tile");
+            // fix the delete button
+            this.ui.objects.Find(x => x.Name == "delete").OnClick += () => 
             {
                 EditorManager.currentTile = new Tile(Vector2.Zero, EditorManager.defaultTile, TileType.Empty);
             };
-            ui.AddObject(delButtonn);
-
-            var grassButtonn = new Button("ui_tile")
-            {
-                LocalPosition = new Vector2(100, 25)
-            };
-            grassButtonn.LoadTextures("Textures/grass1.png", "Textures/grass1.png");
-            grassButtonn.OnClick += () =>
-            {
-                EditorManager.currentTile = new Tile(Vector2.Zero, grassButtonn.normalTexture, TileType.Normal);
-            };
-            ui.AddObject(grassButtonn);
-
-            var grassButtonn2 = new Button("ui_tile")
-            {
-                LocalPosition = new Vector2(175, 25)
-            };
-            grassButtonn2.LoadTextures("Textures/grass2.png", "Textures/grass2.png");
-            grassButtonn2.OnClick += () =>
-            {
-                EditorManager.currentTile = new Tile(Vector2.Zero, grassButtonn2.normalTexture, TileType.Normal);
-            };
-            ui.AddObject(grassButtonn2);
-
-            var waterButtonn = new Button("ui_tile")
-            {
-                LocalPosition = new Vector2(25, 100)
-            };
-            waterButtonn.LoadTextures("Textures/ocean1.png", "Textures/ocean1.png");
-            waterButtonn.OnClick += () =>
-            {
-                EditorManager.currentTile = new Tile(Vector2.Zero, waterButtonn.normalTexture, TileType.Normal);
-            };
-            ui.AddObject(waterButtonn);
-
 
             this.AddFrame(ui);
 
             fileManagerFrame = new FileManagerFrame();
+            fileManagerFrame.parent = this;
             this.AddFrame(fileManagerFrame);
 
+            var grassButton = this.ui.Find("grass1") as Button;
+
             currentTile = new GameObject("currentTile", new Vector2(300, 25));
-            currentTile.Sprite.Texture = grassButtonn.normalTexture;
+            currentTile.Sprite.Texture = grassButton.normalTexture;
             this.AddGameObject(currentTile);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 50; i++)
             {
-                for (int j = 0; j < 100; j++)
+                for (int j = 0; j < 50; j++)
                 {
                     EditorTile tile = new EditorTile(new Vector2(i * 50, j * 50), EditorManager.defaultTile, TileType.Normal);
                     this.AddTile(tile);
@@ -94,12 +94,60 @@ namespace LevelEditor
             }
 
 
-            EditorManager.currentTile = new Tile(Vector2.Zero, grassButtonn.normalTexture, TileType.Normal);
+            EditorManager.currentTile = new Tile(Vector2.Zero, grassButton.normalTexture, TileType.Normal);
 
            
 
             base.Load();
         }
 
+        public override void Update(Camera2D camera)
+        {
+            keyboard = Keyboard.GetState();
+
+            int scrollSpeed = 7;
+
+            if (keyboard.IsKeyDown(Keys.LeftShift))
+                scrollSpeed = 14;
+
+            // handle inputs
+            if (keyboard.IsKeyDown(Keys.D))
+            {
+                this.mapPosition.X -= scrollSpeed;
+            }
+            // handle inputs
+            if (keyboard.IsKeyDown(Keys.A))
+            {
+                this.mapPosition.X += scrollSpeed;
+            }
+            // handle inputs
+            if (keyboard.IsKeyDown(Keys.W))
+            {
+                this.mapPosition.Y += scrollSpeed;
+            }
+            // handle inputs
+            if (keyboard.IsKeyDown(Keys.S))
+            {
+                this.mapPosition.Y -= scrollSpeed;
+            }
+
+            base.Update(camera);
+        }
+
+        public override void Draw(SpriteBatch sb)
+        {
+            foreach (Tile tile in this.tiles)
+            {
+                var stile = tile as EditorTile;
+                stile.Transform.Position = this.mapPosition + stile.StartingPosition;
+                sb.Draw(stile.Sprite.Texture, stile.Transform.Position, Color.White);
+            }
+
+            foreach (GameObject go in this.gameObjects)
+                go.Draw(sb);
+
+            foreach (Frame frame in this.frames)
+                frame.Draw(sb);
+        }
     }
 }
