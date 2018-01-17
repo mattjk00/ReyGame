@@ -23,7 +23,7 @@ namespace Rey.Engine.Scenes
 
             this.Name = "test";
 
-            this.Background = AssetLoader.LoadTexture("Assets/Textures/backgrounds/wood1.png");
+            //this.Background = AssetLoader.LoadTexture("Assets/Textures/backgrounds/wood1.png");
 
             Trapdoor trapdoor = new Trapdoor();
             this.AddGameObject(trapdoor);
@@ -60,6 +60,15 @@ namespace Rey.Engine.Scenes
 
             TestUIFrame testUIframe = new TestUIFrame();
             this.AddFrame(testUIframe);
+
+            for (int i = 0; i < 1280/50; i++)
+            {
+                for (int j = 0; j < 720/50; j++)
+                {
+                    Tile tile = new Tile(new Vector2(i * 50, j * 50), AssetLoader.LoadTexture("Assets/Textures/tiles/grass1.png"), TileType.Normal);
+                    this.AddTile(tile);
+                }
+            }
 
             base.Load();
             //enemy.SetInterval(1000);

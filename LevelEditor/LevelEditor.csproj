@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{F660BAC1-3F34-4899-85E3-F348B12639B3}</ProjectGuid>
+    <ProjectGuid>{674312BD-6B7A-4D10-B652-C50654F69401}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rey</RootNamespace>
-    <AssemblyName>Rey</AssemblyName>
+    <RootNamespace>LevelEditor</RootNamespace>
+    <AssemblyName>LevelEditor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -41,38 +41,11 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\Animation.cs" />
-    <Compile Include="Engine\AssetLoader.cs" />
-    <Compile Include="Engine\Camera2D.cs" />
-    <Compile Include="Engine\ChildAnimation.cs" />
-    <Compile Include="Engine\ChildObject.cs" />
-    <Compile Include="Engine\CollisionManager.cs" />
-    <Compile Include="Engine\EntityStats.cs" />
-    <Compile Include="Engine\GameData.cs" />
-    <Compile Include="Engine\GameObject.cs" />
-    <Compile Include="Engine\InputHelper.cs" />
-    <Compile Include="Engine\Prefabs\BabyFishDemon.cs" />
-    <Compile Include="Engine\Prefabs\Bat.cs" />
-    <Compile Include="Engine\Prefabs\Enemy.cs" />
-    <Compile Include="Engine\Prefabs\Healthbar.cs" />
-    <Compile Include="Engine\Prefabs\Player.cs" />
-    <Compile Include="Engine\Prefabs\PlayerArm.cs" />
-    <Compile Include="Engine\Prefabs\Projectile.cs" />
-    <Compile Include="Engine\Prefabs\TestUIFrame.cs" />
-    <Compile Include="Engine\Prefabs\Tile.cs" />
-    <Compile Include="Engine\Prefabs\Trapdoor.cs" />
-    <Compile Include="Engine\ProjectileManager.cs" />
-    <Compile Include="Engine\Scene.cs" />
-    <Compile Include="Engine\SceneManager.cs" />
-    <Compile Include="Engine\Scenes\MainMenuScene.cs" />
-    <Compile Include="Engine\Scenes\TestScene.cs" />
-    <Compile Include="Engine\Scenes\TransitionScene.cs" />
-    <Compile Include="Engine\Sprite.cs" />
-    <Compile Include="Engine\Transform.cs" />
-    <Compile Include="Engine\UI\Button.cs" />
-    <Compile Include="Engine\UI\Frame.cs" />
-    <Compile Include="Engine\UI\UIObject.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="EditorManager.cs" />
+    <Compile Include="EditorScene.cs" />
+    <Compile Include="EditorTile.cs" />
+    <Compile Include="FileManagerFrame.cs" />
+    <Compile Include="LevelEditor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -81,6 +54,7 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -89,12 +63,12 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
-    <Content Include="Content\gameFont.xnb">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Engine\Prefabs\UI\" />
+    <ProjectReference Include="..\Rey\Rey.csproj">
+      <Project>{f660bac1-3f34-4899-85e3-f348b12639b3}</Project>
+      <Name>Rey</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

@@ -3,33 +3,28 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Rey.Engine;
 
-namespace Rey
+namespace LevelEditor
 {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class LevelEditor : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        //SceneManager sceneManager = new SceneManager();
+        EditorScene editorScene = new EditorScene();
 
-        Texture2D mouseTexture;
         Camera2D camera = new Camera2D();
-        MouseState mouse;
-        KeyboardState keyboard;
 
-        public Game1()
+        public LevelEditor()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            this.IsMouseVisible = false;
+
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
-            this.graphics.IsFullScreen = false;
-
-            this.camera.Zoom = 1.0f;
+            this.IsMouseVisible = true;
         }
 
         /// <summary>
@@ -40,12 +35,8 @@ namespace Rey
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             AssetLoader.Graphics = this.graphics;
-            AssetLoader.LoadFont(Content);
-
-
-            
+            EditorManager.Load();
 
             base.Initialize();
         }
@@ -59,9 +50,7 @@ namespace Rey
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            mouseTexture = AssetLoader.LoadTexture("Assets/Textures/Player/mouse.png");
-
-            SceneManager.Load();
+            editorScene.Load();
         }
 
         /// <summary>
@@ -80,18 +69,12 @@ namespace Rey
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            mouse = Mouse.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (SceneManager.Quit)
-            {
-                Exit();
-            }
+            InputHelper.MousePosition = Mouse.GetState().Position.ToVector2();
 
-            InputHelper.MousePosition = Vector2.Transform(mouse.Position.ToVector2(), Matrix.Invert(camera.GetTransformation(GraphicsDevice)));
-
-            SceneManager.Update(camera);
+            editorScene.Update(camera);
 
             base.Update(gameTime);
         }
@@ -102,12 +85,12 @@ namespace Rey
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(new Color(200, 200, 200));
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice));
-            SceneManager.Draw(spriteBatch);
+            spriteBatch.Begin();
 
-            spriteBatch.Draw(mouseTexture, InputHelper.MousePosition, Color.White);
+            editorScene.Draw(spriteBatch);
+
             spriteBatch.End();
 
             base.Draw(gameTime);

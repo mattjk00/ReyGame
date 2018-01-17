@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.3
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rey", "Rey\Rey.csproj", "{F660BAC1-3F34-4899-85E3-F348B12639B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LevelEditor", "LevelEditor\LevelEditor.csproj", "{674312BD-6B7A-4D10-B652-C50654F69401}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{F660BAC1-3F34-4899-85E3-F348B12639B3}.Debug|x86.Build.0 = Debug|x86
 		{F660BAC1-3F34-4899-85E3-F348B12639B3}.Release|x86.ActiveCfg = Release|x86
 		{F660BAC1-3F34-4899-85E3-F348B12639B3}.Release|x86.Build.0 = Release|x86
+		{674312BD-6B7A-4D10-B652-C50654F69401}.Debug|x86.ActiveCfg = Debug|x86
+		{674312BD-6B7A-4D10-B652-C50654F69401}.Debug|x86.Build.0 = Debug|x86
+		{674312BD-6B7A-4D10-B652-C50654F69401}.Release|x86.ActiveCfg = Release|x86
+		{674312BD-6B7A-4D10-B652-C50654F69401}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -22,6 +22,7 @@ namespace Rey.Engine.UI
         public bool Scrollable { get; set; } = false;
         private int previousScrollValue;
         public Texture2D Background { get; set; }
+        public Vector2 ScrollLimits { get; set; } = new Vector2(0, 0); // The limit of the scrolling X = min, Y = max
 
         protected List<UIObject> objects = new List<UIObject>();
 
@@ -89,6 +90,15 @@ namespace Rey.Engine.UI
                 var offset = (mouse.ScrollWheelValue - previousScrollValue)/4;
                 // update the scroll distance of the frame
                 this.ScrollDistance += offset; 
+            }
+
+            // stop the scroller from going to infinity
+            if (this.ScrollLimits != Vector2.Zero)
+            {
+                if (this.ScrollDistance < this.ScrollLimits.X)
+                    this.ScrollDistance = (int)this.ScrollLimits.X;
+                if (this.ScrollDistance > this.ScrollLimits.Y)
+                    this.ScrollDistance = (int)this.ScrollLimits.Y;
             }
 
             // remember the last scroll wheel value

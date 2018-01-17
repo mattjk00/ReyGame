@@ -53,7 +53,9 @@ namespace Rey.Engine.UI
         public override void DrawUI(SpriteBatch sb, Frame frame)
         {
             base.DrawUI(sb, frame);
-            sb.DrawString(AssetLoader.Font, this.Text, this.Transform.Position, this.Sprite.Color);
+            // try to draw text
+            if (AssetLoader.Font != null)
+                sb.DrawString(AssetLoader.Font, this.Text, this.Transform.Position, this.Sprite.Color);
             
         }
     }

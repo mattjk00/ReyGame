@@ -41,7 +41,7 @@ namespace Rey.Engine.UI
         public virtual void DrawUI(SpriteBatch sb, Frame frame)
         {
             Rectangle bounds = new Rectangle(0, 0, 0, 0);
-            if (this.Transform.Position.Y + this.Sprite.Texture.Height  < frame.Position.Y + frame.Height && this.Transform.Position.Y > frame.Position.Y)
+            if ((this.Transform.Position.Y + this.Sprite.Texture.Height  < frame.Position.Y + frame.Height && this.Transform.Position.Y > frame.Position.Y) || frame.Scrollable == false)
                 bounds = new Rectangle(0, 0, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
             sb.Draw(this.Sprite.Texture, this.Transform.Position, bounds, Color.White);
         }

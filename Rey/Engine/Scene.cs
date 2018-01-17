@@ -16,17 +16,20 @@ namespace Rey.Engine
     public class Scene
     {
         public List<GameObject> gameObjects { get; protected set; }
+        public List<Tile> tiles { get; protected set; } = new List<Tile>();
         public List<Frame> frames { get; protected set; } = new List<Frame>();
         public Texture2D Background { get; protected set; }
         public string Name { get; protected set; }
         protected CollisionManager collisionManager = new CollisionManager();
         public bool CombatScene { get; set; } = true;
+        private Player player;
 
         public Scene() { this.gameObjects = new List<GameObject>();  }
         public Scene(string name)
         {
             this.Name = name;
             this.gameObjects = new List<GameObject>();
+            this.tiles = new List<Tile>();
         }
 
         public Scene(string name, Texture2D bg)
@@ -34,6 +37,7 @@ namespace Rey.Engine
             this.Name = name;
             this.Background = bg;
             this.gameObjects = new List<GameObject>();
+            this.tiles = new List<Tile>();
         }
 
         public void AddGameObject(GameObject go)
@@ -46,6 +50,11 @@ namespace Rey.Engine
             this.frames.Add(frame);
         }
 
+        public void AddTile(Tile tile)
+        {
+            this.tiles.Add(tile);
+        }
+
         /// <summary>
         /// Put loading logic in here
         /// </summary>
@@ -55,6 +64,10 @@ namespace Rey.Engine
                 go.Load();
             foreach (Frame frame in this.frames)
                 frame.Load();
+            foreach (Tile tile in this.tiles)
+                tile.Load();
+
+            player = this.gameObjects.Find(x => x.Name == "player") as Player; // find the player
         }
 
         /// <summary>
@@ -64,6 +77,7 @@ namespace Rey.Engine
         {
             this.Background = null;
             this.gameObjects = new List<GameObject>();
+            this.tiles = new List<Tile>();
         }
 
         /// <summary>
@@ -74,10 +88,28 @@ namespace Rey.Engine
         {
             if (this.Background != null)
                 sb.Draw(this.Background, Vector2.Zero, Color.White);
+
+
+            // look through each tile
+            foreach (Tile tile in this.tiles)
+            {
+                if (player != null)
+                {
+                    // if the tile is close enough to the player, draw it
+                    if (Vector2.Distance(player.Transform.Position, tile.Transform.Position) < 750)
+                        tile.Draw(sb);
+                }
+                else
+                {
+                    tile.Draw(sb);
+                }
+            }
+            
             foreach (GameObject go in this.gameObjects)
                 go.Draw(sb);
             foreach (Frame frame in this.frames)
                 frame.Draw(sb);
+            
         }
 
         /// <summary>
@@ -89,6 +121,9 @@ namespace Rey.Engine
                 go.Update();
             this.gameObjects.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
 
+            foreach (Tile tile in this.tiles)
+                tile.Update();
+
             foreach (Frame frame in this.frames)
             {
                 frame.Update();
@@ -99,7 +134,7 @@ namespace Rey.Engine
                 this.CheckForAttackCollisions();
                 this.CheckToSeeIfAllAreDead();
 
-                var player = this.gameObjects.First(x => x.Name == "player") as Player; // find the player
+                player = this.gameObjects.Find(x => x.Name == "player") as Player; // find the player
                 camera.Position = new Vector2(player.Transform.Position.X - 1280/2, player.Transform.Position.Y - 720/2);
             }
 
