@@ -46,6 +46,7 @@
     <Compile Include="EditorTile.cs" />
     <Compile Include="FileManagerFrame.cs" />
     <Compile Include="LevelEditor.cs" />
+    <Compile Include="ObjectChooserFrame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

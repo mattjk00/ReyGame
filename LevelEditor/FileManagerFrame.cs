@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 using Rey.Engine;
+using Rey.Engine.Memory;
 using Rey.Engine.Prefabs;
 using Rey.Engine.UI;
 using System;
@@ -60,18 +61,36 @@ namespace LevelEditor
         void Save(string filename)
         {
 
+            Map map = new Map();
+
             List<Tile> exportTiles = new List<Tile>();
             foreach(Tile tile in parent.tiles)
             {
                 if (tile.TileType != TileType.Empty)
                 {
+                    var stile = tile as EditorTile;
                     // creat the new tile
-                    var newTile = new Tile(tile.Transform.Position, null, tile.TileType);
+                    var newTile = new Tile(stile.Name, stile.StartingPosition, null, stile.TileType);
                     exportTiles.Add(newTile);
                 }
             }
 
-            string json = JsonConvert.SerializeObject(exportTiles);
+            map.Tiles = exportTiles;
+
+            List<MapMarker> markers = new List<MapMarker>();
+            foreach (Tile tile in parent.tiles)
+            {
+                // convert to an editor tile
+                var stile = tile as EditorTile;
+                if (stile.marker != null)
+                {
+                    var newMarker = new MapMarker(stile.marker.Name, stile.marker.Position, null, stile.marker.MarkerType);
+                    markers.Add(newMarker);
+                }
+            }
+            map.Markers = markers;
+
+            string json = JsonConvert.SerializeObject(map);
 
             File.WriteAllText(filename, json);
             

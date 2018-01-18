@@ -96,7 +96,7 @@ namespace Rey.Engine
                 if (player != null)
                 {
                     // if the tile is close enough to the player, draw it
-                    if (Vector2.Distance(player.Transform.Position, tile.Transform.Position) < 750)
+                    if (Vector2.Distance(player.Transform.Position, tile.Transform.Position) < 850)
                         tile.Draw(sb);
                 }
                 else

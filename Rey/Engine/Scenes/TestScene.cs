@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Rey.Engine.Memory;
 using Rey.Engine.Prefabs;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace Rey.Engine.Scenes
             Trapdoor trapdoor = new Trapdoor();
             this.AddGameObject(trapdoor);
 
-            
+            var map = Map.LoadFromFile("Assets/test_map.guat");
 
             /*Enemy enemy = new Enemy();
             enemy.Transform.Position = new Vector2(500, 500);
@@ -61,13 +62,21 @@ namespace Rey.Engine.Scenes
             TestUIFrame testUIframe = new TestUIFrame();
             this.AddFrame(testUIframe);
 
-            for (int i = 0; i < 1280/50; i++)
+            /*for (int i = 0; i < 1280/50; i++)
             {
                 for (int j = 0; j < 720/50; j++)
                 {
                     Tile tile = new Tile(new Vector2(i * 50, j * 50), AssetLoader.LoadTexture("Assets/Textures/tiles/grass1.png"), TileType.Normal);
                     this.AddTile(tile);
                 }
+            }*/
+
+            // load tiles
+            foreach (Tile tile in map.Tiles)
+            {
+                // load the texture
+                tile.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/tiles/" + tile.Name + ".png");
+                this.AddTile(tile);
             }
 
             base.Load();

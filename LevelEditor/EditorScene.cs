@@ -21,6 +21,7 @@ namespace LevelEditor
         Vector2 mapPosition = new Vector2(); // the position of the map
 
         TabFrame tabFrame = new TabFrame();
+        ObjectChooserFrame objChooserFrame = new ObjectChooserFrame();
 
         public override void Load()
         {
@@ -52,7 +53,9 @@ namespace LevelEditor
                 button.LoadTextures(files[i], files[i]);
                 button.OnClick += () =>
                 {
-                    EditorManager.currentTile = new Tile(Vector2.Zero, button.normalTexture, TileType.Normal);
+                    EditorManager.TileMode = true;
+                    EditorManager.currentTile = new Tile(button.Name, Vector2.Zero, button.normalTexture, TileType.Normal);
+                    EditorManager.currentTileName = button.Name;
                 };
                 ui.AddObject(button);
 
@@ -71,17 +74,20 @@ namespace LevelEditor
             // fix the delete button
             this.ui.objects.Find(x => x.Name == "delete").OnClick += () => 
             {
-                EditorManager.currentTile = new Tile(Vector2.Zero, EditorManager.defaultTile, TileType.Empty);
+                EditorManager.currentTile = new Tile("", Vector2.Zero, EditorManager.defaultTile, TileType.Empty);
             };
 
             
             fileManagerFrame = new FileManagerFrame();
             fileManagerFrame.parent = this;
 
+            objChooserFrame = new ObjectChooserFrame();
+
             tabFrame.Width = 1920;
             tabFrame.Height = 720;
             tabFrame.Position = new Vector2(0, 50);
             tabFrame.AddTab(ui);
+            tabFrame.AddTab(objChooserFrame);
 
             this.AddFrame(fileManagerFrame);
             this.AddFrame(tabFrame);
@@ -97,13 +103,13 @@ namespace LevelEditor
             {
                 for (int j = 0; j < 50; j++)
                 {
-                    EditorTile tile = new EditorTile(new Vector2(i * 50, j * 50), EditorManager.defaultTile, TileType.Normal);
+                    EditorTile tile = new EditorTile("", new Vector2(i * 50, j * 50), EditorManager.defaultTile, TileType.Empty);
                     this.AddTile(tile);
                 }
             }
 
 
-            EditorManager.currentTile = new Tile(Vector2.Zero, grassButton.normalTexture, TileType.Normal);
+            EditorManager.currentTile = new Tile(grassButton.Name, Vector2.Zero, grassButton.normalTexture, TileType.Normal);
 
            
 
@@ -148,8 +154,13 @@ namespace LevelEditor
             foreach (Tile tile in this.tiles)
             {
                 var stile = tile as EditorTile;
+                
                 stile.Transform.Position = this.mapPosition + stile.StartingPosition;
                 sb.Draw(stile.Sprite.Texture, stile.Transform.Position, Color.White);
+                if (stile.marker != null)
+                {
+                    sb.Draw(stile.marker.Texture, stile.marker.Position, Color.White);
+                }
             }
 
             foreach (GameObject go in this.gameObjects)

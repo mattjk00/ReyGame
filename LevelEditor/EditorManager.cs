@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Rey.Engine;
+using Rey.Engine.Memory;
 using Rey.Engine.Prefabs;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,11 @@ namespace LevelEditor
     {
         public static Texture2D defaultTile;
 
+        public static bool TileMode = true;
+
         public static Tile currentTile; // the current tiel
+        public static string currentTileName;
+        public static MapMarker currentMarker;
 
         public static void Load()
         {

@@ -31,11 +31,12 @@ namespace Rey.Engine.Prefabs
         /// </summary>
         /// <param name="position"></param>
         /// <param name="texture"></param>
-        public Tile(Vector2 position, Texture2D texture, TileType typ)
+        public Tile(string name, Vector2 position, Texture2D texture, TileType typ)
         {
             this.Transform.Position = position;
             this.Sprite.Texture = texture;
             this.TileType = typ;
+            this.Name = name;
         }
 
         public override void Draw(SpriteBatch sb)
