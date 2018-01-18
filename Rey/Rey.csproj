@@ -71,6 +71,7 @@
     <Compile Include="Engine\Transform.cs" />
     <Compile Include="Engine\UI\Button.cs" />
     <Compile Include="Engine\UI\Frame.cs" />
+    <Compile Include="Engine\UI\TabFrame.cs" />
     <Compile Include="Engine\UI\UIObject.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />

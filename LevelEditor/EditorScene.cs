@@ -20,6 +20,8 @@ namespace LevelEditor
         KeyboardState keyboard;
         Vector2 mapPosition = new Vector2(); // the position of the map
 
+        TabFrame tabFrame = new TabFrame();
+
         public override void Load()
         {
             this.Name = "editor";
@@ -72,11 +74,18 @@ namespace LevelEditor
                 EditorManager.currentTile = new Tile(Vector2.Zero, EditorManager.defaultTile, TileType.Empty);
             };
 
-            this.AddFrame(ui);
-
+            
             fileManagerFrame = new FileManagerFrame();
             fileManagerFrame.parent = this;
+
+            tabFrame.Width = 1920;
+            tabFrame.Height = 720;
+            tabFrame.Position = new Vector2(0, 50);
+            tabFrame.AddTab(ui);
+
             this.AddFrame(fileManagerFrame);
+            this.AddFrame(tabFrame);
+
 
             var grassButton = this.ui.Find("grass1") as Button;
 

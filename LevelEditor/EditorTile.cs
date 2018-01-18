@@ -48,6 +48,13 @@ namespace LevelEditor
                 this.GoOn();
             }
 
+            // if mouse is clicked and intersecting this box
+            if (mouse.RightButton == ButtonState.Pressed && previousMouse.RightButton == ButtonState.Released && mouseBox.Intersects(this.BoundingBoxes[0])
+                && this.Transform.Position.X > 300 && this.clickedThisLoop == false) // this prevents from clicking under UI
+            {
+                this.TileType = TileType.PlayerStart;
+            }
+
             if (clickedThisLoop == true)
                 previousMouse = mouse;
             clickedThisLoop = false;

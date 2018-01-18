@@ -14,7 +14,8 @@ namespace Rey.Engine.Prefabs
     public enum TileType
     {
         Empty = 0,
-        Normal = 1
+        Normal = 1,
+        PlayerStart = 2
     }
 
     /// <summary>
