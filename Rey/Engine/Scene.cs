@@ -131,6 +131,7 @@ namespace Rey.Engine
 
             if (this.CombatScene)
             {
+                this.CheckForWorldCollisions();
                 this.CheckForAttackCollisions();
                 this.CheckToSeeIfAllAreDead();
 
@@ -274,6 +275,43 @@ namespace Rey.Engine
                 }
 
                 
+            }
+        }
+
+        void CheckForWorldCollisions()
+        {
+            // loop through the tiles
+            foreach (Tile tile in this.tiles)
+            {
+                var touchedVerticalBox = false;
+                var touchedHorizontalBox = false;
+
+                if (tile.TileType == TileType.Block)
+                {
+                    
+
+                    // if player collides with a block, handle the collision
+                    if (player.MovementBox.Intersects(tile.TopBox) && !touchedVerticalBox&& !touchedHorizontalBox)
+                    {
+                        this.collisionManager.HandlePlayerAndBlock(player, tile, "top");
+                        touchedVerticalBox = true;
+                    }
+                    else if (player.MovementBox.Intersects(tile.BottomBox) && !touchedVerticalBox && !touchedHorizontalBox)
+                    {
+                        this.collisionManager.HandlePlayerAndBlock(player, tile, "bottom");
+                        touchedVerticalBox = true;
+                    }
+                    else if (player.MovementBox.Intersects(tile.LeftBox) && !touchedHorizontalBox && !touchedVerticalBox)
+                    {
+                        this.collisionManager.HandlePlayerAndBlock(player, tile, "left");
+                        touchedHorizontalBox = true;
+                    }
+                    else if (player.MovementBox.Intersects(tile.RightBox) && !touchedHorizontalBox && !touchedVerticalBox)
+                    {
+                        this.collisionManager.HandlePlayerAndBlock(player, tile, "right");
+                        touchedHorizontalBox = true;
+                    }
+                }
             }
         }
 

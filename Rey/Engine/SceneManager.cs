@@ -10,7 +10,7 @@ namespace Rey.Engine
 {
     public static class SceneManager
     {
-        static private string currentScene = "mainmenu"; // the current scene being displayed
+        static private string currentScene = "test"; // the current scene being displayed
         static private string lastScene = "";
         static private List<Scene> scenes = new List<Scene>(); // the list of all scenes in the game
 

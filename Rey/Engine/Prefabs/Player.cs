@@ -31,7 +31,7 @@ namespace Rey.Engine.Prefabs
         KeyboardState lastKeyboard;
         MouseState mouse;
         MouseState lastMouse;
-        float speed = 0.6f;
+        float speed = 0.5f;
         ChildObject arm = new ChildObject(); // the player's arm
         ChildObject weapon = new ChildObject();
         ChildAnimation legs = new ChildAnimation(48, 50, 6, 3);
@@ -53,6 +53,9 @@ namespace Rey.Engine.Prefabs
 
         public ProjectileManager projectileManager { get; protected set; } = new ProjectileManager();
 
+        public Rectangle MovementBox { get; protected set; } = new Rectangle();
+        public int MovementBoxOffset { get; protected set; } = 20;
+
         /// <summary>
         /// Set the player's properties
         /// </summary>
@@ -66,7 +69,7 @@ namespace Rey.Engine.Prefabs
             this.magicAttackBody = AssetLoader.LoadTexture("Assets/Textures/Player/default_magic_body.png"); // load the player texture
             this.Sprite.Texture = this.defaultBody;
             this.AddDefaultBoundingBox();
-            this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
+           // this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
             this.BoundingBoxes.Add(new Rectangle(0, 0, 0, 0));
             this.Transform.Origin = new Vector2(this.Sprite.Texture.Width / 2, this.Sprite.Texture.Height / 2);
             this.IsEnemy = false;
@@ -94,6 +97,8 @@ namespace Rey.Engine.Prefabs
             this.healthbar.Load();
             this.healthbar.AssignStats(this.EntityStats);
             this.healthbar.LocalPosition = new Vector2(-10, -50);
+
+            
         }
 
         /// <summary>
@@ -136,6 +141,9 @@ namespace Rey.Engine.Prefabs
 
             if (this.EntityStats.HP <= 0)
                 this.Die();
+
+            // place the movement box
+            this.MovementBox = new Rectangle((int)this.Transform.Position.X - this.MovementBoxOffset, (int)this.Transform.Position.Y + 65, 50, 5);
 
             this.UpdateDefaultBox(0);
             // update the sword bounding box
@@ -376,7 +384,7 @@ namespace Rey.Engine.Prefabs
             this.magicAttackTimer = 0;
             this.LandedMeleeHit = false;
             this.projectileManager.Projectiles.Clear();
-            this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
+            //this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
         }
     }
 }

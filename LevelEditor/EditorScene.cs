@@ -103,7 +103,7 @@ namespace LevelEditor
             {
                 for (int j = 0; j < 50; j++)
                 {
-                    EditorTile tile = new EditorTile("", new Vector2(i * 50, j * 50), EditorManager.defaultTile, TileType.Empty);
+                    EditorTile tile = new EditorTile("ocean1", new Vector2(i * 50, j * 50), this.ui.Find("ocean1").Sprite.Texture, TileType.Block);
                     this.AddTile(tile);
                 }
             }
@@ -159,7 +159,7 @@ namespace LevelEditor
                 sb.Draw(stile.Sprite.Texture, stile.Transform.Position, Color.White);
                 if (stile.marker != null)
                 {
-                    sb.Draw(stile.marker.Texture, stile.marker.Position, Color.White);
+                    sb.Draw(stile.marker.Texture, stile.Transform.Position, Color.White);
                 }
             }
 

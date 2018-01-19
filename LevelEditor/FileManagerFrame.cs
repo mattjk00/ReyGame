@@ -84,7 +84,7 @@ namespace LevelEditor
                 var stile = tile as EditorTile;
                 if (stile.marker != null)
                 {
-                    var newMarker = new MapMarker(stile.marker.Name, stile.marker.Position, null, stile.marker.MarkerType);
+                    var newMarker = new MapMarker(stile.marker.Name, stile.marker.StartingPosition, null, stile.marker.MarkerType);
                     markers.Add(newMarker);
                 }
             }

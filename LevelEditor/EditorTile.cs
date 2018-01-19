@@ -60,8 +60,8 @@ namespace LevelEditor
                 this.TileType = TileType.PlayerStart;
             }*/
 
-            if (this.marker != null)
-                this.marker.Position = this.Transform.Position;
+            //if (this.marker != null)
+                //this.marker.Position = this.Transform.Position;
 
             if (clickedThisLoop == true)
                 previousMouse = mouse;
@@ -116,7 +116,7 @@ namespace LevelEditor
                 this.marker = null;
             else
             {
-                this.marker = new MapMarker("", this.Transform.Position, EditorManager.currentMarker.Texture, EditorManager.currentMarker.MarkerType);
+                this.marker = new MapMarker("", this.StartingPosition, EditorManager.currentMarker.Texture, EditorManager.currentMarker.MarkerType);
                 //this.marker.Texture = EditorManager.currentMarker.Texture;
             }
         }

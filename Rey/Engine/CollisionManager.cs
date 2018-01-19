@@ -76,5 +76,34 @@ namespace Rey.Engine
                 enemy.Bounce(bounce);
             projectile.ToBeDestroyed = true; // destroy the projectile
         }
+
+        /// <summary>
+        /// Handles the collision between a player and the world
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="tile"></param>
+        public void HandlePlayerAndBlock(Player player, Tile tile, string side)
+        {
+            if (side == "left")
+            {
+                player.Transform.Position = new Vector2(tile.Transform.Position.X - player.MovementBox.Width + player.MovementBoxOffset + 1, player.Transform.Position.Y);
+                player.Transform.VelX = 0;
+            }
+            else if (side == "right")
+            {
+                player.Transform.Position = new Vector2(tile.Transform.Position.X + tile.Box.Width + player.MovementBoxOffset, player.Transform.Position.Y);
+                player.Transform.VelX = 0;
+            }
+            else if (side == "bottom")
+            {
+                player.Transform.Position = new Vector2(player.Transform.Position.X, tile.Transform.Position.Y - 14);
+                player.Transform.VelY = 0;
+            }
+            else if (side == "top")
+            {
+                player.Transform.Position = new Vector2(player.Transform.Position.X, tile.TopBox.Y - (player.MovementBox.Height*13.9f));
+                player.Transform.VelY = 0;
+            }
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace Rey.Engine.Scenes
             Trapdoor trapdoor = new Trapdoor();
             this.AddGameObject(trapdoor);
 
-            var map = Map.LoadFromFile("Assets/test_map.guat");
+            var map = Map.LoadFromFile("Assets/island4.guat");
 
             /*Enemy enemy = new Enemy();
             enemy.Transform.Position = new Vector2(500, 500);
@@ -41,11 +41,11 @@ namespace Rey.Engine.Scenes
 
             Bat bat = new Bat();
             bat.Transform.Position = new Vector2(0, 0);
-            this.AddGameObject(bat);
+            //this.AddGameObject(bat);
 
             BabyFishDemon fish = new BabyFishDemon();
             fish.Transform.Position = new Vector2(100, 720);
-            this.AddGameObject(fish);
+            //this.AddGameObject(fish);
 
             player = new Player();
             this.AddGameObject(player);
@@ -76,8 +76,14 @@ namespace Rey.Engine.Scenes
             {
                 // load the texture
                 tile.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/tiles/" + tile.Name + ".png");
+                if (tile.Name == "ocean1")
+                    tile.SetType(TileType.Block);
                 this.AddTile(tile);
             }
+            // try to find the player's starting position
+            var playerStart = map.Markers.Find(x => x.MarkerType == MarkerType.PlayerSpawnPoint);
+            if (playerStart != null)
+                player.Transform.Position = playerStart.StartingPosition;
 
             base.Load();
             //enemy.SetInterval(1000);
