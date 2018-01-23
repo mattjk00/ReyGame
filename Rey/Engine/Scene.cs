@@ -123,6 +123,7 @@ namespace Rey.Engine
 
             foreach (Tile tile in this.tiles)
                 tile.Update();
+            this.tiles.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
 
             foreach (Frame frame in this.frames)
             {
@@ -280,33 +281,46 @@ namespace Rey.Engine
 
         void CheckForWorldCollisions()
         {
+            /*int leftTile = (int)Math.Floor((float)player.MovementBox.Left / 50);
+            int rightTile = (int)Math.Ceiling(((float)player.MovementBox.Right / 50)) - 1;
+            int topTile = (int)Math.Floor((float)player.MovementBox.Top / 50);
+            int bottomTile = (int)Math.Ceiling(((float)player.MovementBox.Bottom / 50)) - 1;
+
+            for (int y = topTile; y <= bottomTile; ++y)
+            {
+                for (int x = leftTile; x <= rightTile; ++x)
+                {
+                    this.tiles[x].Sprite.Color = Color.Red;
+                }
+            }*/
+
             // loop through the tiles
-            foreach (Tile tile in this.tiles)
+            var blockTiles = this.tiles.FindAll(x => x.TileType == TileType.Block);
+            
+            foreach (Tile tile in blockTiles)
             {
                 var touchedVerticalBox = false;
                 var touchedHorizontalBox = false;
 
-                if (tile.TileType == TileType.Block)
+                if (player.MovementBox.Intersects(tile.Box))
                 {
-                    
-
                     // if player collides with a block, handle the collision
-                    if (player.MovementBox.Intersects(tile.TopBox) && !touchedVerticalBox&& !touchedHorizontalBox)
+                    if (player.MovementBox.Intersects(tile.TopBox) && !touchedVerticalBox && !touchedHorizontalBox)//(player.MovementBox.Bottom > tile.Box.Top && player.MovementBox.Top < tile.Box.Top && !touchedHorizontalBox && !touchedVerticalBox)
                     {
                         this.collisionManager.HandlePlayerAndBlock(player, tile, "top");
                         touchedVerticalBox = true;
                     }
-                    else if (player.MovementBox.Intersects(tile.BottomBox) && !touchedVerticalBox && !touchedHorizontalBox)
+                    else if (player.MovementBox.Intersects(tile.BottomBox) && !touchedVerticalBox && !touchedHorizontalBox) //(player.MovementBox.Top < tile.Box.Bottom && player.MovementBox.Bottom > tile.Box.Bottom && !touchedHorizontalBox && !touchedVerticalBox)//
                     {
                         this.collisionManager.HandlePlayerAndBlock(player, tile, "bottom");
                         touchedVerticalBox = true;
                     }
-                    else if (player.MovementBox.Intersects(tile.LeftBox) && !touchedHorizontalBox && !touchedVerticalBox)
+                    else if (player.MovementBox.Intersects(tile.LeftBox) && !touchedHorizontalBox && !touchedVerticalBox)// (player.MovementBox.Right > tile.Box.Left && player.MovementBox.Left < tile.Box.Left && !touchedHorizontalBox && !touchedVerticalBox)//
                     {
                         this.collisionManager.HandlePlayerAndBlock(player, tile, "left");
                         touchedHorizontalBox = true;
                     }
-                    else if (player.MovementBox.Intersects(tile.RightBox) && !touchedHorizontalBox && !touchedVerticalBox)
+                    else if (player.MovementBox.Intersects(tile.RightBox) && !touchedHorizontalBox && !touchedVerticalBox) //if (player.MovementBox.Left < tile.Box.Right && player.MovementBox.Right > tile.Box.Right && !touchedHorizontalBox && !touchedVerticalBox)//
                     {
                         this.collisionManager.HandlePlayerAndBlock(player, tile, "right");
                         touchedHorizontalBox = true;

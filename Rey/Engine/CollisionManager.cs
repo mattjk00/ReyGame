@@ -87,21 +87,24 @@ namespace Rey.Engine
             if (side == "left")
             {
                 player.Transform.Position = new Vector2(tile.Transform.Position.X - player.MovementBox.Width + player.MovementBoxOffset + 1, player.Transform.Position.Y);
+                //player.Transform.Position = new Vector2(tile.Box.Left - player.MovementBox.Width/2 - 5, player.Transform.Position.Y);
                 player.Transform.VelX = 0;
             }
             else if (side == "right")
             {
                 player.Transform.Position = new Vector2(tile.Transform.Position.X + tile.Box.Width + player.MovementBoxOffset, player.Transform.Position.Y);
+                //player.Transform.Position = new Vector2(tile.Box.Right + player.MovementBox.Width / 2 - 5, player.Transform.Position.Y);
                 player.Transform.VelX = 0;
             }
             else if (side == "bottom")
             {
                 player.Transform.Position = new Vector2(player.Transform.Position.X, tile.Transform.Position.Y - 14);
+                //player.Transform.Position = new Vector2(player.Transform.Position.X, tile.Box.Bottom - player.Sprite.Texture.Height + 7);
                 player.Transform.VelY = 0;
             }
             else if (side == "top")
             {
-                player.Transform.Position = new Vector2(player.Transform.Position.X, tile.TopBox.Y - (player.MovementBox.Height*13.9f));
+                player.Transform.Position = new Vector2(player.Transform.Position.X, tile.Box.Top - player.Sprite.Texture.Height - 7);
                 player.Transform.VelY = 0;
             }
         }

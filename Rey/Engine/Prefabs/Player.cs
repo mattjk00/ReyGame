@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using Rey.Engine.Behaviors;
 
 public enum Direction
 {
@@ -69,7 +70,7 @@ namespace Rey.Engine.Prefabs
             this.magicAttackBody = AssetLoader.LoadTexture("Assets/Textures/Player/default_magic_body.png"); // load the player texture
             this.Sprite.Texture = this.defaultBody;
             this.AddDefaultBoundingBox();
-           // this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
+            // this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
             this.BoundingBoxes.Add(new Rectangle(0, 0, 0, 0));
             this.Transform.Origin = new Vector2(this.Sprite.Texture.Width / 2, this.Sprite.Texture.Height / 2);
             this.IsEnemy = false;
@@ -98,6 +99,11 @@ namespace Rey.Engine.Prefabs
             this.healthbar.AssignStats(this.EntityStats);
             this.healthbar.LocalPosition = new Vector2(-10, -50);
 
+            /*this.AddBehavior(new PlayerMovementBehavior()
+            {
+                Speed = this.speed,
+                Direction = this.direction
+            });*/
             
         }
 

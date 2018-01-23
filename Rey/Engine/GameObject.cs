@@ -20,6 +20,7 @@ namespace Rey.Engine
         public List<Rectangle> BoundingBoxes { get; set; }
         public bool IsEnemy { get; protected set; }
         public bool ToBeDestroyed { get; set; } // the status of the game object
+        public List<Behavior> Behaviors { get; set; } = new List<Behavior>();
 
         public GameObject()
         {
@@ -36,6 +37,7 @@ namespace Rey.Engine
             this.Transform = new Transform();
             this.Sprite = new Sprite();
             this.Name = name;
+            this.BoundingBoxes = new List<Rectangle>();
         }
 
         /// <summary>
@@ -48,6 +50,7 @@ namespace Rey.Engine
             this.Transform = new Transform(pos);
             this.Sprite = new Sprite();
             this.Name = name;
+            this.BoundingBoxes = new List<Rectangle>();
         }
 
         /// <summary>
@@ -58,12 +61,17 @@ namespace Rey.Engine
             // create default bounds
             if (this.Sprite.Texture != null)
                 this.Transform.Bounds = new Rectangle(0, 0, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
+            foreach (Behavior be in this.Behaviors)
+                be.Load(this);
         }
 
         public virtual void Update()
         {
             this.Transform.Position += this.Transform.Velocity;
-            
+
+            // update the behaviors
+            foreach (Behavior be in this.Behaviors)
+                be.Update(this);
         }
 
         /// <summary>
@@ -73,6 +81,10 @@ namespace Rey.Engine
         public virtual void Draw(SpriteBatch sb)
         {
             sb.Draw(this.Sprite.Texture, this.Transform.Position, this.Transform.Bounds, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f,  SpriteEffects.None, 0);
+
+            // draw the behaviors
+            foreach (Behavior be in this.Behaviors)
+                be.Draw(this, sb);
         }
 
         // adds a default bounding box based on sprite size
@@ -87,6 +99,15 @@ namespace Rey.Engine
         {
             this.BoundingBoxes[index] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X), (int)(this.Transform.Position.Y - this.Transform.Origin.Y),
                 this.Sprite.Texture.Width, this.Sprite.Texture.Height);
+        }
+
+        /// <summary>
+        /// Adds a new behavior
+        /// </summary>
+        /// <param name="br"></param>
+        public void AddBehavior(Behavior br)
+        {
+            this.Behaviors.Add(br);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Rey.Engine.Prefabs
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(this.Sprite.Texture, this.Transform.Position, new Rectangle(0, 0, 50, 50), Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
+            sb.Draw(this.Sprite.Texture, this.Transform.Position, new Rectangle(0, 0, 50, 50), this.Sprite.Color, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
         }
 
         public void SetType(TileType tt)

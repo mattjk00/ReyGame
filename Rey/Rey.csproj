@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Engine\Animation.cs" />
     <Compile Include="Engine\AssetLoader.cs" />
+    <Compile Include="Engine\Behavior.cs" />
+    <Compile Include="Engine\Behaviors\PlayerMovementBehavior.cs" />
     <Compile Include="Engine\Camera2D.cs" />
     <Compile Include="Engine\ChildAnimation.cs" />
     <Compile Include="Engine\ChildObject.cs" />
