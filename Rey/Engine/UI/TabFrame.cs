@@ -54,8 +54,11 @@ namespace Rey.Engine.UI
             base.Update();
 
             // update the current tab
-            tabs[currentTab].Position = this.Position + tabStartingPositions[currentTab];
-            tabs[currentTab].Update();
+            if (this.tabs.Count > 0)
+            {
+                tabs[currentTab].Position = this.Position + tabStartingPositions[currentTab];
+                tabs[currentTab].Update();
+            }
         }
 
         public override void Draw(SpriteBatch sb)
@@ -67,7 +70,10 @@ namespace Rey.Engine.UI
                     new Vector2((float)this.Width / (float)Background.Width, (float)this.Height / (float)Background.Height), SpriteEffects.None, 0);
             }
 
-            tabs[currentTab].Draw(sb);
+            if (this.tabs.Count > 0)
+            {
+                tabs[currentTab].Draw(sb);
+            }
 
             foreach (UIObject ui in this.objects)
             {

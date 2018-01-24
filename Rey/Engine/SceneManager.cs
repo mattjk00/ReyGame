@@ -10,7 +10,7 @@ namespace Rey.Engine
 {
     public static class SceneManager
     {
-        static private string currentScene = "test"; // the current scene being displayed
+        static private string currentScene = "mainmenu"; // the current scene being displayed
         static private string lastScene = "";
         static private List<Scene> scenes = new List<Scene>(); // the list of all scenes in the game
 
@@ -59,6 +59,17 @@ namespace Rey.Engine
 
             // draw the current scene
             scenes.First(x => x.Name == currentScene).Draw(sb);
+        }
+
+        // do the second draw call for the current scene
+        public static void SecondDraw(SpriteBatch sb)
+        {
+            // if drawing the last scene, find and draw the last scene
+            if (DrawLastScene)
+                scenes.Find(x => x.Name == lastScene).SecondDraw(sb);
+
+            // draw the current scene
+            scenes.First(x => x.Name == currentScene).SecondDraw(sb);
         }
 
         /// <summary>

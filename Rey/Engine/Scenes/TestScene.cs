@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Rey.Engine.Memory;
 using Rey.Engine.Prefabs;
+using Rey.Engine.Prefabs.UI.Inventory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace Rey.Engine.Scenes
         Player player;
         GameObject fadeScreen;
         GameObject upperWall;
+
+        Inventory inventory;
 
         protected bool transitioning; // if the scene is in a state of transitiong
 
@@ -41,11 +44,15 @@ namespace Rey.Engine.Scenes
 
             Bat bat = new Bat();
             bat.Transform.Position = new Vector2(0, 0);
-            //this.AddGameObject(bat);
+            this.AddGameObject(bat);
+
+            Bat bat2 = new Bat();
+            bat2.Transform.Position = new Vector2(2000, 0);
+            this.AddGameObject(bat2);
 
             BabyFishDemon fish = new BabyFishDemon();
             fish.Transform.Position = new Vector2(100, 720);
-            //this.AddGameObject(fish);
+            this.AddGameObject(fish);
 
             player = new Player();
             this.AddGameObject(player);
@@ -59,8 +66,12 @@ namespace Rey.Engine.Scenes
             upperWall.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/blocks/stone_block.png");
             this.AddGameObject(upperWall);
 
+            this.inventory = new Inventory();
+
             TestUIFrame testUIframe = new TestUIFrame();
             this.AddFrame(testUIframe);
+
+            this.AddFrame(inventory);
 
             /*for (int i = 0; i < 1280/50; i++)
             {

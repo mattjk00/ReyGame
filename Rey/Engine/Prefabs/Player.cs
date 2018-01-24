@@ -315,8 +315,8 @@ namespace Rey.Engine.Prefabs
                 if (this.AttackState == PlayerAttackState.MeleeAttack || this.AttackState == PlayerAttackState.None)
                 {
                     sb.Draw(this.Sprite.Texture, this.Transform.Position, null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.None, 0);
-                    this.weapon.LocalPosition = new Vector2(20, 65);
-                    sb.Draw(this.weapon.Sprite.Texture, this.weapon.Transform.Position, null, this.weapon.Sprite.Color, this.weapon.Transform.Rotation, this.weapon.Transform.Origin, 1.0f, SpriteEffects.None, 0);
+                    //this.weapon.LocalPosition = new Vector2(20, 65);
+                    //sb.Draw(this.weapon.Sprite.Texture, this.weapon.Transform.Position, null, this.weapon.Sprite.Color, this.weapon.Transform.Rotation, this.weapon.Transform.Origin, 1.0f, SpriteEffects.None, 0);
                 }
                 else if (this.AttackState == PlayerAttackState.MagicAttack)
                 {
@@ -328,8 +328,8 @@ namespace Rey.Engine.Prefabs
                 if (this.AttackState == PlayerAttackState.MeleeAttack || this.AttackState == PlayerAttackState.None)
                 {
                     sb.Draw(this.Sprite.Texture, this.Transform.Position, null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
-                    this.weapon.LocalPosition = new Vector2(-37, 65);
-                    sb.Draw(this.weapon.Sprite.Texture, this.weapon.Transform.Position, null, this.weapon.Sprite.Color, this.weapon.Transform.Rotation, this.weapon.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
+                    //this.weapon.LocalPosition = new Vector2(-37, 65);
+                    //sb.Draw(this.weapon.Sprite.Texture, this.weapon.Transform.Position, null, this.weapon.Sprite.Color, this.weapon.Transform.Rotation, this.weapon.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
                 }
                 else if (this.AttackState == PlayerAttackState.MagicAttack)
                 {
@@ -339,7 +339,7 @@ namespace Rey.Engine.Prefabs
 
             sb.Draw(head.Sprite.Texture, head.Transform.Position, Color.White);
 
-            this.arm.Draw(sb);
+            //this.arm.Draw(sb);
             this.projectileManager.Draw(sb);
 
         }

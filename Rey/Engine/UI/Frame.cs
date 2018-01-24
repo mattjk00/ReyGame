@@ -23,7 +23,7 @@ namespace Rey.Engine.UI
         private int previousScrollValue;
         public Texture2D Background { get; set; }
         public Vector2 ScrollLimits { get; set; } = new Vector2(0, 0); // The limit of the scrolling X = min, Y = max
-
+        public bool LockedPosition { get; set; } = false;
         public List<UIObject> objects = new List<UIObject>();
 
         

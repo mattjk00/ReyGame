@@ -107,9 +107,20 @@ namespace Rey.Engine
             
             foreach (GameObject go in this.gameObjects)
                 go.Draw(sb);
-            foreach (Frame frame in this.frames)
+            foreach (Frame frame in frames.FindAll(f => f.LockedPosition == false))
                 frame.Draw(sb);
             
+        }
+
+        /// <summary>
+        /// Another draaw method that is called after the first one so without camera
+        /// </summary>
+        /// <param name="sb"></param>
+        public virtual void SecondDraw(SpriteBatch sb)
+        {
+            // draw the remainder of the frames
+            foreach (Frame frame in frames.FindAll(f => f.LockedPosition == true))
+                frame.Draw(sb);
         }
 
         /// <summary>

@@ -110,6 +110,11 @@ namespace Rey
             spriteBatch.Draw(mouseTexture, InputHelper.MousePosition, Color.White);
             spriteBatch.End();
 
+            // second draw
+            spriteBatch.Begin();
+            SceneManager.SecondDraw(spriteBatch);
+            spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }
