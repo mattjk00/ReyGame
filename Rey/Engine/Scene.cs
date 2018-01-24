@@ -281,23 +281,43 @@ namespace Rey.Engine
 
         void CheckForWorldCollisions()
         {
-            /*int leftTile = (int)Math.Floor((float)player.MovementBox.Left / 50);
+            // loop through the tiles
+            var blockTiles = this.tiles.FindAll(x => x.TileType == TileType.Block);
+
+            int leftTile = (int)Math.Floor((float)player.MovementBox.Left / 50);
             int rightTile = (int)Math.Ceiling(((float)player.MovementBox.Right / 50)) - 1;
             int topTile = (int)Math.Floor((float)player.MovementBox.Top / 50);
             int bottomTile = (int)Math.Ceiling(((float)player.MovementBox.Bottom / 50)) - 1;
+
+            // tiles to check
+            var checkTiles = new List<Tile>();
 
             for (int y = topTile; y <= bottomTile; ++y)
             {
                 for (int x = leftTile; x <= rightTile; ++x)
                 {
-                    this.tiles[x].Sprite.Color = Color.Red;
+                    // find current tile
+                    Tile tile = blockTiles.Find(t => t.MapX == x && t.MapY == y);
+                    if (tile != null)
+                        checkTiles.Add(tile);
                 }
-            }*/
+            }
 
-            // loop through the tiles
-            var blockTiles = this.tiles.FindAll(x => x.TileType == TileType.Block);
+            // if tiles to check is greater than, remove all except the closest tile
+            /*if (checkTiles.Count > 1)
+            {
+                var closestTile = checkTiles[0];
+                for (int i = 0; i < checkTiles.Count; i++)
+                {
+                    if (Vector2.Distance(checkTiles[0].Transform.Position, player.Transform.Position) < Vector2.Distance(closestTile.Transform.Position, player.Transform.Position))
+                        closestTile = checkTiles[0];
+                }
+                checkTiles.Clear();
+                checkTiles.Add(closestTile);
+            }*/
             
-            foreach (Tile tile in blockTiles)
+            
+            foreach (Tile tile in checkTiles)
             {
                 var touchedVerticalBox = false;
                 var touchedHorizontalBox = false;

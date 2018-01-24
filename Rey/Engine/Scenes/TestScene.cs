@@ -78,6 +78,7 @@ namespace Rey.Engine.Scenes
                 tile.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/tiles/" + tile.Name + ".png");
                 if (tile.Name == "ocean1")
                     tile.SetType(TileType.Block);
+                tile.SetMapCoords(50);
                 this.AddTile(tile);
             }
             // try to find the player's starting position

@@ -31,6 +31,8 @@ namespace Rey.Engine.Prefabs
         public Rectangle RightBox { get; protected set; }
         public Rectangle TopBox { get; protected set; }
         public Rectangle BottomBox { get; protected set; }
+        public int MapX { get; protected set; }
+        public int MapY { get; protected set; }
 
         /// <summary>
         /// Constructor for making tile a bit easier to make
@@ -52,7 +54,7 @@ namespace Rey.Engine.Prefabs
             // update the bounding box
             this.Box = new Rectangle((int)this.Transform.Position.X, (int)this.Transform.Position.Y, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
 
-            this.TopBox = new Rectangle((int)this.Transform.Position.X + 10, (int)this.Transform.Position.Y, this.Sprite.Texture.Width - 20, 1);
+            this.TopBox = new Rectangle((int)this.Transform.Position.X + 5, (int)this.Transform.Position.Y, this.Sprite.Texture.Width - 10, 1);
             this.BottomBox = new Rectangle((int)this.Transform.Position.X + 5, (int)this.Transform.Position.Y + this.Sprite.Texture.Height - 1, this.Sprite.Texture.Width - 10, 1);
             this.LeftBox = new Rectangle((int)this.Transform.Position.X, (int)this.Transform.Position.Y + 2, 1, this.Sprite.Texture.Height - 4);
             this.RightBox = new Rectangle((int)this.Transform.Position.X + (int)this.Sprite.Texture.Width - 1, (int)this.Transform.Position.Y + 2, 1, this.Sprite.Texture.Height - 4);
@@ -66,6 +68,12 @@ namespace Rey.Engine.Prefabs
         public void SetType(TileType tt)
         {
             this.TileType = tt;
+        }
+
+        public void SetMapCoords(int tileSize)
+        {
+            this.MapX = (int)((float)this.Transform.Position.X / (float)tileSize);
+            this.MapY = (int)((float)this.Transform.Position.Y / (float)tileSize);
         }
     }
 }
