@@ -27,21 +27,24 @@ namespace Rey.Engine
         /// </summary>
         public static void Load()
         {
+            
             // load a test scene
-            testScene = new TestScene();
+            testScene = new TestScene("test");
             testScene.Load();
             scenes.Add(testScene);
             // done with test scene
 
             // transition
-            transitionScene = new TransitionScene();
+            transitionScene = new TransitionScene("transition");
             transitionScene.Load();
             scenes.Add(transitionScene);
 
             // main menu
-            mainMenuScene = new MainMenuScene();
+            mainMenuScene = new MainMenuScene("mainmenu");
             mainMenuScene.Load();
             scenes.Add(mainMenuScene);
+
+            SetScene("mainmenu");
         }
 
         // Update the currently running scene
@@ -94,12 +97,17 @@ namespace Rey.Engine
         {
             lastScene = currentScene;
             currentScene = sceneName;
+
+            // load new scene and unload old scene
+            /*scenes.Find(x => x.Name == currentScene).Load();
+            if (DrawLastScene == false)
+                scenes.Find(x => x.Name == lastScene).Unload();*/
         }
 
         public static void TransitionToScene(string sceneName)
         {
-            SetScene("transition");
             DrawLastScene = true; // draw the last scene while transitioning
+            SetScene("transition");
             transitionScene.LoadNewTransition(sceneName);
         }
 

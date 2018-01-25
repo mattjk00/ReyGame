@@ -18,14 +18,19 @@ namespace Rey.Engine.Scenes
         GameObject upperWall;
 
         Inventory inventory;
+    
+        // weather for the scene
+        Weather weather; 
 
         protected bool transitioning; // if the scene is in a state of transitiong
+
+        public TestScene(string name) : base(name) { }
 
         public override void Load()
         {
 
 
-            this.Name = "test";
+            //this.Name = "test";
 
             //this.Background = AssetLoader.LoadTexture("Assets/Textures/backgrounds/wood1.png");
 
@@ -73,14 +78,8 @@ namespace Rey.Engine.Scenes
 
             this.AddFrame(inventory);
 
-            /*for (int i = 0; i < 1280/50; i++)
-            {
-                for (int j = 0; j < 720/50; j++)
-                {
-                    Tile tile = new Tile(new Vector2(i * 50, j * 50), AssetLoader.LoadTexture("Assets/Textures/tiles/grass1.png"), TileType.Normal);
-                    this.AddTile(tile);
-                }
-            }*/
+            weather = new Weather();
+            this.AddGameObject(weather);
 
             // load tiles
             foreach (Tile tile in map.Tiles)
@@ -142,6 +141,13 @@ namespace Rey.Engine.Scenes
 
             // load the scene again
             SceneManager.StartingNewCombatScene = true;
+        }
+
+        public override void SecondDraw(SpriteBatch sb)
+        {
+            base.SecondDraw(sb);
+
+            this.weather.SecondDraw(sb);
         }
     }
 }

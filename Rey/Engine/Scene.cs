@@ -75,7 +75,7 @@ namespace Rey.Engine
         /// </summary>
         public virtual void Unload()
         {
-            this.Background = null;
+            //this.Background.Dispose();
             this.gameObjects = new List<GameObject>();
             this.tiles = new List<Tile>();
         }
@@ -244,13 +244,13 @@ namespace Rey.Engine
                             player.GetHit(enemy.EntityStats);
                             if (player.Transform.Position.X > enemy.Transform.Position.X)
                             {
-                                player.Bounce(new Vector2(7, 0)); // bounces player based on direction of incoming hit
-                                enemy.Bounce(new Vector2(-7, 0));
+                                player.Bounce(new Vector2(4, 0)); // bounces player based on direction of incoming hit
+                                enemy.Bounce(new Vector2(-4, 0));
                             }
                             else
                             {
-                                player.Bounce(new Vector2(-7, 0));
-                                enemy.Bounce(new Vector2(7, 0));
+                                player.Bounce(new Vector2(-4, 0));
+                                enemy.Bounce(new Vector2(4, 0));
                             }
                         }
                     }
@@ -260,13 +260,13 @@ namespace Rey.Engine
                         player.GetHit(enemy.EntityStats);
                         if (player.Transform.Position.X > enemy.Transform.Position.X)
                         {
-                            player.Bounce(new Vector2(9, 0)); // bounces player based on direction of incoming hit
-                            enemy.Bounce(new Vector2(-9, 0));
+                            player.Bounce(new Vector2(4, 0)); // bounces player based on direction of incoming hit
+                            enemy.Bounce(new Vector2(-4, 0));
                         }
                         else
                         {
-                            player.Bounce(new Vector2(-9, 0));
-                            enemy.Bounce(new Vector2(9, 0));
+                            player.Bounce(new Vector2(-4, 0));
+                            enemy.Bounce(new Vector2(4, 0));
                         }
                     }
 

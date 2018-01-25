@@ -16,9 +16,11 @@ namespace Rey.Engine.Scenes
         private float fadeDelay = 1;
         private float fadeTimer = 0;
 
+        public TransitionScene(string name) : base(name) { }
+
         public override void Load()
         {
-            this.Name = "transition";
+            //this.Name = "transition";
             this.CombatScene = false;
 
             base.Load();

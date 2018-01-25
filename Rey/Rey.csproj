@@ -66,6 +66,7 @@
     <Compile Include="Engine\Prefabs\Tile.cs" />
     <Compile Include="Engine\Prefabs\Trapdoor.cs" />
     <Compile Include="Engine\Prefabs\UI\Inventory\Inventory.cs" />
+    <Compile Include="Engine\Prefabs\Weather.cs" />
     <Compile Include="Engine\ProjectileManager.cs" />
     <Compile Include="Engine\Scene.cs" />
     <Compile Include="Engine\SceneManager.cs" />

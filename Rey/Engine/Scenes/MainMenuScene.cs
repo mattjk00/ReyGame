@@ -17,9 +17,11 @@ namespace Rey.Engine.Scenes
         private Button startButton;
         private Button quitButton;
 
+        public MainMenuScene(string name) : base(name) { }
+
         public override void Load()
         {
-            this.Name = "mainmenu";
+            //this.Name = "mainmenu";
             this.CombatScene = false;
             this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/main_menu.png");
 
