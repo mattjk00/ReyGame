@@ -98,7 +98,7 @@ namespace Rey.Engine
             }
             else if (side == "bottom")
             {
-                player.Transform.Position = new Vector2(player.Transform.Position.X, tile.Transform.Position.Y - 14);
+                player.Transform.Position = new Vector2(player.Transform.Position.X, tile.Transform.Position.Y - 15);
                 //player.Transform.Position = new Vector2(player.Transform.Position.X, tile.Box.Bottom - player.Sprite.Texture.Height + 7);
                 player.Transform.VelY = 0;
             }

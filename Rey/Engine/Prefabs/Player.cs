@@ -32,7 +32,7 @@ namespace Rey.Engine.Prefabs
         KeyboardState lastKeyboard;
         MouseState mouse;
         MouseState lastMouse;
-        float speed = 0.5f;
+        float speed = 0.4f;
         ChildObject arm = new ChildObject(); // the player's arm
         ChildObject weapon = new ChildObject();
         ChildAnimation legs = new ChildAnimation(48, 50, 6, 3);
@@ -183,7 +183,7 @@ namespace Rey.Engine.Prefabs
             if (this.keyboard.IsKeyDown(Keys.S))
                 this.Transform.VelY += speed;
 
-            if (this.mouse.Position.X > this.Transform.Position.X)
+            if (InputHelper.MousePosition.X> this.Transform.Position.X)
                 this.direction = Direction.MovingRight;
             else
                 this.direction = Direction.MovingLeft;
@@ -337,7 +337,12 @@ namespace Rey.Engine.Prefabs
                 }
             }
 
-            sb.Draw(head.Sprite.Texture, head.Transform.Position, Color.White);
+            // draw the head
+            if (this.direction == Direction.MovingLeft)
+                sb.Draw(head.Sprite.Texture, head.Transform.Position, null, Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
+            else
+                sb.Draw(head.Sprite.Texture, head.Transform.Position, null, Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.FlipHorizontally, 0);
+
 
             //this.arm.Draw(sb);
             this.projectileManager.Draw(sb);

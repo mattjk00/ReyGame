@@ -19,6 +19,7 @@ namespace Rey
         Camera2D camera = new Camera2D();
         MouseState mouse;
         KeyboardState keyboard;
+        Texture2D vhsFilter;
 
         public Game1()
         {
@@ -27,7 +28,7 @@ namespace Rey
             this.IsMouseVisible = false;
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
-            this.graphics.IsFullScreen = false;
+            this.graphics.IsFullScreen = true;
 
             this.camera.Zoom = 1.0f;
         }
@@ -44,7 +45,7 @@ namespace Rey
             AssetLoader.Graphics = this.graphics;
             AssetLoader.LoadFont(Content);
 
-
+            vhsFilter = AssetLoader.LoadTexture("Assets/Textures/backgrounds/vhs.png");
             
 
             base.Initialize();
@@ -106,13 +107,15 @@ namespace Rey
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice));
             SceneManager.Draw(spriteBatch);
-
             spriteBatch.Draw(mouseTexture, InputHelper.MousePosition, Color.White);
+
             spriteBatch.End();
 
             // second draw
             spriteBatch.Begin();
             SceneManager.SecondDraw(spriteBatch);
+            //spriteBatch.Draw(vhsFilter, Vector2.Zero, Color.White * 0.1f);
+
             spriteBatch.End();
 
             base.Draw(gameTime);
