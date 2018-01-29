@@ -55,6 +55,7 @@
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\Memory\Map.cs" />
     <Compile Include="Engine\Memory\MapMarker.cs" />
+    <Compile Include="Engine\Memory\MarkerParser.cs" />
     <Compile Include="Engine\Prefabs\BabyFishDemon.cs" />
     <Compile Include="Engine\Prefabs\Bat.cs" />
     <Compile Include="Engine\Prefabs\Enemy.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Engine\Transform.cs" />
     <Compile Include="Engine\UI\Button.cs" />
     <Compile Include="Engine\UI\Frame.cs" />
+    <Compile Include="Engine\UI\RadioButton.cs" />
     <Compile Include="Engine\UI\TabFrame.cs" />
     <Compile Include="Engine\UI\UIObject.cs" />
     <Compile Include="Game1.cs" />

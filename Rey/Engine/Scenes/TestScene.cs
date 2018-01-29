@@ -37,7 +37,7 @@ namespace Rey.Engine.Scenes
             Trapdoor trapdoor = new Trapdoor();
             this.AddGameObject(trapdoor);
 
-            var map = Map.LoadFromFile("Assets/village_test1.guat");
+            var map = Map.LoadFromFile("Assets/new_test.guat");
 
             /*Enemy enemy = new Enemy();
             enemy.Transform.Position = new Vector2(500, 500);
@@ -49,7 +49,7 @@ namespace Rey.Engine.Scenes
 
             Bat bat = new Bat();
             bat.Transform.Position = new Vector2(0, 0);
-            this.AddGameObject(bat);
+            //this.AddGameObject(bat);
 
             Bat bat2 = new Bat();
             bat2.Transform.Position = new Vector2(2000, 0);
@@ -57,7 +57,7 @@ namespace Rey.Engine.Scenes
 
             BabyFishDemon fish = new BabyFishDemon();
             fish.Transform.Position = new Vector2(100, 720);
-            this.AddGameObject(fish);
+            //this.AddGameObject(fish);
 
             player = new Player();
             this.AddGameObject(player);
@@ -86,8 +86,8 @@ namespace Rey.Engine.Scenes
             {
                 // load the texture
                 tile.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/tiles/" + tile.Name + ".png");
-                if (tile.Name == "ocean1" || tile.Name == "wood_base" || tile.Name == "wood_wall")
-                    tile.SetType(TileType.Block);
+                /*if (tile.Name == "ocean1" || tile.Name == "wood_base" || tile.Name == "wood_wall")
+                    tile.SetType(TileType.Block);*/
                 tile.SetMapCoords(50);
                 this.AddTile(tile);
             }
@@ -95,6 +95,11 @@ namespace Rey.Engine.Scenes
             var playerStart = map.Markers.Find(x => x.MarkerType == MarkerType.PlayerSpawnPoint);
             if (playerStart != null)
                 player.Transform.Position = playerStart.StartingPosition;
+            
+            // parse through enemies
+            var enemies = MarkerParser.ParseEnemies(map.Markers);
+            foreach (Enemy enemy in enemies)
+                this.AddGameObject(enemy);
 
             base.Load();
             //enemy.SetInterval(1000);

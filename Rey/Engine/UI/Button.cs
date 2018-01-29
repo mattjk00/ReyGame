@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,9 +45,23 @@ namespace Rey.Engine.UI
 
         }
 
+        /// <summary>
+        /// Loads the buttons textures
+        /// </summary>
+        /// <param name="norm"></param>
+        /// <param name="hover"></param>
+        public void LoadTextures(Texture2D norm, Texture2D hover)
+        {
+            this.normalTexture = norm;
+            this.hoverTexture = hover;
+            this.Sprite.Texture = normalTexture;
+            this.AddDefaultBoundingBox();
+
+        }
+
         public override void Update()
         {
-            this.UpdateDefaultBox(0);
+            //this.UpdateDefaultBox(0);
             base.Update();
         }
 

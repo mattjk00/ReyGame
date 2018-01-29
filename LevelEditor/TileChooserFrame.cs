@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Rey.Engine;
-using Rey.Engine.Memory;
 using Rey.Engine.Prefabs;
 using Rey.Engine.UI;
 using System;
@@ -11,22 +10,25 @@ using System.Threading.Tasks;
 
 namespace LevelEditor
 {
-    public class ObjectChooserFrame : Frame
+    class TileChooserFrame :Frame
     {
-        private string path;
+        string path;
+        TileType tileType;
 
-        public ObjectChooserFrame(string fpath)
+        public TileChooserFrame(string fpath, TileType tt)
         {
-            this.path = fpath; // what path to search for objects in
+            this.path = fpath; // which directory to search
+            this.tileType = tt; // which type of tiles
         }
 
         public override void Load()
         {
+            
+            
             this.Width = 300;
             this.Height = 720;
             this.Scrollable = true;
             this.ScrollLimits = new Vector2(75, 1000);
-            this.Name = "OPtions";
 
             this.Background = AssetLoader.LoadTexture("Textures/ui/ui.png");
 
@@ -46,14 +48,10 @@ namespace LevelEditor
                 button.LoadTextures(files[i], files[i]);
                 button.OnClick += () =>
                 {
-                    EditorManager.TileMode = false;
-                    if (button.Name == "player")
-                        EditorManager.currentMarker = new MapMarker(button.Name, Vector2.Zero, button.normalTexture, MarkerType.PlayerSpawnPoint);
-                    else
-                        EditorManager.currentMarker = new MapMarker(button.Name, Vector2.Zero, button.normalTexture, MarkerType.SpawnPoint);
+                    EditorManager.TileMode = true;
+                    EditorManager.currentTile = new Tile(button.Name, Vector2.Zero, button.normalTexture, this.tileType);
+                    EditorManager.currentTileName = button.Name;
                 };
-                
-
                 this.AddObject(button);
 
                 column++;
@@ -64,6 +62,18 @@ namespace LevelEditor
                     column = 0;
                     row++;
                 }
+            }
+
+            // remove the default tile
+            this.objects.RemoveAll(x => x.Name == "default_tile");
+            // fix the delete button
+            var deleteButton = this.objects.Find(x => x.Name == "delete");
+            if (deleteButton != null)
+            {
+                deleteButton.OnClick += () =>
+                {
+                    EditorManager.currentTile = new Tile("", Vector2.Zero, EditorManager.defaultTile, TileType.Empty);
+                };
             }
 
             base.Load();

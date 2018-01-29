@@ -22,7 +22,7 @@ namespace Rey.Engine.UI
         /// Adds a new tab to this UI frame, as well as a button to click on it
         /// </summary>
         /// <param name="frame"></param>
-        public void AddTab(Frame frame)
+        public void AddTab(Frame frame, string normalTab, string hoverTab)
         {
             this.tabs.Add(frame);
             this.tabStartingPositions.Add(frame.Position);
@@ -30,9 +30,18 @@ namespace Rey.Engine.UI
             // create tab button
             var tabButton = new Button((this.tabs.Count - 1).ToString())
             {
-                LocalPosition = new Vector2(this.tabs.Count * 50, -25)
+                LocalPosition = new Vector2(0, -25),
+                Text = frame.Name
             };
-            tabButton.LoadTextures("Textures/ui/tab.png", "Textures/ui/tab.png");
+            tabButton.LoadTextures(normalTab, hoverTab);
+            tabButton.Sprite.Color = Color.Black;
+
+            // adjust tabs
+            //if (this.tabs.Count > 1)
+                
+
+            
+
             tabButton.OnClick += () =>
             {
                 // set the current tab to the tab number. The number of the tab is stored in the button name
@@ -47,6 +56,14 @@ namespace Rey.Engine.UI
             // load all the frames
             foreach (Frame frame in this.tabs)
                 frame.Load();
+            int index = 0;
+            foreach(Button tabButton in this.objects)
+            {
+                // stretch the buttons
+                tabButton.Transform.Bounds = new Rectangle(0, 0, (int)((float)this.Width / (float)(this.tabs.Count)), tabButton.normalTexture.Height);
+                tabButton.LocalPosition = new Vector2(tabButton.Transform.Bounds.Width * index, -25);
+                index++;
+            }
         }
 
         public override void Update()

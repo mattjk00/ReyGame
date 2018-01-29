@@ -44,7 +44,7 @@ namespace Rey.Engine
             mainMenuScene.Load();
             scenes.Add(mainMenuScene);
 
-            SetScene("mainmenu");
+            SetScene("test");
         }
 
         // Update the currently running scene

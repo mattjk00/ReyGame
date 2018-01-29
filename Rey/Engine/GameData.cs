@@ -8,7 +8,7 @@ namespace Rey.Engine
 {
     public static class GameData
     {
-
+        
     }
 
     public enum EnemyIDs

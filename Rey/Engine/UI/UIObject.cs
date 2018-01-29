@@ -30,6 +30,7 @@ namespace Rey.Engine.UI
             this.OnHover += () => { };
             this.OnMouseLeave += () => { };
             this.Name = name;
+            
         }
 
         // rescale the ui object
@@ -41,8 +42,11 @@ namespace Rey.Engine.UI
         public virtual void DrawUI(SpriteBatch sb, Frame frame)
         {
             Rectangle bounds = new Rectangle(0, 0, 0, 0);
-            if ((this.Transform.Position.Y + this.Sprite.Texture.Height  < frame.Position.Y + frame.Height && this.Transform.Position.Y > frame.Position.Y) || frame.Scrollable == false)
-                bounds = new Rectangle(0, 0, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
+
+
+
+            if ((this.Transform.Position.Y + this.Sprite.Texture.Height < frame.Position.Y + frame.Height && this.Transform.Position.Y > frame.Position.Y) || frame.Scrollable == false)
+                bounds = this.Transform.Bounds;
             sb.Draw(this.Sprite.Texture, this.Transform.Position, bounds, Color.White);
         }
 
@@ -58,7 +62,13 @@ namespace Rey.Engine.UI
 
             // set the UI's position based off the local position, the position of the parent frame, and the scroll
             this.Transform.Position = this.LocalPosition + frame.Position + new Vector2(0, frame.ScrollDistance);
-            
+
+            // in case bounds are empty, fix them
+            if (this.Transform.Bounds == new Rectangle(0, 0, 0, 0))
+                this.Transform.Bounds = new Rectangle(0, 0, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
+            this.BoundingBoxes[0] = new Rectangle((int)this.Transform.Position.X, (int)this.Transform.Position.Y, this.Transform.Bounds.Width, this.Transform.Bounds.Height);
+
+
             if (this.IsActive)
             {
                 // check all bounding boxes

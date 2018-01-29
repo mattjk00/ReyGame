@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,7 @@ namespace Rey.Engine.Prefabs
     /// <summary>
     /// The type of tile 
     /// </summary>
+    [Serializable]
     public enum TileType
     {
         Empty = 0,
@@ -25,7 +28,9 @@ namespace Rey.Engine.Prefabs
     [Serializable]
     public class Tile : GameObject
     {
+        [JsonProperty]
         public TileType TileType { get; protected set; }
+
         public Rectangle Box { get; protected set; }
         public Rectangle LeftBox { get; protected set; }
         public Rectangle RightBox { get; protected set; }

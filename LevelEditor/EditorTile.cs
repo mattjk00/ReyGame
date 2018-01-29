@@ -19,8 +19,11 @@ namespace LevelEditor
         MouseState previousMouse;
         public Vector2 StartingPosition;
         public MapMarker marker;
+        public bool Selected { get; set; } // if the tile is selected
 
         bool clickedThisLoop = false;
+
+        int clickTimer = 0;
 
         public EditorTile(string name, Vector2 position, Texture2D texture, TileType typ) : base(name, position, texture, typ)
         {
@@ -31,27 +34,38 @@ namespace LevelEditor
 
         public override void Update()
         {
+            this.clickTimer++;
+
             this.UpdateDefaultBox(0);
             // get the mouse state
             mouse = Mouse.GetState();
             // set a mouse box
             Rectangle mouseBox = new Rectangle(mouse.Position, new Point(2, 2));
 
-            // same thing as above but an alternative for holding down the mouse
-            if (mouse.LeftButton == ButtonState.Pressed && previousMouse.LeftButton == ButtonState.Pressed && mouseBox.Intersects(this.BoundingBoxes[0])
-                && this.Transform.Position.X > 300 && this.clickedThisLoop == false) // this prevents from clicking under UI
+            if (this.clickTimer >= 50) // slows down clicking
             {
-                this.GoOn();
-            }
+                this.clickTimer = 50;
+                // same thing as above but an alternative for holding down the mouse
+                if (mouse.LeftButton == ButtonState.Pressed && previousMouse.LeftButton == ButtonState.Pressed && mouseBox.Intersects(this.BoundingBoxes[0])
+                    && this.Transform.Position.X > 300 && this.clickedThisLoop == false) // this prevents from clicking under UI
+                {
+                    this.GoOn();
+                    this.clickTimer = 0;
+                }
 
-            // if mouse is clicked and intersecting this box
-            if (mouse.LeftButton == ButtonState.Pressed && previousMouse.LeftButton == ButtonState.Released && mouseBox.Intersects(this.BoundingBoxes[0]) 
-                && this.Transform.Position.X > 300 && this.clickedThisLoop == false) // this prevents from clicking under UI
-            {
-                this.Toggle();
-            }
+                // if mouse is clicked and intersecting this box
+                if (mouse.LeftButton == ButtonState.Pressed && previousMouse.LeftButton == ButtonState.Released && mouseBox.Intersects(this.BoundingBoxes[0])
+                    && this.Transform.Position.X > 300 && this.clickedThisLoop == false) // this prevents from clicking under UI
+                {
+                    this.Toggle();
+                    this.clickTimer = 0;
+                }
 
-            
+
+            }
+            // remove selection if not selected
+            if (EditorManager.SelectedTile != this)
+                this.Selected = false;
 
             // if mouse is clicked and intersecting this box
             /*if (mouse.RightButton == ButtonState.Pressed && previousMouse.RightButton == ButtonState.Released && mouseBox.Intersects(this.BoundingBoxes[0])
@@ -61,7 +75,7 @@ namespace LevelEditor
             }*/
 
             //if (this.marker != null)
-                //this.marker.Position = this.Transform.Position;
+            //this.marker.Position = this.Transform.Position;
 
             if (clickedThisLoop == true)
                 previousMouse = mouse;
@@ -92,12 +106,16 @@ namespace LevelEditor
                 {
                     ToggleMarker();
                 }
+                //ToggleSelection();
             }
+
+            
             
         }
 
         void GoOn()
         {
+            ToggleSelection();
             if (EditorManager.TileMode)
             {
                 this.clickedThisLoop = true;
@@ -116,8 +134,22 @@ namespace LevelEditor
                 this.marker = null;
             else
             {
-                this.marker = new MapMarker("", this.StartingPosition, EditorManager.currentMarker.Texture, EditorManager.currentMarker.MarkerType);
+                this.marker = new MapMarker(EditorManager.currentMarker.Name, this.StartingPosition, EditorManager.currentMarker.Texture, EditorManager.currentMarker.MarkerType);
                 //this.marker.Texture = EditorManager.currentMarker.Texture;
+            }
+        }
+
+        void ToggleSelection()
+        {
+            if (this.Selected == false)
+            {
+                this.Selected = true;
+                EditorManager.SelectedTile = this;
+            }
+            else
+            {
+                this.Selected = false;
+                EditorManager.SelectedTile = null;
             }
         }
     }

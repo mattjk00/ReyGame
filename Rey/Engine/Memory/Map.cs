@@ -17,7 +17,7 @@ namespace Rey.Engine.Memory
 
         public static Map LoadFromFile(string filename)
         {
-            Map loadedMap = new Map();
+            Map loadedMap = new Map(); 
 
             // load the file
             string maptext = File.ReadAllText(filename);

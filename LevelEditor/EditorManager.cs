@@ -13,6 +13,7 @@ namespace LevelEditor
     public static class EditorManager
     {
         public static Texture2D defaultTile;
+        public static Texture2D selectedTileTexture;
 
         public static bool TileMode = true;
 
@@ -20,9 +21,12 @@ namespace LevelEditor
         public static string currentTileName;
         public static MapMarker currentMarker;
 
+        public static EditorTile SelectedTile; // the selected tile
+
         public static void Load()
         {
             defaultTile = AssetLoader.LoadTexture("Textures/default_tile.png");
+            selectedTileTexture = AssetLoader.LoadTexture("Textures/ui/selected.png");
         }
     }
 }

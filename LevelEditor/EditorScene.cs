@@ -14,14 +14,19 @@ namespace LevelEditor
 {
     public class EditorScene : Scene
     {
-        Frame ui;
+        //Frame ui;
         GameObject currentTile;
         FileManagerFrame fileManagerFrame;
         KeyboardState keyboard;
         Vector2 mapPosition = new Vector2(); // the position of the map
 
         TabFrame tabFrame = new TabFrame();
-        ObjectChooserFrame objChooserFrame = new ObjectChooserFrame();
+        ObjectChooserFrame objChooserFrame;
+
+        ObjectChooserFrame monsterChooser;
+
+        TileChooserFrame tileChooser;
+        TileChooserFrame blockChooser;
 
         public override void Load()
         {
@@ -29,7 +34,8 @@ namespace LevelEditor
             this.CombatScene = false;
 
 
-            ui = new Frame();
+            /*ui = new Frame();
+            ui.Name = "Tiles";
             ui.Width = 300;
             ui.Height = 720;
             ui.Scrollable = true;
@@ -75,25 +81,40 @@ namespace LevelEditor
             this.ui.objects.Find(x => x.Name == "delete").OnClick += () => 
             {
                 EditorManager.currentTile = new Tile("", Vector2.Zero, EditorManager.defaultTile, TileType.Empty);
-            };
+            };*/
 
-            
+
             fileManagerFrame = new FileManagerFrame();
             fileManagerFrame.parent = this;
 
-            objChooserFrame = new ObjectChooserFrame();
+            objChooserFrame = new ObjectChooserFrame("Textures/objects");
+            objChooserFrame.Name = "Markers";
 
-            tabFrame.Width = 1920;
+            monsterChooser = new ObjectChooserFrame("Textures/monsters");
+            monsterChooser.Name = "Monsters";
+
+            tileChooser = new TileChooserFrame("Textures", TileType.Normal);
+            tileChooser.Name = "Tiles";
+            tileChooser.Load();
+
+            blockChooser = new TileChooserFrame("Textures/blocks", TileType.Block);
+            blockChooser.Name = "Blocks";
+            blockChooser.Load();
+
+            tabFrame.Width = 300;
             tabFrame.Height = 720;
             tabFrame.Position = new Vector2(0, 50);
-            tabFrame.AddTab(ui);
-            tabFrame.AddTab(objChooserFrame);
+            tabFrame.AddTab(tileChooser, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
+            tabFrame.AddTab(blockChooser, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
+            tabFrame.AddTab(monsterChooser, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
+
+            tabFrame.AddTab(objChooserFrame, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
 
             this.AddFrame(fileManagerFrame);
             this.AddFrame(tabFrame);
 
 
-            var grassButton = this.ui.Find("grass1") as Button;
+            var grassButton = tileChooser.Find("grass1") as Button;
 
             currentTile = new GameObject("currentTile", new Vector2(300, 25));
             currentTile.Sprite.Texture = grassButton.normalTexture;
@@ -103,7 +124,7 @@ namespace LevelEditor
             {
                 for (int j = 0; j < 50; j++)
                 {
-                    EditorTile tile = new EditorTile("ocean1", new Vector2(i * 50, j * 50), this.ui.Find("ocean1").Sprite.Texture, TileType.Block);
+                    EditorTile tile = new EditorTile("ocean1", new Vector2(i * 50, j * 50), blockChooser.Find("ocean1").Sprite.Texture, TileType.Block);
                     this.AddTile(tile);
                 }
             }
@@ -160,6 +181,11 @@ namespace LevelEditor
                 if (stile.marker != null)
                 {
                     sb.Draw(stile.marker.Texture, stile.Transform.Position, Color.White);
+                }
+
+                if (stile.Selected)
+                {
+                    sb.Draw(EditorManager.selectedTileTexture, tile.Transform.Position, Color.White);
                 }
             }
 

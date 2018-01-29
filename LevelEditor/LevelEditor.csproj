@@ -47,8 +47,10 @@
     <Compile Include="FileManagerFrame.cs" />
     <Compile Include="LevelEditor.cs" />
     <Compile Include="ObjectChooserFrame.cs" />
+    <Compile Include="OptionFrame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TileChooserFrame.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -67,6 +69,9 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
+    <Content Include="Content\gameFont.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

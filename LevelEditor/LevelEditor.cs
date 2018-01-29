@@ -39,6 +39,7 @@ namespace LevelEditor
         protected override void Initialize()
         {
             AssetLoader.Graphics = this.graphics;
+            AssetLoader.Font = Content.Load<SpriteFont>("gameFont");
             EditorManager.Load();
 
             base.Initialize();
