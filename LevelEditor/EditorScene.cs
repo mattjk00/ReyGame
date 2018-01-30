@@ -28,60 +28,13 @@ namespace LevelEditor
         TileChooserFrame tileChooser;
         TileChooserFrame blockChooser;
 
+        OptionFrame optionFrame;
+
         public override void Load()
         {
             this.Name = "editor";
             this.CombatScene = false;
 
-
-            /*ui = new Frame();
-            ui.Name = "Tiles";
-            ui.Width = 300;
-            ui.Height = 720;
-            ui.Scrollable = true;
-            ui.ScrollLimits = new Vector2(75, 1000);
-
-            ui.Background = AssetLoader.LoadTexture("Textures/ui/ui.png");
-
-            // get how many files are in the textures.
-            var files = System.IO.Directory.GetFiles("Textures");
-            int row = 0; // row to put tiles in 
-            int column = 0;
-
-            for (int i = 0; i < files.Length; i++)
-            {
-                // create a button in the right row
-                var button = new Button(files[i].Split('.')[0].Replace("Textures\\", ""))
-                {
-                    LocalPosition = new Vector2((column * 60) + 25, (row * 60) + 25)
-                };
-                // load the texture
-                button.LoadTextures(files[i], files[i]);
-                button.OnClick += () =>
-                {
-                    EditorManager.TileMode = true;
-                    EditorManager.currentTile = new Tile(button.Name, Vector2.Zero, button.normalTexture, TileType.Normal);
-                    EditorManager.currentTileName = button.Name;
-                };
-                ui.AddObject(button);
-
-                column++;
-
-                // prevetn overlap, every 3 squares go to the next row
-                if (column > 3)
-                {
-                    column = 0;
-                    row++;
-                }
-            }
-
-            // remove the default tile
-            this.ui.objects.RemoveAll(x => x.Name == "default_tile");
-            // fix the delete button
-            this.ui.objects.Find(x => x.Name == "delete").OnClick += () => 
-            {
-                EditorManager.currentTile = new Tile("", Vector2.Zero, EditorManager.defaultTile, TileType.Empty);
-            };*/
 
 
             fileManagerFrame = new FileManagerFrame();
@@ -110,9 +63,12 @@ namespace LevelEditor
 
             tabFrame.AddTab(objChooserFrame, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
 
+            optionFrame = new OptionFrame();
+            
+
             this.AddFrame(fileManagerFrame);
             this.AddFrame(tabFrame);
-
+            this.AddFrame(optionFrame);
 
             var grassButton = tileChooser.Find("grass1") as Button;
 
@@ -194,6 +150,9 @@ namespace LevelEditor
 
             foreach (Frame frame in this.frames)
                 frame.Draw(sb);
+
+            // helper
+            sb.Draw(EditorManager.currentTile.Sprite.Texture, InputHelper.MousePosition, Color.White * 0.3f);
         }
     }
 }

@@ -39,6 +39,9 @@ namespace Rey.Engine.Prefabs
         public int MapX { get; protected set; }
         public int MapY { get; protected set; }
 
+        // depth of where to draw
+        public int Depth { get; set; } = -1;
+
         /// <summary>
         /// Constructor for making tile a bit easier to make
         /// </summary>

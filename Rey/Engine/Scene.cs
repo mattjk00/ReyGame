@@ -55,6 +55,11 @@ namespace Rey.Engine
             this.tiles.Add(tile);
         }
 
+        public void ClearTiles()
+        {
+            this.tiles.Clear();
+        }
+
         /// <summary>
         /// Put loading logic in here
         /// </summary>
@@ -91,7 +96,27 @@ namespace Rey.Engine
 
 
             // look through each tile
-            foreach (Tile tile in this.tiles)
+            // all tiles under this depth
+            foreach (Tile tile in this.tiles.FindAll(x => x.Depth < 1))
+            {
+                if (player != null)
+                {
+                    // if the tile is close enough to the player, draw it
+                    if (Vector2.Distance(player.Transform.Position, tile.Transform.Position) < 800)
+                        tile.Draw(sb);
+                }
+                else
+                {
+                    
+                    tile.Draw(sb);
+                }
+            }
+            
+            foreach (GameObject go in this.gameObjects)
+                go.Draw(sb);
+
+            // all tiles under this depth, draw thtiles again
+            foreach (Tile tile in this.tiles.FindAll(x => x.Depth > 0))
             {
                 if (player != null)
                 {
@@ -104,9 +129,7 @@ namespace Rey.Engine
                     tile.Draw(sb);
                 }
             }
-            
-            foreach (GameObject go in this.gameObjects)
-                go.Draw(sb);
+
             foreach (Frame frame in frames.FindAll(f => f.LockedPosition == false))
                 frame.Draw(sb);
             

@@ -152,5 +152,10 @@ namespace LevelEditor
                 EditorManager.SelectedTile = null;
             }
         }
+
+        public void SetMarker(MapMarker mmarker)
+        {
+            this.marker = mmarker;
+        }
     }
 }

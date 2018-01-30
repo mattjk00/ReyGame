@@ -37,7 +37,7 @@ namespace Rey.Engine.Scenes
             Trapdoor trapdoor = new Trapdoor();
             this.AddGameObject(trapdoor);
 
-            var map = Map.LoadFromFile("Assets/new_test.guat");
+            var map = Map.LoadFromFile("Assets/new_test2.guat");
 
             /*Enemy enemy = new Enemy();
             enemy.Transform.Position = new Vector2(500, 500);
@@ -84,8 +84,16 @@ namespace Rey.Engine.Scenes
             // load tiles
             foreach (Tile tile in map.Tiles)
             {
-                // load the texture
-                tile.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/tiles/" + tile.Name + ".png");
+                try
+                {
+                    // load the texture
+                    tile.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/tiles/" + tile.Name + ".png");
+                }
+                catch (System.IO.FileNotFoundException fnfe)
+                {
+                    var a = 0;
+                }
+                
                 /*if (tile.Name == "ocean1" || tile.Name == "wood_base" || tile.Name == "wood_wall")
                     tile.SetType(TileType.Block);*/
                 tile.SetMapCoords(50);
