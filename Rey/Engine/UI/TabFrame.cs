@@ -34,7 +34,7 @@ namespace Rey.Engine.UI
                 Text = frame.Name
             };
             tabButton.LoadTextures(normalTab, hoverTab);
-            tabButton.Sprite.Color = Color.Black;
+            tabButton.TextColor = Color.Black;
 
             // adjust tabs
             //if (this.tabs.Count > 1)

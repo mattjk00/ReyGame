@@ -9,6 +9,8 @@ namespace Rey.Engine.Prefabs.UI.Inventory
 {
     public class Inventory : TabFrame
     {
+        BackpackFrame backpack = new BackpackFrame();
+
         public override void Load()
         {
             this.Name = "inventory";
@@ -19,6 +21,8 @@ namespace Rey.Engine.Prefabs.UI.Inventory
 
             this.Position = new Microsoft.Xna.Framework.Vector2(1030, 320);
             this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/ui_back.png");
+
+            this.AddTab(backpack, "Assets/Textures/UI/main_menu_button_normal.png", "Assets/Textures/UI/main_menu_button_hover.png");
 
             base.Load();
         }

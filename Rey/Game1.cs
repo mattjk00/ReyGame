@@ -91,6 +91,8 @@ namespace Rey
             }
 
             InputHelper.MousePosition = Vector2.Transform(mouse.Position.ToVector2(), Matrix.Invert(camera.GetTransformation(GraphicsDevice)));
+            InputHelper.Camera = this.camera;
+            InputHelper.GD = this.GraphicsDevice;
 
             SceneManager.Update(camera);
 
@@ -107,14 +109,17 @@ namespace Rey
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice));
             SceneManager.Draw(spriteBatch);
-            spriteBatch.Draw(mouseTexture, InputHelper.MousePosition, Color.White);
 
             spriteBatch.End();
 
             // second draw
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
             SceneManager.SecondDraw(spriteBatch);
             //spriteBatch.Draw(vhsFilter, Vector2.Zero, Color.White * 0.1f);
+            spriteBatch.Draw(mouseTexture, Mouse.GetState().Position.ToVector2(), Color.White);
+
+            //spriteBatch.DrawString(AssetLoader.Font, "(" + InputHelper.MousePosition.X.ToString() + ", " + InputHelper.MousePosition.Y.ToString() + ")", InputHelper.MousePosition, Color.Red);
+            spriteBatch.DrawString(AssetLoader.Font, "(" + Mouse.GetState().Position.X.ToString() + ", " + Mouse.GetState().Position.Y.ToString() + ")", InputHelper.MousePosition, Color.Red);
 
             spriteBatch.End();
 

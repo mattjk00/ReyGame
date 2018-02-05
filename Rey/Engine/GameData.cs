@@ -8,7 +8,16 @@ namespace Rey.Engine
 {
     public static class GameData
     {
-        
+        // the player's backpack
+        public static List<Item> backpack = new List<Item>()
+        {
+            ItemData.ironHelmet,
+            ItemData.mushroomHelmet,
+            ItemData.mushroomChest
+        };
+
+        public static Item EquippedHelmet = null;
+        public static Item EquippedChest = null;
     }
 
     public enum EnemyIDs

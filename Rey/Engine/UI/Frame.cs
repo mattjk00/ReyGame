@@ -40,8 +40,21 @@ namespace Rey.Engine.UI
             // update the ui objects
             foreach (UIObject ui in this.objects)
             {
-                ui.Update();
+                //ui.Update();
                 ui.UpdateUI(mouse, oldMouse, this);
+
+                // if the ui object is locked
+                /*if (this.LockedPosition == true)
+                {
+                    // iterate over the bounding boxes in the frame
+                    for (int i = 0; i < ui.BoundingBoxes.Count; i++)
+                    {
+                        // convert the bounding box so it can be clicked on by the sxcreen
+                        var r = ui.BoundingBoxes[i]; // cache
+                        var pos = InputHelper.ConvertToWindowPoint(r.Location.ToVector2());
+                        ui.BoundingBoxes[i] = new Rectangle((int)pos.X, (int)pos.Y, r.Width, r.Height);
+                    }
+                }*/
             }
             // update old mouse
             oldMouse = mouse;
@@ -77,6 +90,7 @@ namespace Rey.Engine.UI
 
         public void AddObject(UIObject ui)
         {
+            ui.LockedPosition = this.LockedPosition;
             this.objects.Add(ui);
         }
 

@@ -53,6 +53,8 @@
     <Compile Include="Engine\GameData.cs" />
     <Compile Include="Engine\GameObject.cs" />
     <Compile Include="Engine\InputHelper.cs" />
+    <Compile Include="Engine\Item.cs" />
+    <Compile Include="Engine\ItemData.cs" />
     <Compile Include="Engine\Memory\Map.cs" />
     <Compile Include="Engine\Memory\MapMarker.cs" />
     <Compile Include="Engine\Memory\MarkerParser.cs" />
@@ -66,6 +68,7 @@
     <Compile Include="Engine\Prefabs\TestUIFrame.cs" />
     <Compile Include="Engine\Prefabs\Tile.cs" />
     <Compile Include="Engine\Prefabs\Trapdoor.cs" />
+    <Compile Include="Engine\Prefabs\UI\Inventory\BackpackFrame.cs" />
     <Compile Include="Engine\Prefabs\UI\Inventory\Inventory.cs" />
     <Compile Include="Engine\Prefabs\Weather.cs" />
     <Compile Include="Engine\ProjectileManager.cs" />
@@ -78,6 +81,7 @@
     <Compile Include="Engine\Transform.cs" />
     <Compile Include="Engine\UI\Button.cs" />
     <Compile Include="Engine\UI\Frame.cs" />
+    <Compile Include="Engine\UI\ItemButton.cs" />
     <Compile Include="Engine\UI\RadioButton.cs" />
     <Compile Include="Engine\UI\TabFrame.cs" />
     <Compile Include="Engine\UI\UIObject.cs" />

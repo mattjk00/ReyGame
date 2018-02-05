@@ -23,6 +23,8 @@ namespace Rey.Engine.UI
 
         public Vector2 LocalPosition { get; set; }
 
+        public bool LockedPosition { get; set; }
+
         public UIObject(string name)
         {
             // add some default delegates
@@ -30,7 +32,7 @@ namespace Rey.Engine.UI
             this.OnHover += () => { };
             this.OnMouseLeave += () => { };
             this.Name = name;
-            
+            this.Sprite.Color = Color.White;
         }
 
         // rescale the ui object
@@ -47,7 +49,7 @@ namespace Rey.Engine.UI
 
             if ((this.Transform.Position.Y + this.Sprite.Texture.Height < frame.Position.Y + frame.Height && this.Transform.Position.Y > frame.Position.Y) || frame.Scrollable == false)
                 bounds = this.Transform.Bounds;
-            sb.Draw(this.Sprite.Texture, this.Transform.Position, bounds, Color.White);
+            sb.Draw(this.Sprite.Texture, this.Transform.Position, bounds, this.Sprite.Color);
         }
 
         /// <summary>
@@ -57,8 +59,12 @@ namespace Rey.Engine.UI
         /// <param name="mouseY"></param>
         public void UpdateUI(MouseState mouse, MouseState oldMouse, Frame frame)
         {
+            Rectangle mouseBox;
             // create a hitbox for the mouse
-            Rectangle mouseBox = new Rectangle(InputHelper.MousePosition.ToPoint(), new Point(1, 1));
+            if (this.LockedPosition == false)
+                mouseBox = new Rectangle(InputHelper.MousePosition.ToPoint(), new Point(1, 1));
+            else
+                mouseBox = new Rectangle(Mouse.GetState().Position, new Point(1, 1));
 
             // set the UI's position based off the local position, the position of the parent frame, and the scroll
             this.Transform.Position = this.LocalPosition + frame.Position + new Vector2(0, frame.ScrollDistance);
@@ -74,6 +80,7 @@ namespace Rey.Engine.UI
                 // check all bounding boxes
                 foreach (Rectangle boundingBox in this.BoundingBoxes)
                 {
+                    
                     // if the button and the mouse intersect
                     if (boundingBox.Intersects(mouseBox))
                     {

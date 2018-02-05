@@ -13,6 +13,7 @@ namespace Rey.Engine.UI
         public Texture2D normalTexture { get; protected set; }
         public Texture2D hoverTexture { get; protected set; }
         public string Text { get; set; } = "";
+        public Color TextColor { get; set; } = Color.White;
 
         /// <summary>
         /// Set up the default button actions
@@ -70,7 +71,7 @@ namespace Rey.Engine.UI
             base.DrawUI(sb, frame);
             // try to draw text
             if (AssetLoader.Font != null)
-                sb.DrawString(AssetLoader.Font, this.Text, this.Transform.Position, this.Sprite.Color);
+                sb.DrawString(AssetLoader.Font, this.Text, this.Transform.Position, this.TextColor);
             
         }
     }

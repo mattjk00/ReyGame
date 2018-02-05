@@ -50,7 +50,9 @@ namespace Rey.Engine.Prefabs
         float magicAttackTimer = 0;
 
         Texture2D defaultBody;
-        Texture2D magicAttackBody;
+        Texture2D defaultMagicAttackBody;
+        Texture2D currentMagicAttackBody;
+        Texture2D currentBody;
 
         public ProjectileManager projectileManager { get; protected set; } = new ProjectileManager();
 
@@ -67,9 +69,12 @@ namespace Rey.Engine.Prefabs
             this.lastKeyboard = Keyboard.GetState();
 
             this.defaultBody = AssetLoader.LoadTexture("Assets/Textures/Player/default_body.png"); // load the player texture
-            this.magicAttackBody = AssetLoader.LoadTexture("Assets/Textures/Player/default_magic_body.png"); // load the player texture
+            this.defaultMagicAttackBody = AssetLoader.LoadTexture("Assets/Textures/Player/default_magic_body.png"); // load the player texture
+            this.currentBody = this.defaultBody;
             this.Sprite.Texture = this.defaultBody;
+            this.currentMagicAttackBody = this.defaultMagicAttackBody;
             this.AddDefaultBoundingBox();
+
             // this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
             this.BoundingBoxes.Add(new Rectangle(0, 0, 0, 0));
             this.Transform.Origin = new Vector2(this.Sprite.Texture.Width / 2, this.Sprite.Texture.Height / 2);
@@ -314,26 +319,26 @@ namespace Rey.Engine.Prefabs
             {
                 if (this.AttackState == PlayerAttackState.MeleeAttack || this.AttackState == PlayerAttackState.None)
                 {
-                    sb.Draw(this.Sprite.Texture, this.Transform.Position, null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.None, 0);
+                    sb.Draw(this.currentBody, this.Transform.Position, null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.None, 0);
                     //this.weapon.LocalPosition = new Vector2(20, 65);
                     //sb.Draw(this.weapon.Sprite.Texture, this.weapon.Transform.Position, null, this.weapon.Sprite.Color, this.weapon.Transform.Rotation, this.weapon.Transform.Origin, 1.0f, SpriteEffects.None, 0);
                 }
                 else if (this.AttackState == PlayerAttackState.MagicAttack)
                 {
-                    sb.Draw(this.magicAttackBody, this.Transform.Position + new Vector2(0, 0), null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
+                    sb.Draw(this.currentMagicAttackBody, this.Transform.Position + new Vector2(0, 0), null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
                 }
             }
             else if (this.direction == Direction.MovingLeft)
             {
                 if (this.AttackState == PlayerAttackState.MeleeAttack || this.AttackState == PlayerAttackState.None)
                 {
-                    sb.Draw(this.Sprite.Texture, this.Transform.Position, null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
+                    sb.Draw(this.currentBody, this.Transform.Position, null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
                     //this.weapon.LocalPosition = new Vector2(-37, 65);
                     //sb.Draw(this.weapon.Sprite.Texture, this.weapon.Transform.Position, null, this.weapon.Sprite.Color, this.weapon.Transform.Rotation, this.weapon.Transform.Origin, 1.0f, SpriteEffects.FlipHorizontally, 0);
                 }
                 else if (this.AttackState == PlayerAttackState.MagicAttack)
                 {
-                    sb.Draw(this.magicAttackBody, this.Transform.Position + new Vector2(-60, 0), null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.None, 0);
+                    sb.Draw(this.currentMagicAttackBody, this.Transform.Position + new Vector2(-60, 0), null, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f, SpriteEffects.None, 0);
                 }
             }
 
@@ -346,6 +351,22 @@ namespace Rey.Engine.Prefabs
 
             //this.arm.Draw(sb);
             this.projectileManager.Draw(sb);
+
+            DrawWornEquipment(sb);
+        }
+
+        /// <summary>
+        /// Draws the equipment the player is currently wearing
+        /// </summary>
+        void DrawWornEquipment(SpriteBatch sb)
+        {
+            if (GameData.EquippedHelmet != null)
+                sb.Draw(GameData.EquippedHelmet.Texture, this.head.Transform.Position, Color.White);
+            if (GameData.EquippedChest != null)
+            {
+                this.currentBody = GameData.EquippedChest.Texture;//sb.Draw(GameData.EquippedChest.Texture, this.Transform.Position, Color.White);
+                this.currentMagicAttackBody = GameData.EquippedChest.AltTexture;
+            }
 
         }
 
