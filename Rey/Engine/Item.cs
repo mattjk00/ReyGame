@@ -30,6 +30,7 @@ namespace Rey.Engine
         public Texture2D AltTexture { get; set; } // alternate teture
         public ItemType ItemType { get; set; } = ItemType.Gear;
         public EquipmentType EquipmentType { get; set; } = EquipmentType.NotValid;
+        public string ID { get; set; }
 
         public Item() { } 
 

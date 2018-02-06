@@ -360,9 +360,9 @@ namespace Rey.Engine.Prefabs
         /// </summary>
         void DrawWornEquipment(SpriteBatch sb)
         {
-            if (GameData.EquippedHelmet != null)
+            if (GameData.EquippedHelmet.ID != null)
                 sb.Draw(GameData.EquippedHelmet.Texture, this.head.Transform.Position, Color.White);
-            if (GameData.EquippedChest != null)
+            if (GameData.EquippedChest.ID != null)
             {
                 this.currentBody = GameData.EquippedChest.Texture;//sb.Draw(GameData.EquippedChest.Texture, this.Transform.Position, Color.White);
                 this.currentMagicAttackBody = GameData.EquippedChest.AltTexture;

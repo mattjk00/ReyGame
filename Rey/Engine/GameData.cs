@@ -11,13 +11,23 @@ namespace Rey.Engine
         // the player's backpack
         public static List<Item> backpack = new List<Item>()
         {
-            ItemData.ironHelmet,
-            ItemData.mushroomHelmet,
-            ItemData.mushroomChest
+            ItemData.New(ItemData.ironHelmet),
+            ItemData.New(ItemData.mushroomChest),
+            ItemData.New(ItemData.ironHelmet),
+            ItemData.New(ItemData.mushroomHelmet),
+            ItemData.New(ItemData.ironHelmet),
+            ItemData.New(ItemData.ironHelmet),
+            ItemData.New(ItemData.mushroomChest),
+            ItemData.New(ItemData.mushroomHelmet),
+            ItemData.New(ItemData.ironHelmet),
+            ItemData.New(ItemData.ironHelmet),
+            ItemData.New(ItemData.mushroomChest),
+            ItemData.New(ItemData.mushroomHelmet),
+            ItemData.New(ItemData.trainingChest)
         };
 
-        public static Item EquippedHelmet = null;
-        public static Item EquippedChest = null;
+        public static Item EquippedHelmet = new Item();
+        public static Item EquippedChest = new Item();
     }
 
     public enum EnemyIDs
