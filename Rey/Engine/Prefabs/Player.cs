@@ -367,6 +367,11 @@ namespace Rey.Engine.Prefabs
                 this.currentBody = GameData.EquippedChest.Texture;//sb.Draw(GameData.EquippedChest.Texture, this.Transform.Position, Color.White);
                 this.currentMagicAttackBody = GameData.EquippedChest.AltTexture;
             }
+            else
+            {
+                this.currentBody = this.defaultBody;
+                this.currentMagicAttackBody = this.defaultMagicAttackBody;
+            }
 
         }
 

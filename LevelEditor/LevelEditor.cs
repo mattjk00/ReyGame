@@ -15,7 +15,7 @@ namespace LevelEditor
 
         EditorScene editorScene = new EditorScene();
 
-        Camera2D camera = new Camera2D();
+        Camera2D camera = new Camera2D(1920, 1080);
 
         public LevelEditor()
         {

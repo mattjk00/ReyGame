@@ -26,9 +26,9 @@ namespace Rey
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.IsMouseVisible = false;
-            this.graphics.PreferredBackBufferWidth = 1920;
-            this.graphics.PreferredBackBufferHeight = 1080;
-            this.graphics.ToggleFullScreen();
+            this.graphics.PreferredBackBufferWidth = 1280;
+            this.graphics.PreferredBackBufferHeight = 720;
+            //this.graphics.ToggleFullScreen();
             //this.graphics.IsFullScreen = true;
 
             this.camera.Zoom = 1.0f;

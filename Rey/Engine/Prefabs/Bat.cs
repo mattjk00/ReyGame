@@ -24,8 +24,8 @@ namespace Rey.Engine.Prefabs
             this.AddDefaultBoundingBox();
             this.IsEnemy = true;
             this.Transform.Origin = new Vector2(this.Sprite.Texture.Width / 2, this.Sprite.Texture.Height / 2);
-            this.EntityStats.MaxHP = 10;
-            this.EntityStats.HP = 10;
+            this.EntityStats.MaxHP = 5;
+            this.EntityStats.HP = 5;
             this.EntityStats.AttackSpeed = 50;
             this.EntityStats.Aggressive = true;
             this.ChooseNewTargetAndInterval();

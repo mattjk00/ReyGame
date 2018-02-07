@@ -21,5 +21,14 @@ namespace Rey.Engine
         {
             return Vector2.Transform(p, Matrix.Invert(Camera.GetTransformation(GD, GDM)));
         }
+
+        public static Vector2 ScaleTexture(Texture2D texture, float dWidth, float dHeight)
+        {
+            // scale the item correctly
+            return new Vector2(
+                    (float)dWidth/ (float)texture.Width,
+                   (float)dHeight/ (float)texture.Height 
+                );
+        }
     }
 }

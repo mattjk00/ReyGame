@@ -11,6 +11,7 @@ namespace Rey.Engine.Prefabs.UI.Inventory
     public class Inventory : TabFrame
     {
         BackpackFrame backpack = new BackpackFrame();
+        EquipmentFrame equipment = new EquipmentFrame();
 
         public override void Load()
         {
@@ -23,8 +24,11 @@ namespace Rey.Engine.Prefabs.UI.Inventory
             this.Position = new Vector2(InputHelper.GDM.PreferredBackBufferWidth - 250, InputHelper.GDM.PreferredBackBufferHeight - 380);//new Microsoft.Xna.Framework.Vector2(1030, 320);
             this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/ui_back.png");
 
-            this.AddTab(backpack, "Assets/Textures/UI/main_menu_button_normal.png", "Assets/Textures/UI/main_menu_button_hover.png");
+            backpack.Name = "Backpack";
+            equipment.Name = "Equipment";
 
+            this.AddTab(backpack, "Assets/Textures/UI/invetory_bar.png", "Assets/Textures/UI/invetory_bar_hover.png");
+            this.AddTab(equipment, "Assets/Textures/UI/invetory_bar.png", "Assets/Textures/UI/invetory_bar_hover.png");
             base.Load();
         }
     }

@@ -37,7 +37,7 @@ namespace Rey.Engine.Scenes
             Trapdoor trapdoor = new Trapdoor();
             this.AddGameObject(trapdoor);
 
-            var map = Map.LoadFromFile("Assets/new_test2.guat");
+            var map = Map.LoadFromFile("Assets/big_island.guat");
 
             /*Enemy enemy = new Enemy();
             enemy.Transform.Position = new Vector2(500, 500);
@@ -53,7 +53,7 @@ namespace Rey.Engine.Scenes
 
             Bat bat2 = new Bat();
             bat2.Transform.Position = new Vector2(2000, 0);
-            this.AddGameObject(bat2);
+            //this.AddGameObject(bat2);
 
             BabyFishDemon fish = new BabyFishDemon();
             fish.Transform.Position = new Vector2(100, 720);
@@ -78,8 +78,8 @@ namespace Rey.Engine.Scenes
 
             this.AddFrame(inventory);
 
-            weather = new Weather();
-            this.AddGameObject(weather);
+           // weather = new Weather();
+            //this.AddGameObject(weather);
 
             // load tiles
             foreach (Tile tile in map.Tiles)
@@ -160,7 +160,7 @@ namespace Rey.Engine.Scenes
         {
             base.SecondDraw(sb);
 
-            this.weather.SecondDraw(sb);
+            //this.weather.SecondDraw(sb);
         }
     }
 }
