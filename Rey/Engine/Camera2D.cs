@@ -14,12 +14,14 @@ namespace Rey.Engine
         public Matrix Transform { get; set; } 
         public Vector2 Position { get; set; } 
         public float Rotation { get; set; }
+        public Vector2 Resolution { get; set; }
 
-        public Camera2D()
+        public Camera2D(float x, float y)
         {
             zoom = 1.0f;
             Rotation = 0.0f;
             Position = Vector2.Zero;
+            this.Resolution = new Vector2(x, y);
         }
 
         // Sets and gets zoom
@@ -39,13 +41,16 @@ namespace Rey.Engine
             Position += amount;
         }
 
-        public Matrix GetTransformation(GraphicsDevice graphicsDevice)
+        public Matrix GetTransformation(GraphicsDevice graphicsDevice, GraphicsDeviceManager gdm)
         {
+            var width = (float)gdm.PreferredBackBufferWidth / this.Resolution.X;
+            var height = (float)gdm.PreferredBackBufferHeight / this.Resolution.Y;
             Transform =      
               Matrix.CreateTranslation(new Vector3(-this.Position.X, -this.Position.Y, 0)) *
                                          Matrix.CreateRotationZ(Rotation) *
                                          Matrix.CreateScale(new Vector3(Zoom, Zoom, 1)) *
-                                         Matrix.CreateTranslation(new Vector3(ViewportWidth * 0.5f, ViewportHeight * 0.5f, 0));
+                                         Matrix.CreateTranslation(new Vector3(ViewportWidth * 0.5f, ViewportHeight * 0.5f, 0)) *
+                                         Matrix.CreateScale(new Vector3(width, height, 1));
             return Transform;
         }
     }

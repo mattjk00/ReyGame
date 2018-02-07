@@ -16,7 +16,7 @@ namespace Rey
         //SceneManager sceneManager = new SceneManager();
 
         Texture2D mouseTexture;
-        Camera2D camera = new Camera2D();
+        Camera2D camera = new Camera2D(1280, 720);
         MouseState mouse;
         KeyboardState keyboard;
         Texture2D vhsFilter;
@@ -26,8 +26,9 @@ namespace Rey
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.IsMouseVisible = false;
-            this.graphics.PreferredBackBufferWidth = 1280;
-            this.graphics.PreferredBackBufferHeight = 720;
+            this.graphics.PreferredBackBufferWidth = 1920;
+            this.graphics.PreferredBackBufferHeight = 1080;
+            this.graphics.ToggleFullScreen();
             //this.graphics.IsFullScreen = true;
 
             this.camera.Zoom = 1.0f;
@@ -60,6 +61,9 @@ namespace Rey
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            InputHelper.GD = this.GraphicsDevice;
+            InputHelper.GDM = this.graphics;
+
             mouseTexture = AssetLoader.LoadTexture("Assets/Textures/Player/mouse.png");
 
             SceneManager.Load();
@@ -90,9 +94,9 @@ namespace Rey
                 Exit();
             }
 
-            InputHelper.MousePosition = Vector2.Transform(mouse.Position.ToVector2(), Matrix.Invert(camera.GetTransformation(GraphicsDevice)));
+            InputHelper.MousePosition = Vector2.Transform(mouse.Position.ToVector2(), Matrix.Invert(camera.GetTransformation(GraphicsDevice, graphics)));
             InputHelper.Camera = this.camera;
-            InputHelper.GD = this.GraphicsDevice;
+            
 
             SceneManager.Update(camera);
 
@@ -107,7 +111,7 @@ namespace Rey
         {
             GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice));
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice, graphics));
             SceneManager.Draw(spriteBatch);
 
             spriteBatch.End();
@@ -119,7 +123,7 @@ namespace Rey
             spriteBatch.Draw(mouseTexture, Mouse.GetState().Position.ToVector2(), Color.White);
 
             //spriteBatch.DrawString(AssetLoader.Font, "(" + InputHelper.MousePosition.X.ToString() + ", " + InputHelper.MousePosition.Y.ToString() + ")", InputHelper.MousePosition, Color.Red);
-            spriteBatch.DrawString(AssetLoader.Font, "(" + Mouse.GetState().Position.X.ToString() + ", " + Mouse.GetState().Position.Y.ToString() + ")", InputHelper.MousePosition, Color.Red);
+            //spriteBatch.DrawString(AssetLoader.Font, "(" + Mouse.GetState().Position.X.ToString() + ", " + Mouse.GetState().Position.Y.ToString() + ")", InputHelper.MousePosition, Color.Red);
 
             spriteBatch.End();
 
