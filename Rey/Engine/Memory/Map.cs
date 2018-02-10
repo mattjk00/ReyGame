@@ -25,6 +25,8 @@ namespace Rey.Engine.Memory
             // deserialize it
             loadedMap = JsonConvert.DeserializeObject<Map>(maptext);
 
+            var y = loadedMap.Tiles.FindAll(x => x.TileType == TileType.Door);
+
             return loadedMap;
         }
     }

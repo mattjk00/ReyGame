@@ -27,6 +27,7 @@ namespace LevelEditor
 
         TileChooserFrame tileChooser;
         TileChooserFrame blockChooser;
+        TileChooserFrame doorChooser;
 
         OptionFrame optionFrame;
 
@@ -54,6 +55,10 @@ namespace LevelEditor
             blockChooser.Name = "Blocks";
             blockChooser.Load();
 
+            doorChooser = new TileChooserFrame("Textures/doors", TileType.Door);
+            doorChooser.Name = "Doors";
+            doorChooser.Load();
+
             tabFrame.Width = 300;
             tabFrame.Height = 720;
             tabFrame.Position = new Vector2(0, 50);
@@ -62,6 +67,7 @@ namespace LevelEditor
             tabFrame.AddTab(monsterChooser, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
 
             tabFrame.AddTab(objChooserFrame, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
+            tabFrame.AddTab(doorChooser, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
 
             optionFrame = new OptionFrame();
             
@@ -69,6 +75,7 @@ namespace LevelEditor
             this.AddFrame(fileManagerFrame);
             this.AddFrame(tabFrame);
             this.AddFrame(optionFrame);
+            
 
             var grassButton = tileChooser.Find("grass1") as Button;
 

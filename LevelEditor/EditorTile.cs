@@ -61,7 +61,12 @@ namespace LevelEditor
                     this.clickTimer = 0;
                 }
 
-
+                // check for a right click
+                if (mouse.RightButton == ButtonState.Pressed && previousMouse.RightButton == ButtonState.Released && mouseBox.Intersects(this.BoundingBoxes[0])
+                    && this.Transform.Position.X > 300 && this.clickedThisLoop == false)// this prevents from clicking under UI
+                {
+                    this.ToggleSelection();
+                }
             }
             // remove selection if not selected
             if (EditorManager.SelectedTile != this)

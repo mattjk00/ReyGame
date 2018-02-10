@@ -19,7 +19,8 @@ namespace Rey.Engine.Prefabs
         Empty = 0,
         Normal = 1,
         PlayerStart = 2,
-        Block = 3
+        Block = 3,
+        Door = 4
     }
 
     /// <summary>
@@ -39,7 +40,11 @@ namespace Rey.Engine.Prefabs
         public int MapX { get; protected set; }
         public int MapY { get; protected set; }
 
+        [JsonProperty]
+        public string Data { get; set; } // used for doors to tell where to go to next or something 
+
         // depth of where to draw
+        [JsonProperty]
         public int Depth { get; set; } = -1;
 
         /// <summary>

@@ -381,13 +381,26 @@ namespace Rey.Engine
                     }
                 }
             }
+
+            // check for doors
+            int doorTouchCount = 0; // the number of doors the player is touching
+            foreach (Tile doorTile in this.tiles.FindAll(x => x.TileType == TileType.Door))
+            {
+                // if they collide, increase the # of boxes touching
+                if (player.MovementBox.Intersects(doorTile.Box))
+                    doorTouchCount++;
+                if (doorTouchCount >= 2) // if the player is touching a bunch of tiles, trigger a message to the scene
+                {
+                    this.HandleTileTrigger(doorTile);
+                }
+            }
         }
 
         void SetTrapdoorState(bool open)
         {
             // find the trapdoor
-            var trapdoor = this.gameObjects.Find(x => x.Name == "trapdoor") as Trapdoor;
-            trapdoor.Open = open; // open the trapdoor
+            /*var trapdoor = this.gameObjects.Find(x => x.Name == "trapdoor") as Trapdoor;
+            trapdoor.Open = open;*/ // open the trapdoor
 
             // find the go button and activate it
             var gobutton = this.frames.Find(x => x.Name == "gameui").Find("gobutton") as Button;
@@ -396,5 +409,10 @@ namespace Rey.Engine
             
         }
 
+        // handles a trigger from a tile. can be used for doors or other things
+        protected virtual void HandleTileTrigger(Tile tile)
+        {
+
+        }
     }
 }

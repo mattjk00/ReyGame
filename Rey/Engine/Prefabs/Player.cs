@@ -32,7 +32,7 @@ namespace Rey.Engine.Prefabs
         KeyboardState lastKeyboard;
         MouseState mouse;
         MouseState lastMouse;
-        float speed = 0.4f;
+        float speed = 0.6f;
         ChildObject arm = new ChildObject(); // the player's arm
         ChildObject weapon = new ChildObject();
         ChildAnimation legs = new ChildAnimation(48, 50, 6, 3);

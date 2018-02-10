@@ -101,6 +101,7 @@ namespace LevelEditor
                     // creat the new tile
                     var newTile = new Tile(stile.Name, stile.StartingPosition, null, stile.TileType);
                     newTile.Depth = stile.Depth;
+                    newTile.Data = stile.Data;
                     exportTiles.Add(newTile);
                 }
             }
@@ -115,6 +116,7 @@ namespace LevelEditor
                 if (stile.marker != null)
                 {
                     var newMarker = new MapMarker(stile.marker.Name, stile.marker.StartingPosition, null, stile.marker.MarkerType);
+                    
                     markers.Add(newMarker);
                 }
             }
@@ -140,9 +142,13 @@ namespace LevelEditor
                     newTile = new EditorTile(tile.Name, tile.Transform.Position, AssetLoader.LoadTexture("Textures/" + tile.Name + ".png"), tile.TileType);
                 else if (tile.TileType == TileType.Block)
                     newTile = new EditorTile(tile.Name, tile.Transform.Position, AssetLoader.LoadTexture("Textures/blocks/" + tile.Name + ".png"), tile.TileType);
+                else if (tile.TileType == TileType.Door)
+                    newTile = new EditorTile(tile.Name, tile.Transform.Position, AssetLoader.LoadTexture("Textures/doors/" + tile.Name + ".png"), tile.TileType);
 
                 // set depth
                 newTile.Depth = tile.Depth;
+                // set data
+                newTile.Data = tile.Data;
 
                 // add the new tile
                 if (newTile.Name != "")

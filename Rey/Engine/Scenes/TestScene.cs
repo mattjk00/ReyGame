@@ -26,6 +26,9 @@ namespace Rey.Engine.Scenes
 
         public TestScene(string name) : base(name) { }
 
+        // the path to the guat map
+        private string mapPath = "Assets/big_island.guat";
+
         public override void Load()
         {
 
@@ -37,7 +40,6 @@ namespace Rey.Engine.Scenes
             Trapdoor trapdoor = new Trapdoor();
             this.AddGameObject(trapdoor);
 
-            var map = Map.LoadFromFile("Assets/big_island.guat");
 
             /*Enemy enemy = new Enemy();
             enemy.Transform.Position = new Vector2(500, 500);
@@ -78,8 +80,31 @@ namespace Rey.Engine.Scenes
 
             this.AddFrame(inventory);
 
-           // weather = new Weather();
+            // weather = new Weather();
             //this.AddGameObject(weather);
+
+            this.LoadMap(false);
+            
+
+            base.Load();
+            //enemy.SetInterval(1000);
+
+        }
+
+        public TestScene():base() { }
+
+        public override void Update(Camera2D camera)
+        {
+            base.Update(camera);
+        }
+
+        void LoadMap(bool fullReset)
+        {
+            var map = Map.LoadFromFile(this.mapPath);
+
+            this.ClearTiles();
+            if (fullReset) // use if not the first loading
+                this.gameObjects.RemoveAll(x => x.Name != "player");
 
             // load tiles
             foreach (Tile tile in map.Tiles)
@@ -93,7 +118,7 @@ namespace Rey.Engine.Scenes
                 {
                     var a = 0;
                 }
-                
+
                 /*if (tile.Name == "ocean1" || tile.Name == "wood_base" || tile.Name == "wood_wall")
                     tile.SetType(TileType.Block);*/
                 tile.SetMapCoords(50);
@@ -103,22 +128,11 @@ namespace Rey.Engine.Scenes
             var playerStart = map.Markers.Find(x => x.MarkerType == MarkerType.PlayerSpawnPoint);
             if (playerStart != null)
                 player.Transform.Position = playerStart.StartingPosition;
-            
+
             // parse through enemies
             var enemies = MarkerParser.ParseEnemies(map.Markers);
             foreach (Enemy enemy in enemies)
                 this.AddGameObject(enemy);
-
-            base.Load();
-            //enemy.SetInterval(1000);
-
-        }
-
-        public TestScene():base() { }
-
-        public override void Update(Camera2D camera)
-        {
-            base.Update(camera);
         }
 
         /// <summary>
@@ -161,6 +175,23 @@ namespace Rey.Engine.Scenes
             base.SecondDraw(sb);
 
             //this.weather.SecondDraw(sb);
+        }
+
+        /// <summary>
+        /// handle a door being entered or other
+        /// </summary>
+        /// <param name="tile"></param>
+        protected override void HandleTileTrigger(Tile tile)
+        {
+            // if it is a door
+            if (tile.TileType == TileType.Door && tile.Data != "")
+            {
+                // transition
+                this.mapPath = "Assets/" + tile.Data + ".guat"; // format the map path
+                
+                SceneManager.TransitionToScene("test");
+                this.LoadMap(true);
+            }
         }
     }
 }

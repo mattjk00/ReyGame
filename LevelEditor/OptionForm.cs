@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rey.Engine.Prefabs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,6 +26,13 @@ namespace LevelEditor
 
             this.numericUpDown1.Value = EditorManager.SelectedTile.Depth;
 
+            // hide door stuff if the tile isn't a door
+            if (EditorManager.SelectedTile.TileType != TileType.Door)
+            {
+                this.label2.Hide();
+                this.textBox1.Hide();
+            }
+
             this.AcceptButton = this.button1;
         }
 
@@ -32,6 +40,12 @@ namespace LevelEditor
         {
             // set the depth
             EditorManager.SelectedTile.Depth = (int)this.numericUpDown1.Value;
+
+            // if the tile type is a door, set the data for where it leads to
+            if (EditorManager.SelectedTile.TileType == TileType.Door)
+            {
+                EditorManager.SelectedTile.Data = this.textBox1.Text;
+            }
 
             this.Close();
         }
