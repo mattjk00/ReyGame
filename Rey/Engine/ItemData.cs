@@ -18,12 +18,12 @@ namespace Rey.Engine
         }
 
         // helmets
-        public static readonly Item ironHelmet = new Item("ironHelmet", ItemType.Gear, EquipmentType.Helmet, AssetLoader.LoadTexture("Assets/Textures/armor/iron_helmet.png"));
-        public static readonly Item mushroomHelmet = new Item("mushroomHelmet", ItemType.Gear, EquipmentType.Helmet, AssetLoader.LoadTexture("Assets/Textures/armor/mushroom_helmet.png"));
+        public static readonly Item ironHelmet = new Item("Iron Helmet", ItemType.Gear, EquipmentType.Helmet, AssetLoader.LoadTexture("Assets/Textures/armor/iron_helmet.png"));
+        public static readonly Item mushroomHelmet = new Item("Shroom Helm", ItemType.Gear, EquipmentType.Helmet, AssetLoader.LoadTexture("Assets/Textures/armor/mushroom_helmet.png"));
 
         // chests
-        public static readonly Item mushroomChest = new Item("mushroomChest", ItemType.Gear, EquipmentType.Chest, AssetLoader.LoadTexture("Assets/Textures/armor/mushroom_chest.png"), AssetLoader.LoadTexture("Assets/Textures/armor/mushroom_magic_body.png"));
-        public static readonly Item trainingChest = new Item("trainingChest", ItemType.Gear, EquipmentType.Chest, AssetLoader.LoadTexture("Assets/Textures/armor/training_chest.png"), AssetLoader.LoadTexture("Assets/Textures/armor/training_magic_body.png"));
+        public static readonly Item mushroomChest = new Item("Shroom Torso", ItemType.Gear, EquipmentType.Chest, AssetLoader.LoadTexture("Assets/Textures/armor/mushroom_chest.png"), AssetLoader.LoadTexture("Assets/Textures/armor/mushroom_magic_body.png"));
+        public static readonly Item trainingChest = new Item("Clora Robes", ItemType.Gear, EquipmentType.Chest, AssetLoader.LoadTexture("Assets/Textures/armor/training_chest.png"), AssetLoader.LoadTexture("Assets/Textures/armor/training_magic_body.png"));
 
 
 

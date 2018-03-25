@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Rey.Engine.Memory;
 using Rey.Engine.Prefabs;
+using Rey.Engine.Prefabs.UI;
 using Rey.Engine.Prefabs.UI.Inventory;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Rey.Engine.Scenes
 {
+   
+
+
     public class TestScene : Scene
     {
         Player player;
@@ -28,6 +32,11 @@ namespace Rey.Engine.Scenes
 
         // the path to the guat map
         private string mapPath = "Assets/big_island.guat";
+
+        NPC npc = new NPC();
+
+        
+        NPCTalkingFrame npcTalkingFrame = new NPCTalkingFrame();
 
         public override void Load()
         {
@@ -64,6 +73,8 @@ namespace Rey.Engine.Scenes
             player = new Player();
             this.AddGameObject(player);
 
+            
+
             fadeScreen = new GameObject("fade");
             fadeScreen.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/UI/fade.png");
             fadeScreen.Sprite.Color = Color.White * 0; // make the screen invisible
@@ -79,12 +90,15 @@ namespace Rey.Engine.Scenes
             this.AddFrame(testUIframe);
 
             this.AddFrame(inventory);
+            this.AddFrame(npcTalkingFrame);
 
             // weather = new Weather();
             //this.AddGameObject(weather);
 
             this.LoadMap(false);
-            
+
+            npc.Transform.Position = player.Transform.Position;
+            this.AddGameObject(npc);
 
             base.Load();
             //enemy.SetInterval(1000);
@@ -95,7 +109,12 @@ namespace Rey.Engine.Scenes
 
         public override void Update(Camera2D camera)
         {
-            base.Update(camera);
+            if (this.State == SceneState.Normal || this.State == SceneState.NPCTalking)
+                base.Update(camera);
+
+            // double check to stop the npc talking
+            if (this.State == SceneState.Normal)
+                this.npcTalkingFrame.Active = false;
         }
 
         void LoadMap(bool fullReset)
@@ -175,6 +194,18 @@ namespace Rey.Engine.Scenes
             base.SecondDraw(sb);
 
             //this.weather.SecondDraw(sb);
+
+            // draw npc ui here
+            if (this.State == SceneState.NPCTalking)
+            {
+                this.npcTalkingFrame.Active = true;
+                // find the current talking npc
+                foreach (NPC npc in this.gameObjects.FindAll(x => x.GetType() == typeof(NPC)))
+                {
+                    if (npc.State == NPCState.Talking)
+                        this.npcTalkingFrame.NPC = npc;
+                }
+            }
         }
 
         /// <summary>

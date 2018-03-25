@@ -71,7 +71,12 @@ namespace Rey.Engine.UI
 
             // in case bounds are empty, fix them
             if (this.Transform.Bounds == new Rectangle(0, 0, 0, 0))
-                this.Transform.Bounds = new Rectangle(0, 0, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
+            {
+                if (this.Sprite.Texture != null)
+                    this.Transform.Bounds = new Rectangle(0, 0, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
+                else
+                    this.Transform.Bounds = new Rectangle(0, 0, 1, 1); // for labels?
+            }
             this.BoundingBoxes[0] = new Rectangle((int)this.Transform.Position.X, (int)this.Transform.Position.Y, this.Transform.Bounds.Width, this.Transform.Bounds.Height);
 
 

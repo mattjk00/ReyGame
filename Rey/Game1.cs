@@ -28,6 +28,7 @@ namespace Rey
             this.IsMouseVisible = false;
             this.graphics.PreferredBackBufferWidth = 1280;
             this.graphics.PreferredBackBufferHeight = 720;
+            //this.Window.AllowUserResizing = true;
             //this.graphics.ToggleFullScreen();
             //this.graphics.IsFullScreen = true;
 
@@ -66,6 +67,11 @@ namespace Rey
 
             mouseTexture = AssetLoader.LoadTexture("Assets/Textures/Player/mouse.png");
 
+            this.graphics.PreferredBackBufferWidth = 1280;//(int)(graphics.GraphicsDevice.DisplayMode.Width * 0.9f);//1280;
+            this.graphics.PreferredBackBufferHeight = 720;//(int)(graphics.GraphicsDevice.DisplayMode.Height * 0.9f);//720;
+            //this.graphics.IsFullScreen = true;
+            this.graphics.ApplyChanges();
+
             SceneManager.Load();
         }
 
@@ -88,6 +94,7 @@ namespace Rey
             mouse = Mouse.GetState();
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            
 
             if (SceneManager.Quit)
             {
@@ -109,12 +116,17 @@ namespace Rey
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice, graphics));
+            /*RenderTarget2D target = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            GraphicsDevice.SetRenderTarget(target);*/
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null,  camera.GetTransformation(GraphicsDevice, graphics));
             SceneManager.Draw(spriteBatch);
 
             spriteBatch.End();
+
+            
 
             // second draw
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
@@ -126,6 +138,18 @@ namespace Rey
             //spriteBatch.DrawString(AssetLoader.Font, "(" + Mouse.GetState().Position.X.ToString() + ", " + Mouse.GetState().Position.Y.ToString() + ")", InputHelper.MousePosition, Color.Red);
 
             spriteBatch.End();
+
+           /* GraphicsDevice.SetRenderTarget(null);
+
+
+            spriteBatch.Begin();
+            // what to scale the screen by
+            float screenScaleFactorX = (float)graphics.PreferredBackBufferWidth/(float)target.Width;
+            float screenScaleFactorY = (float)graphics.PreferredBackBufferHeight/(float)target.Height;
+            spriteBatch.Draw(target, Vector2.Zero, new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Color.White, 0, Vector2.Zero, 
+                new Vector2(1, 1), 
+                SpriteEffects.None, 0);
+            spriteBatch.End();*/
 
             base.Draw(gameTime);
         }

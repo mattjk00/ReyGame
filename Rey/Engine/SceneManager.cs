@@ -104,6 +104,12 @@ namespace Rey.Engine
                 scenes.Find(x => x.Name == lastScene).Unload();*/
         }
 
+        // gets the current scene
+        public static Scene GetCurrentScene()
+        {
+            return scenes.Find(x => x.Name == currentScene);
+        }
+
         public static void TransitionToScene(string sceneName)
         {
             DrawLastScene = true; // draw the last scene while transitioning

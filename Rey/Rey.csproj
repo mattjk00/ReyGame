@@ -62,6 +62,7 @@
     <Compile Include="Engine\Prefabs\Bat.cs" />
     <Compile Include="Engine\Prefabs\Enemy.cs" />
     <Compile Include="Engine\Prefabs\Healthbar.cs" />
+    <Compile Include="Engine\Prefabs\NPC.cs" />
     <Compile Include="Engine\Prefabs\Player.cs" />
     <Compile Include="Engine\Prefabs\PlayerArm.cs" />
     <Compile Include="Engine\Prefabs\Projectile.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Engine\Prefabs\UI\Inventory\BackpackFrame.cs" />
     <Compile Include="Engine\Prefabs\UI\Inventory\EquipmentFrame.cs" />
     <Compile Include="Engine\Prefabs\UI\Inventory\Inventory.cs" />
+    <Compile Include="Engine\Prefabs\UI\NPCTalkingFrame.cs" />
     <Compile Include="Engine\Prefabs\Weather.cs" />
     <Compile Include="Engine\ProjectileManager.cs" />
     <Compile Include="Engine\Scene.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Engine\UI\Button.cs" />
     <Compile Include="Engine\UI\Frame.cs" />
     <Compile Include="Engine\UI\ItemButton.cs" />
+    <Compile Include="Engine\UI\Label.cs" />
     <Compile Include="Engine\UI\RadioButton.cs" />
     <Compile Include="Engine\UI\TabFrame.cs" />
     <Compile Include="Engine\UI\UIObject.cs" />

@@ -31,6 +31,7 @@ namespace Rey.Engine
         public ItemType ItemType { get; set; } = ItemType.Gear;
         public EquipmentType EquipmentType { get; set; } = EquipmentType.NotValid;
         public string ID { get; set; }
+        public EntityStats Stats { get; set; }
 
         public Item() { } 
 

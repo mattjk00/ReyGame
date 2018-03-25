@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Rey.Engine.Prefabs;
 using Rey.Engine.UI;
 using System;
@@ -10,6 +11,13 @@ using System.Threading.Tasks;
 
 namespace Rey.Engine
 {
+    public enum SceneState
+    {
+        Normal,
+        Paused,
+        NPCTalking
+    }
+
     /// <summary>
     /// Holds the data of all game objects in scene
     /// </summary>
@@ -23,6 +31,8 @@ namespace Rey.Engine
         protected CollisionManager collisionManager = new CollisionManager();
         public bool CombatScene { get; set; } = true;
         private Player player;
+        public SceneState State { get; set; } = SceneState.Normal;
+
 
         public Scene() { this.gameObjects = new List<GameObject>();  }
         public Scene(string name)
@@ -130,7 +140,7 @@ namespace Rey.Engine
                 }
             }
 
-            foreach (Frame frame in frames.FindAll(f => f.LockedPosition == false))
+            foreach (Frame frame in frames.FindAll(f => f.LockedPosition == false && f.Active == true))
                 frame.Draw(sb);
             
         }
@@ -142,7 +152,7 @@ namespace Rey.Engine
         public virtual void SecondDraw(SpriteBatch sb)
         {
             // draw the remainder of the frames
-            foreach (Frame frame in frames.FindAll(f => f.LockedPosition == true))
+            foreach (Frame frame in frames.FindAll(f => f.LockedPosition == true && f.Active == true))
                 frame.Draw(sb);
         }
 
@@ -159,7 +169,7 @@ namespace Rey.Engine
                 tile.Update();
             this.tiles.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
 
-            foreach (Frame frame in this.frames)
+            foreach (Frame frame in this.frames.FindAll(x => x.Active == true))
             {
                 frame.Update();
             }
@@ -381,6 +391,67 @@ namespace Rey.Engine
                     }
                 }
             }
+
+            /// CHECK FOR NPCs
+            foreach (Tile tile in blockTiles)
+            {
+                var npcs = this.gameObjects.FindAll(x => x.Name == "NPC");
+                foreach (NPC npc in npcs)
+                {
+                    var touchedVerticalBox = false;
+                    var touchedHorizontalBox = false;
+
+                    if (npc.MovementBox.Intersects(tile.Box))
+                    {
+                        // if npc collides with a block, handle the collision
+                        if (npc.MovementBox.Intersects(tile.TopBox) && !touchedVerticalBox && !touchedHorizontalBox)//(npc.MovementBox.Bottom > tile.Box.Top && npc.MovementBox.Top < tile.Box.Top && !touchedHorizontalBox && !touchedVerticalBox)
+                        {
+                            this.collisionManager.HandleNPCAndBlock(npc, tile, "top");
+                            touchedVerticalBox = true;
+                        }
+                        else if (npc.MovementBox.Intersects(tile.BottomBox) && !touchedVerticalBox && !touchedHorizontalBox) //(npc.MovementBox.Top < tile.Box.Bottom && npc.MovementBox.Bottom > tile.Box.Bottom && !touchedHorizontalBox && !touchedVerticalBox)//
+                        {
+                            this.collisionManager.HandleNPCAndBlock(npc, tile, "bottom");
+                            touchedVerticalBox = true;
+                        }
+                        else if (npc.MovementBox.Intersects(tile.LeftBox) && !touchedHorizontalBox && !touchedVerticalBox)// (npc.MovementBox.Right > tile.Box.Left && npc.MovementBox.Left < tile.Box.Left && !touchedHorizontalBox && !touchedVerticalBox)//
+                        {
+                            this.collisionManager.HandleNPCAndBlock(npc, tile, "left");
+                            touchedHorizontalBox = true;
+                        }
+                        else if (npc.MovementBox.Intersects(tile.RightBox) && !touchedHorizontalBox && !touchedVerticalBox) //if (npc.MovementBox.Left < tile.Box.Right && npc.MovementBox.Right > tile.Box.Right && !touchedHorizontalBox && !touchedVerticalBox)//
+                        {
+                            this.collisionManager.HandleNPCAndBlock(npc, tile, "right");
+                            touchedHorizontalBox = true;
+                        }
+                    }
+
+                }
+            }
+
+            // check for player touching NPCs
+            foreach (NPC npc in this.gameObjects.FindAll(x => x.GetType() == typeof(NPC)))
+            {
+                // if the npc and the player is close enough
+                if (Vector2.Distance(npc.Transform.Position, player.Transform.Position) < 100 && this.State != SceneState.NPCTalking)
+                {
+                    // if key is pressed, initiate interaction
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        npc.State = NPCState.Talking;
+                        this.State = SceneState.NPCTalking;
+                    }
+                }
+                if (this.State == SceneState.NPCTalking)
+                {
+                    // if the player moves too far away, stop the interaction
+                    if (Vector2.Distance(npc.Transform.Position, player.Transform.Position) > 100)
+                    {
+                        this.State = SceneState.Normal;
+                    }
+                }
+            }
+
 
             // check for doors
             int doorTouchCount = 0; // the number of doors the player is touching

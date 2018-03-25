@@ -108,5 +108,32 @@ namespace Rey.Engine
                 player.Transform.VelY = 0;
             }
         }
+
+        public void HandleNPCAndBlock(NPC npc, Tile tile, string side)
+        {
+            if (side == "left")
+            {
+                npc.Transform.Position = new Vector2(tile.Transform.Position.X - npc.MovementBox.Width + npc.MovementBoxOffset + 1, npc.Transform.Position.Y);
+                //player.Transform.Position = new Vector2(tile.Box.Left - player.MovementBox.Width/2 - 5, player.Transform.Position.Y);
+                npc.Transform.VelX = 0;
+            }
+            else if (side == "right")
+            {
+                npc.Transform.Position = new Vector2(tile.Transform.Position.X + tile.Box.Width + npc.MovementBoxOffset, npc.Transform.Position.Y);
+                //npc.Transform.Position = new Vector2(tile.Box.Right + npc.MovementBox.Width / 2 - 5, npc.Transform.Position.Y);
+                npc.Transform.VelX = 0;
+            }
+            else if (side == "bottom")
+            {
+                npc.Transform.Position = new Vector2(npc.Transform.Position.X, tile.Transform.Position.Y - 15);
+                //npc.Transform.Position = new Vector2(npc.Transform.Position.X, tile.Box.Bottom - npc.Sprite.Texture.Height + 7);
+                npc.Transform.VelY = 0;
+            }
+            else if (side == "top")
+            {
+                npc.Transform.Position = new Vector2(npc.Transform.Position.X, tile.Box.Top - npc.Sprite.Texture.Height - 7);
+                npc.Transform.VelY = 0;
+            }
+        }
     }
 }

@@ -58,13 +58,19 @@ namespace Rey.Engine.Prefabs.UI.Inventory
 
             // draw the helmet in the equipment screen if valid
             if (GameData.EquippedHelmet.ID != null)
-                sb.Draw(GameData.EquippedHelmet.Texture, helmetButton.Transform.Position, null, Color.White, 0, Vector2.Zero, 
+            {
+                sb.Draw(GameData.EquippedHelmet.Texture, helmetButton.Transform.Position, null, Color.White, 0, Vector2.Zero,
                     InputHelper.ScaleTexture(GameData.EquippedHelmet.Texture, 50, 50), SpriteEffects.None, 0);
+                sb.DrawString(AssetLoader.Font, GameData.EquippedHelmet.Name, helmetButton.Transform.Position - new Vector2(0, 15), Color.Silver);
+            }
 
             // draw the chest in the equipment screen if valid
             if (GameData.EquippedChest.ID != null)
+            {
                 sb.Draw(GameData.EquippedChest.Texture, chestButton.Transform.Position, null, Color.White, 0, Vector2.Zero,
                     InputHelper.ScaleTexture(GameData.EquippedChest.Texture, 50, 50), SpriteEffects.None, 0);
+                sb.DrawString(AssetLoader.Font, GameData.EquippedChest.Name, chestButton.Transform.Position - new Vector2(0, 15), Color.Silver);
+            }
         }
     }
 }
