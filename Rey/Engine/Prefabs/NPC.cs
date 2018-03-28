@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Rey.Engine.Prefabs
 {
@@ -21,6 +22,8 @@ namespace Rey.Engine.Prefabs
     {
         // the state of the current NPC
         public NPCState State { get; set; } = NPCState.Idle;
+
+        ChildObject body = new ChildObject();
 
         // walking variables
         int intervalWalk;
@@ -52,7 +55,9 @@ namespace Rey.Engine.Prefabs
             this.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/NPCs/npc.png");
             this.AddDefaultBoundingBox();
 
-            
+            this.body.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/NPCs/npc_body.png");
+            this.body.Load();
+
         }
 
         public override void Load()
@@ -68,6 +73,9 @@ namespace Rey.Engine.Prefabs
             base.Update();
             this.UpdateDefaultBox(0);
             this.Transform.Velocity *= 0.9f;
+
+            this.body.LocalPosition = new Vector2(-5, 40);
+            this.body.Update(this);
 
             // CHANGE LATEr
             this.MovementBox = this.BoundingBoxes[0];
@@ -90,7 +98,7 @@ namespace Rey.Engine.Prefabs
             {
                 // reset variables
                 walkTimer = 0;
-                intervalWalk = random.Next(15, 250);
+                intervalWalk = random.Next(15, 25);
 
                 var targetX = 0;
                 var targetY = 0;
@@ -140,6 +148,15 @@ namespace Rey.Engine.Prefabs
             // if arrived, set the state to idle
             if (Vector2.Distance(this.Transform.Position, this.target) < 20)
                 this.State = NPCState.Idle;
+        }
+
+        public override void Draw(SpriteBatch sb)
+        {
+            this.body.Draw(sb);
+
+            base.Draw(sb);
+
+            // sb.Draw(this.body.Sprite.Texture, this.body.Transform.Position, Color.White);
         }
     }
 }

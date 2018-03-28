@@ -49,6 +49,7 @@ namespace Rey.Engine.Prefabs.UI
                     this.Active = false;
                     SceneManager.GetCurrentScene().State = SceneState.Normal;
                     this.talkIndex = 0;
+                    this.NPC.State = NPCState.Idle;
                 }
             };
             this.AddObject(nextButton);

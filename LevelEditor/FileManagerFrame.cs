@@ -102,6 +102,7 @@ namespace LevelEditor
                     var newTile = new Tile(stile.Name, stile.StartingPosition, null, stile.TileType);
                     newTile.Depth = stile.Depth;
                     newTile.Data = stile.Data;
+                    
                     exportTiles.Add(newTile);
                 }
             }

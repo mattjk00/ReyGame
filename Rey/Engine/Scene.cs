@@ -104,26 +104,31 @@ namespace Rey.Engine
             if (this.Background != null)
                 sb.Draw(this.Background, Vector2.Zero, Color.White);
 
+            // all the tiles to draw
+            List<GameObject> objectBath = new List<GameObject>();
 
             // look through each tile
             // all tiles under this depth
+
+            
             foreach (Tile tile in this.tiles.FindAll(x => x.Depth < 1))
             {
                 if (player != null)
                 {
                     // if the tile is close enough to the player, draw it
                     if (Vector2.Distance(player.Transform.Position, tile.Transform.Position) < 800)
-                        tile.Draw(sb);
+                        objectBath.Add(tile);
                 }
                 else
                 {
-                    
-                    tile.Draw(sb);
+
+                    objectBath.Add(tile);
                 }
             }
-            
+
+
             foreach (GameObject go in this.gameObjects)
-                go.Draw(sb);
+                objectBath.Add(go);
 
             // all tiles under this depth, draw thtiles again
             foreach (Tile tile in this.tiles.FindAll(x => x.Depth > 0))
@@ -132,13 +137,17 @@ namespace Rey.Engine
                 {
                     // if the tile is close enough to the player, draw it
                     if (Vector2.Distance(player.Transform.Position, tile.Transform.Position) < 850)
-                        tile.Draw(sb);
+                        objectBath.Add(tile);
                 }
                 else
                 {
-                    tile.Draw(sb);
+                    objectBath.Add(tile);
                 }
             }
+
+            // draw all tiles
+            foreach (GameObject go in objectBath)
+                go.Draw(sb);
 
             foreach (Frame frame in frames.FindAll(f => f.LockedPosition == false && f.Active == true))
                 frame.Draw(sb);

@@ -14,7 +14,7 @@ namespace Rey.Engine
     public class GameObject
     {
         
-        public string Name { get; protected set; }
+        public string Name { get; set; }
         public Transform Transform { get; set; }
         public Sprite Sprite { get; set; }
         public List<Rectangle> BoundingBoxes { get; set; }

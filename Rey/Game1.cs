@@ -67,8 +67,8 @@ namespace Rey
 
             mouseTexture = AssetLoader.LoadTexture("Assets/Textures/Player/mouse.png");
 
-            this.graphics.PreferredBackBufferWidth = 1280;//(int)(graphics.GraphicsDevice.DisplayMode.Width * 0.9f);//1280;
-            this.graphics.PreferredBackBufferHeight = 720;//(int)(graphics.GraphicsDevice.DisplayMode.Height * 0.9f);//720;
+            this.graphics.PreferredBackBufferWidth = 1920;//(int)(graphics.GraphicsDevice.DisplayMode.Width * 0.9f);//1280;
+            this.graphics.PreferredBackBufferHeight = 1080;//(int)(graphics.GraphicsDevice.DisplayMode.Height * 0.9f);//720;
             //this.graphics.IsFullScreen = true;
             this.graphics.ApplyChanges();
 
@@ -95,6 +95,10 @@ namespace Rey
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             
+            if (Keyboard.GetState().IsKeyDown(Keys.F1))
+            {
+                this.graphics.ToggleFullScreen();
+            }
 
             if (SceneManager.Quit)
             {

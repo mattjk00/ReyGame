@@ -92,7 +92,7 @@ namespace Rey.Engine.Scenes
             this.AddFrame(inventory);
             this.AddFrame(npcTalkingFrame);
 
-            // weather = new Weather();
+             //weather = new Weather();
             //this.AddGameObject(weather);
 
             this.LoadMap(false);
@@ -117,7 +117,7 @@ namespace Rey.Engine.Scenes
                 this.npcTalkingFrame.Active = false;
         }
 
-        void LoadMap(bool fullReset)
+        void LoadMap(bool fullReset, string atDoor = "")
         {
             var map = Map.LoadFromFile(this.mapPath);
 
@@ -131,7 +131,10 @@ namespace Rey.Engine.Scenes
                 try
                 {
                     // load the texture
-                    tile.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/tiles/" + tile.Name + ".png");
+                    if (tile.TileType != TileType.Door)
+                        tile.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/tiles/" + tile.Name + ".png");
+                    else
+                        tile.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/tiles/" + tile.Name.Split(';')[0] + ".png");
                 }
                 catch (System.IO.FileNotFoundException fnfe)
                 {
@@ -145,8 +148,15 @@ namespace Rey.Engine.Scenes
             }
             // try to find the player's starting position
             var playerStart = map.Markers.Find(x => x.MarkerType == MarkerType.PlayerSpawnPoint);
-            if (playerStart != null)
+            if (playerStart != null && atDoor == "")
                 player.Transform.Position = playerStart.StartingPosition;
+            else if (atDoor != "") // if loading in at a door
+            {
+                // find the specific door with the specific given door data name
+                var door = map.Tiles.Find(x => x.TileType == TileType.Door && x.Data.Split(';')[1] == atDoor);
+                if (door != null)
+                    player.Transform.Position = new Vector2(door.Transform.Position.X, door.Transform.Position.Y + player.Sprite.Texture.Height);
+            }
 
             // parse through enemies
             var enemies = MarkerParser.ParseEnemies(map.Markers);
@@ -218,10 +228,15 @@ namespace Rey.Engine.Scenes
             if (tile.TileType == TileType.Door && tile.Data != "")
             {
                 // transition
-                this.mapPath = "Assets/" + tile.Data + ".guat"; // format the map path
+                this.mapPath = "Assets/" + tile.Data.Split(';')[0] + ".guat"; // format the map path
                 
-                SceneManager.TransitionToScene("test");
-                this.LoadMap(true);
+                //SceneManager.TransitionToScene("test");
+
+                // try and load in at a door posiition
+                if (tile.Data.Contains(';'))
+                    this.LoadMap(true, tile.Data.Split(';')[1]);
+                else
+                    this.LoadMap(true);
             }
         }
     }
