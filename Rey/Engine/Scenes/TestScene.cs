@@ -31,7 +31,7 @@ namespace Rey.Engine.Scenes
         public TestScene(string name) : base(name) { }
 
         // the path to the guat map
-        private string mapPath = "Assets/big_island.guat";
+        private string mapPath = "Assets/village.guat";
 
         
 
@@ -144,7 +144,7 @@ namespace Rey.Engine.Scenes
                 /*if (tile.Name == "ocean1" || tile.Name == "wood_base" || tile.Name == "wood_wall")
                     tile.SetType(TileType.Block);*/
                 tile.SetMapCoords(50);
-                if (tile.Name != null)
+                if (tile.Name != null && tile.Name != "delete")
                     this.AddTile(tile);
             }
             // try to find the player's starting position

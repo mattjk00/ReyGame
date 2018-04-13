@@ -58,6 +58,8 @@ namespace Rey.Engine.Prefabs
             this.Sprite.Texture = texture;
             this.TileType = typ;
             this.Name = name;
+
+            
         }
 
         public override void Update()
@@ -78,8 +80,9 @@ namespace Rey.Engine.Prefabs
             // the scale of the tile texture
             float xScale = 50 / (float)this.Sprite.Texture.Width;
             float yScale = 50 / (float)this.Sprite.Texture.Height;
+            this.Transform.Scale = new Vector2(xScale, yScale);
 
-            sb.Draw(this.Sprite.Texture, this.Transform.Position, new Rectangle(0, 0, 50, 50), this.Sprite.Color, 0, Vector2.Zero, new Vector2(xScale, yScale), SpriteEffects.None, 0);
+            sb.Draw(this.Sprite.Texture, this.Transform.Position, new Rectangle(0, 0, 50, 50), this.Sprite.Color, 0, Vector2.Zero, this.Transform.Scale, SpriteEffects.None, 0);
         }
 
         public void SetType(TileType tt)

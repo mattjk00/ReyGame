@@ -88,9 +88,9 @@ namespace LevelEditor
             currentTile.Sprite.Texture = grassButton.normalTexture;
             this.AddGameObject(currentTile);
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 75; i++)
             {
-                for (int j = 0; j < 50; j++)
+                for (int j = 0; j < 75; j++)
                 {
                     EditorTile tile = new EditorTile("ocean1", new Vector2(i * 50, j * 50), blockChooser.Find("ocean1").Sprite.Texture, TileType.Block);
                     this.AddTile(tile);

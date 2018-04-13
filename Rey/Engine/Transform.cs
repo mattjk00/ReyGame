@@ -19,6 +19,7 @@ namespace Rey.Engine
         public Rectangle Bounds { get; set; }
         public float Rotation { get; set; }
         public Vector2 Origin { get; set; }
+        public Vector2 Scale { get; set; } = Vector2.One;
 
         public float VelX
         {
