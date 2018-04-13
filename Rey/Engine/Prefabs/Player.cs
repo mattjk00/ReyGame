@@ -216,7 +216,7 @@ namespace Rey.Engine.Prefabs
         void StartMagicAttack()
         {
             // if the player is ready to attack
-            if (this.magicAttackTimer == 0 && this.AttackState == PlayerAttackState.None)
+            if (this.magicAttackTimer == 0 && this.AttackState == PlayerAttackState.None && InputHelper.MouseOnUI == false)
             {
                 this.projectileManager.ShootNew(this.Transform.Position, InputHelper.MousePosition); // shoot a new projectile
                 this.AttackState = PlayerAttackState.MagicAttack;

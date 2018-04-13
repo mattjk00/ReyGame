@@ -170,6 +170,11 @@ namespace Rey.Engine
         /// </summary>
         public virtual void Update(Camera2D camera)
         {
+            foreach (Frame frame in this.frames.FindAll(x => x.Active == true))
+            {
+                frame.Update();
+            }
+
             foreach (GameObject go in this.gameObjects)
                 go.Update();
             this.gameObjects.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
@@ -178,10 +183,7 @@ namespace Rey.Engine
                 tile.Update();
             this.tiles.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
 
-            foreach (Frame frame in this.frames.FindAll(x => x.Active == true))
-            {
-                frame.Update();
-            }
+            InputHelper.MouseOnUI = false; // reset it
 
             if (this.CombatScene)
             {

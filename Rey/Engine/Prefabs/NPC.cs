@@ -47,7 +47,7 @@ namespace Rey.Engine.Prefabs
         };
 
         // default constructor
-        public NPC()
+        public NPC(string scriptFile = "")
         {
             this.Name = "NPC";
             intervalWalk = random.Next(0, 0);
@@ -58,6 +58,10 @@ namespace Rey.Engine.Prefabs
             this.body.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/NPCs/npc_body.png");
             this.body.Load();
 
+            if (scriptFile != "")
+            {
+                this.Script = System.IO.File.ReadAllLines("Assets/Textures/NPCs/scripts/" + scriptFile).ToList();
+            }
         }
 
         public override void Load()

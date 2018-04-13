@@ -39,7 +39,7 @@ namespace Rey.Engine.Prefabs.UI
             nextButton.LoadTextures(AssetLoader.LoadTexture("Assets/Textures/UI/invetory_bar.png"), AssetLoader.LoadTexture("Assets/Textures/UI/invetory_bar_hover.png"));
             nextButton.Text = "Continue...";
             nextButton.TextColor = Color.Black;
-            nextButton.LocalPosition = new Vector2(this.Width / 2, this.Height);
+            nextButton.LocalPosition = new Vector2(this.Width / 2, this.Height - this.Height/4);
             nextButton.OnClick += () =>
             {
                 this.talkIndex++;

@@ -33,7 +33,7 @@ namespace Rey.Engine.Scenes
         // the path to the guat map
         private string mapPath = "Assets/big_island.guat";
 
-        NPC npc = new NPC();
+        
 
         
         NPCTalkingFrame npcTalkingFrame = new NPCTalkingFrame();
@@ -97,8 +97,8 @@ namespace Rey.Engine.Scenes
 
             this.LoadMap(false);
 
-            npc.Transform.Position = player.Transform.Position;
-            this.AddGameObject(npc);
+            
+            
 
             base.Load();
             //enemy.SetInterval(1000);
@@ -144,7 +144,8 @@ namespace Rey.Engine.Scenes
                 /*if (tile.Name == "ocean1" || tile.Name == "wood_base" || tile.Name == "wood_wall")
                     tile.SetType(TileType.Block);*/
                 tile.SetMapCoords(50);
-                this.AddTile(tile);
+                if (tile.Name != null)
+                    this.AddTile(tile);
             }
             // try to find the player's starting position
             var playerStart = map.Markers.Find(x => x.MarkerType == MarkerType.PlayerSpawnPoint);
@@ -162,6 +163,11 @@ namespace Rey.Engine.Scenes
             var enemies = MarkerParser.ParseEnemies(map.Markers);
             foreach (Enemy enemy in enemies)
                 this.AddGameObject(enemy);
+
+            // parse through npcs
+            var npcs = MarkerParser.ParseNPCs(map.Markers);
+            foreach (NPC npc in npcs)
+                this.AddGameObject(npc);
         }
 
         /// <summary>

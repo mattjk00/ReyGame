@@ -36,5 +36,27 @@ namespace Rey.Engine.Memory
 
             return enemies;
         }
+
+        public static List<NPC> ParseNPCs(List<MapMarker> markers)
+        {
+            List<NPC> npcs = new List<NPC>();
+            // iterate through each marker of npcs type
+            foreach (MapMarker npcMarker in markers.FindAll(x => x.MarkerType == MarkerType.NPCSpawnPoint))
+            {
+                // create a new npc and set its position
+                NPC newNPC = new NPC();
+                // get the correct enemy type
+                switch (npcMarker.Name)
+                {
+                    case "npc_clarice":
+                        newNPC = new NPC("clarice.guat");
+                        break;
+                }
+                newNPC.Transform.Position = npcMarker.Position;
+                npcs.Add(newNPC);
+            }
+
+            return npcs;
+        }
     }
 }

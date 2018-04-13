@@ -37,6 +37,12 @@ namespace Rey.Engine.UI
             if (this.Scrollable)
                 this.HandleScroll();
 
+            // check if mouse intersects frame
+            if (new Rectangle(mouse.Position, new Point(1, 1)).Intersects(new Rectangle(this.Position.ToPoint(), new Point(Width, Height))))
+            {
+                InputHelper.MouseOnUI = true; // mouse is on a ui
+            }
+
             // update the ui objects
             foreach (UIObject ui in this.objects)
             {

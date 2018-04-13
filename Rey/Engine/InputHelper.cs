@@ -16,6 +16,7 @@ namespace Rey.Engine
         public static Camera2D Camera;
         public static GraphicsDevice GD;
         public static GraphicsDeviceManager GDM;
+        public static bool MouseOnUI = false;
 
         public static Vector2 ConvertToWindowPoint(Vector2 p)
         {

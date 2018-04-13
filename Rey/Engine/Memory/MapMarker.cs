@@ -11,7 +11,8 @@ namespace Rey.Engine.Memory
     public enum MarkerType
     {
         PlayerSpawnPoint,
-        SpawnPoint
+        SpawnPoint,
+        NPCSpawnPoint
     }
 
     [Serializable]
