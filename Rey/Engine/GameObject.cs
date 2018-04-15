@@ -14,13 +14,13 @@ namespace Rey.Engine
     public class GameObject
     {
         
-        public string Name { get; set; }
-        public Transform Transform { get; set; }
-        public Sprite Sprite { get; set; }
-        public List<Rectangle> BoundingBoxes { get; set; }
-        public bool IsEnemy { get; protected set; }
+        public string Name { get; set; } // the game object's name
+        public Transform Transform { get; set; } // the position data for the object
+        public Sprite Sprite { get; set; } // the drawing data for the object
+        public List<Rectangle> BoundingBoxes { get; set; } // Collision detection boxes
+        public bool IsEnemy { get; protected set; } // Is this game object an enemy?
         public bool ToBeDestroyed { get; set; } // the status of the game object
-        public List<Behavior> Behaviors { get; set; } = new List<Behavior>();
+        public List<Behavior> Behaviors { get; set; } = new List<Behavior>(); // Scripts for the object
 
         public GameObject()
         {

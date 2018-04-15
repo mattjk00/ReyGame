@@ -30,7 +30,7 @@ namespace Rey
             this.graphics.PreferredBackBufferHeight = 720;
             //this.Window.AllowUserResizing = true;
             //this.graphics.ToggleFullScreen();
-            this.graphics.IsFullScreen = true;
+            //this.graphics.IsFullScreen = true;
 
             this.camera.Zoom = 1.0f;
         }

@@ -108,6 +108,7 @@ namespace LevelEditor
             }
 
             map.Tiles = exportTiles;
+            map.SetSize(this.parent.Width, this.parent.Height);
 
             List<MapMarker> markers = new List<MapMarker>();
             foreach (Tile tile in parent.tiles)
@@ -133,6 +134,8 @@ namespace LevelEditor
         {
             // load the map
             Map map = Map.LoadFromFile(filename);
+            this.parent.LoadTiles(map.Width, map.Height);
+
             this.parent.ClearTiles(); // clear the parent tiles
 
             foreach(Tile tile in map.Tiles)
@@ -168,6 +171,8 @@ namespace LevelEditor
                         tileOwner.SetMarker(new MapMarker(marker.Name, tileOwner.StartingPosition, AssetLoader.LoadTexture("textures/objects/" + marker.Name + ".png"), marker.MarkerType));
                     else if (marker.MarkerType == MarkerType.SpawnPoint)
                         tileOwner.SetMarker(new MapMarker(marker.Name, tileOwner.StartingPosition, AssetLoader.LoadTexture("textures/monsters/" + marker.Name + ".png"), marker.MarkerType));
+                    else if (marker.MarkerType == MarkerType.NPCSpawnPoint)
+                        tileOwner.SetMarker(new MapMarker(marker.Name, tileOwner.StartingPosition, AssetLoader.LoadTexture("textures/npcs/" + marker.Name + ".png"), marker.MarkerType));
                 }
             }
         }

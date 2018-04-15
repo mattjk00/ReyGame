@@ -54,7 +54,9 @@ namespace LevelEditor
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            editorScene.game = this;
             editorScene.Load();
+            
         }
 
         /// <summary>

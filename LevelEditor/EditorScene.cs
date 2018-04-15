@@ -32,6 +32,13 @@ namespace LevelEditor
 
         OptionFrame optionFrame;
 
+        public LevelEditor game; // the game
+
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+
+        Button grassButton;
+
         public override void Load()
         {
             this.Name = "editor";
@@ -82,15 +89,35 @@ namespace LevelEditor
             this.AddFrame(optionFrame);
             
 
-            var grassButton = tileChooser.Find("grass1") as Button;
+            grassButton = tileChooser.Find("grass1") as Button;
 
             currentTile = new GameObject("currentTile", new Vector2(300, 25));
             currentTile.Sprite.Texture = grassButton.normalTexture;
             this.AddGameObject(currentTile);
 
-            for (int i = 0; i < 75; i++)
+            StartForm startForm = new StartForm();
+            var dialogResult = startForm.ShowDialog();
+
+            if (dialogResult == System.Windows.Forms.DialogResult.OK)
             {
-                for (int j = 0; j < 75; j++)
+                this.LoadTiles(startForm.Width, startForm.Height);
+            }
+            else
+            {
+                game.Exit();
+            }
+           
+
+            base.Load();
+        }
+
+        public void LoadTiles(int width, int height)
+        {
+            this.Width = width;
+            this.Height = height;
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
                 {
                     EditorTile tile = new EditorTile("ocean1", new Vector2(i * 50, j * 50), blockChooser.Find("ocean1").Sprite.Texture, TileType.Block);
                     this.AddTile(tile);
@@ -99,10 +126,6 @@ namespace LevelEditor
 
 
             EditorManager.currentTile = new Tile(grassButton.Name, Vector2.Zero, grassButton.normalTexture, TileType.Normal);
-
-           
-
-            base.Load();
         }
 
         public override void Update(Camera2D camera)

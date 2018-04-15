@@ -6,6 +6,7 @@ using Rey.Engine.Prefabs.UI;
 using Rey.Engine.Prefabs.UI.Inventory;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,12 @@ namespace Rey.Engine.Scenes
 
         public override void Load()
         {
-
+            try
+            {
+                mapPath = System.IO.File.ReadAllText("launchoptions.txt");
+            }
+            catch (FileNotFoundException fnfe)
+            { }
 
             //this.Name = "test";
 

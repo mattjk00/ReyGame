@@ -12,8 +12,14 @@ namespace Rey.Engine.Memory
     [Serializable]
     public class Map
     {
+        [JsonProperty]
         public List<Tile> Tiles = new List<Tile>();
+        [JsonProperty]
         public List<MapMarker> Markers = new List<MapMarker>();
+        [JsonProperty]
+        public int Width { get; set; } = 75;
+        [JsonProperty]
+        public int Height { get; set; } = 75;
 
         public static Map LoadFromFile(string filename)
         {
@@ -28,6 +34,12 @@ namespace Rey.Engine.Memory
             var y = loadedMap.Tiles.FindAll(x => x.TileType == TileType.Door);
 
             return loadedMap;
+        }
+
+        public void SetSize(int w, int h)
+        {
+            this.Width = w;
+            this.Height = h;
         }
     }
 }
