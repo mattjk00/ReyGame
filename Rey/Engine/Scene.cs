@@ -126,8 +126,12 @@ namespace Rey.Engine
                 }
             }
 
+            // add all pickups
+            foreach (GameObject go in this.gameObjects.FindAll(x => x.GetType() == typeof(Pickup)))
+                objectBath.Add(go);
 
-            foreach (GameObject go in this.gameObjects)
+            // add all non pickups
+            foreach (GameObject go in this.gameObjects.FindAll(x => x.GetType() != typeof(Pickup)))
                 objectBath.Add(go);
 
             // all tiles under this depth, draw thtiles again
@@ -476,6 +480,17 @@ namespace Rey.Engine
                     this.HandleTileTrigger(doorTile);
                 }
             }
+
+            // check for pickups
+            foreach (Pickup pickup in this.gameObjects.FindAll(x => x.GetType() == typeof(Pickup)))
+            {
+                // if the pickup box interescts the player
+                if (pickup.Box.Intersects(player.BoundingBoxes[0]))
+                {
+                    // handle it
+                    collisionManager.HandlePlayerAndPickup(player, pickup);
+                }
+            }
         }
 
         void SetTrapdoorState(bool open)
@@ -495,6 +510,22 @@ namespace Rey.Engine
         protected virtual void HandleTileTrigger(Tile tile)
         {
 
+        }
+
+        /// <summary>
+        /// Drops item at player
+        /// </summary>
+        /// <param name="item"></param>
+        public void DropItemAtPlayer(Item item)
+        {
+            Random r = new Random();
+            // create the pickup
+            Pickup pickup = new Pickup();
+            pickup.PickupItem = item;
+            pickup.Transform.Position = this.player.Transform.Position;
+            //pickup.Transform.Velocity = new Vector2(r.Next(-5, 5), r.Next(-4, 4));
+            pickup.Load();
+            this.AddGameObject(pickup);
         }
     }
 }

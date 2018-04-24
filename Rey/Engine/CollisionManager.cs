@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Rey.Engine.Prefabs;
 using System;
 using System.Collections.Generic;
@@ -133,6 +134,18 @@ namespace Rey.Engine
             {
                 npc.Transform.Position = new Vector2(npc.Transform.Position.X, tile.Box.Top - npc.Sprite.Texture.Height - 7);
                 npc.Transform.VelY = 0;
+            }
+        }
+
+        /// <summary>
+        /// handles collision between player and pickup
+        /// </summary>
+        public void HandlePlayerAndPickup(Player player, Pickup pickup)
+        {
+            // if space is being pressed
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                pickup.GetPickedUp();
             }
         }
     }

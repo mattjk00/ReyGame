@@ -15,6 +15,7 @@ namespace Rey.Engine.UI
         public ItemButton (string name) : base (name)
         {
             this.OnClick += HandleClick;
+            this.OnRightClick += HandleRightClick;
         }
 
         // handles what to do when the inventory is clicked
@@ -60,6 +61,19 @@ namespace Rey.Engine.UI
                     }
                 }
 
+            }
+        }
+
+        // handles right click. drops item on ground
+        void HandleRightClick()
+        {
+            // try and find index
+            var indexOfThis = GameData.backpack.IndexOf(this.Item);
+
+            if (indexOfThis > -1 && GameData.backpack[indexOfThis].Name != null)
+            {
+                SceneManager.GetCurrentScene().DropItemAtPlayer(this.Item);
+                GameData.backpack[indexOfThis] = new Item(); // clear it
             }
         }
 

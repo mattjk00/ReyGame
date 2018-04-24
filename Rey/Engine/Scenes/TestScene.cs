@@ -55,6 +55,11 @@ namespace Rey.Engine.Scenes
             Trapdoor trapdoor = new Trapdoor();
             this.AddGameObject(trapdoor);
 
+            GameData.AddItemToBackpack(ItemData.New(ItemData.mushroomHelmet));
+            GameData.AddItemToBackpack(ItemData.New(ItemData.mushroomHelmet));
+            GameData.AddItemToBackpack(ItemData.New(ItemData.mushroomHelmet));
+
+
 
             /*Enemy enemy = new Enemy();
             enemy.Transform.Position = new Vector2(500, 500);
@@ -174,6 +179,11 @@ namespace Rey.Engine.Scenes
             var npcs = MarkerParser.ParseNPCs(map.Markers);
             foreach (NPC npc in npcs)
                 this.AddGameObject(npc);
+
+            /*Pickup pickup = new Pickup();
+            pickup.Transform.Position = player.Transform.Position;
+            pickup.PickupItem = ItemData.ironHelmet;
+            this.AddGameObject(pickup);*/
         }
 
         /// <summary>

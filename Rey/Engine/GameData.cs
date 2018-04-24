@@ -23,10 +23,27 @@ namespace Rey.Engine
             ItemData.New(ItemData.ironHelmet),
             ItemData.New(ItemData.mushroomChest),
             ItemData.New(ItemData.mushroomHelmet),
-            ItemData.New(ItemData.trainingChest)
+            ItemData.New(ItemData.trainingChest),
+            new Item(),
+            new Item(),
+            new Item(),
+            new Item(),
+            new Item(),
+            new Item(),
+            new Item(),
+            new Item(),
+            new Item(),
+            new Item(),
+            new Item(),
+            new Item()
         };
 
-        public static void AddItemToBackpack(Item item)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns>Whether it was a sucess or not</returns>
+        public static bool AddItemToBackpack(Item item)
         {
             var indexOfFirstEmpty = -1;
             // iterate through and find the first empty slot
@@ -41,7 +58,12 @@ namespace Rey.Engine
             }
             // if a valid index, add the item
             if (indexOfFirstEmpty >= 0)
+            {
                 backpack[indexOfFirstEmpty] = item;
+                return true;
+            }
+            else
+                return false;
         }
 
         public static Item EquippedHelmet = new Item();

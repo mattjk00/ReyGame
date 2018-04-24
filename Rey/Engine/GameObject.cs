@@ -80,9 +80,15 @@ namespace Rey.Engine
         /// <param name="sb"></param>
         public virtual void Draw(SpriteBatch sb)
         {
-            sb.Draw(this.Sprite.Texture, this.Transform.Position, this.Transform.Bounds, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, 1.0f,  SpriteEffects.None, 0);
+            try
+            {
+                sb.Draw(this.Sprite.Texture, this.Transform.Position, this.Transform.Bounds, this.Sprite.Color, this.Transform.Rotation, this.Transform.Origin, this.Transform.Scale, SpriteEffects.None, 0);
+            }
+            catch (ArgumentNullException ane)
+            {
 
-            // draw the behaviors
+            }
+                // draw the behaviors
             foreach (Behavior be in this.Behaviors)
                 be.Draw(this, sb);
         }

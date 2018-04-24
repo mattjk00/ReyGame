@@ -14,6 +14,7 @@ namespace Rey.Engine.UI
     {
         // a button click action
         public Action OnClick;
+        public Action OnRightClick;
         public Action OnHover;
         public Action OnMouseLeave;
 
@@ -29,6 +30,7 @@ namespace Rey.Engine.UI
         {
             // add some default delegates
             this.OnClick += () => { };
+            this.OnRightClick += () => { };
             this.OnHover += () => { };
             this.OnMouseLeave += () => { };
             this.Name = name;
@@ -101,6 +103,12 @@ namespace Rey.Engine.UI
                         {
                             // trigger the click event
                             this.OnClick();
+                        }
+                        // if right clicked
+                        if (mouse.RightButton == ButtonState.Pressed && oldMouse.RightButton == ButtonState.Released)
+                        {
+                            // trigger the click event
+                            this.OnRightClick();
                         }
                     }
                     else

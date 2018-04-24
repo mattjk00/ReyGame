@@ -63,6 +63,7 @@
     <Compile Include="Engine\Prefabs\Enemy.cs" />
     <Compile Include="Engine\Prefabs\Healthbar.cs" />
     <Compile Include="Engine\Prefabs\NPC.cs" />
+    <Compile Include="Engine\Prefabs\Pickup.cs" />
     <Compile Include="Engine\Prefabs\Player.cs" />
     <Compile Include="Engine\Prefabs\PlayerArm.cs" />
     <Compile Include="Engine\Prefabs\Projectile.cs" />
