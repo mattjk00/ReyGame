@@ -29,7 +29,9 @@ namespace Rey.Engine.Prefabs
         public PlayerAttackState AttackState { get; set; } // the attacking state of the player
         public EntityStats EntityStats { get; set; } = new EntityStats(); // the player's stats
         public EnemyState State { get; protected set; } = EnemyState.Idle; // the enemy's state
-        
+
+        // the drop table for the enemy
+        public Dictionary<Item, float> DropTable { get; protected set; } = new Dictionary<Item, float>();
         
 
         // timers for attacking
@@ -312,6 +314,28 @@ namespace Rey.Engine.Prefabs
             this.State = EnemyState.Dead;
             this.Sprite.Color = new Color(255, 0, 0, 80);
             this.Transform.Rotation = MathHelper.ToRadians(90);
+            this.DropItems(); // drop items
+        }
+
+        /// <summary>
+        /// Drop table
+        /// </summary>
+        protected void DropItems()
+        {
+
+            Random random = new Random();
+            if (DropTable.Count > 0)
+            {
+                // get a random index from the drop table
+                int randomIndex = random.Next(0, DropTable.Count);
+                float randomNum = (float)random.NextDouble(); // gets a random float to compare to
+                                                              // compare the random number to the dictionary entry at the given random index. If the randnum is less than or equal to the entry, drop the item.
+                if (randomNum <= DropTable.ElementAt(randomIndex).Value)
+                {
+                    // drop the item at the monster positiion
+                    SceneManager.GetCurrentScene().DropItemAtPosition(ItemData.New(DropTable.ElementAt(randomIndex).Key), this.Transform.Position);
+                }
+            }
         }
 
         // bounces the enemy based on given velocity

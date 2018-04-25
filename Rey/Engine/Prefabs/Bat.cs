@@ -46,6 +46,11 @@ namespace Rey.Engine.Prefabs
             this.healthbar.Load();
             this.healthbar.AssignStats(this.EntityStats);
             this.healthbar.LocalPosition = new Vector2(5, -5);
+
+            // drop table
+            this.DropTable.Add(ItemData.New(ItemData.trainingChest), 0.45f);
+            this.DropTable.Add(ItemData.New(ItemData.ironHelmet), 0.25f);
+            this.DropTable.Add(ItemData.New(ItemData.mushroomHelmet), 0.30f);
         }
 
         public override void Update()

@@ -33,6 +33,7 @@ namespace Rey.Engine
         private Player player;
         public SceneState State { get; set; } = SceneState.Normal;
 
+        private List<GameObject> addQ = new List<GameObject>(); // queue to add go's
 
         public Scene() { this.gameObjects = new List<GameObject>();  }
         public Scene(string name)
@@ -52,7 +53,16 @@ namespace Rey.Engine
 
         public void AddGameObject(GameObject go)
         {
-            this.gameObjects.Add(go);
+            //this.gameObjects.Add(go);
+            this.addQ.Add(go);
+        }
+
+        // puts game object queue into reg list
+        void HandleQueue()
+        {
+            // adds all them
+            this.gameObjects.AddRange(this.addQ);
+            this.addQ.Clear();
         }
 
         public void AddFrame(Frame frame)
@@ -75,6 +85,7 @@ namespace Rey.Engine
         /// </summary>
         public virtual void Load()
         {
+            this.HandleQueue();
             foreach (GameObject go in this.gameObjects)
                 go.Load();
             foreach (Frame frame in this.frames)
@@ -179,9 +190,11 @@ namespace Rey.Engine
                 frame.Update();
             }
 
+            
             foreach (GameObject go in this.gameObjects)
                 go.Update();
             this.gameObjects.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
+            
 
             foreach (Tile tile in this.tiles)
                 tile.Update();
@@ -206,6 +219,9 @@ namespace Rey.Engine
                 SceneManager.StartingNewCombatScene = false; // let the scene manager know that it is prepared to start new scene
                 
             }
+
+            // fill queue
+            this.HandleQueue();
         }
 
         // turns monsters aggressive
@@ -523,6 +539,21 @@ namespace Rey.Engine
             Pickup pickup = new Pickup();
             pickup.PickupItem = item;
             pickup.Transform.Position = this.player.Transform.Position;
+            //pickup.Transform.Velocity = new Vector2(r.Next(-5, 5), r.Next(-4, 4));
+            pickup.Load();
+            this.AddGameObject(pickup);
+        }
+        /// <summary>
+        /// Drops item at position
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="pos"></param>
+        public void DropItemAtPosition(Item item, Vector2 pos)
+        {
+            // create the pickup
+            Pickup pickup = new Pickup();
+            pickup.PickupItem = item;
+            pickup.Transform.Position = pos;
             //pickup.Transform.Velocity = new Vector2(r.Next(-5, 5), r.Next(-4, 4));
             pickup.Load();
             this.AddGameObject(pickup);
