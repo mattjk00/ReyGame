@@ -24,6 +24,7 @@ namespace Rey.Engine.Prefabs
         public NPCState State { get; set; } = NPCState.Idle;
 
         ChildObject body = new ChildObject();
+        ChildAnimation legs = new ChildAnimation(48, 50, 6, 3);
 
         // walking variables
         int intervalWalk;
@@ -58,6 +59,10 @@ namespace Rey.Engine.Prefabs
             this.body.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/NPCs/npc_body.png");
             this.body.Load();
 
+            // load the legs
+            this.legs.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/legs_animation.png");
+            this.legs.LocalPosition = new Vector2(-10, 90);
+
             if (scriptFile != "")
             {
                 this.Script = System.IO.File.ReadAllLines("Assets/Textures/NPCs/scripts/" + scriptFile).ToList();
@@ -80,15 +85,24 @@ namespace Rey.Engine.Prefabs
 
             this.body.LocalPosition = new Vector2(-5, 40);
             this.body.Update(this);
+            this.legs.Update(this);
+
+            
 
             // CHANGE LATEr
             this.MovementBox = this.BoundingBoxes[0];
 
             // Call correct function for the state
             if (State == NPCState.Idle)
+            {
                 HandleIdle();
+                this.legs.SetFrame(6);
+            }
             else if (State == NPCState.Walking)
+            {
                 HandleWalk();
+                this.legs.Animate();
+            }
         }
 
         /// <summary>
@@ -156,11 +170,13 @@ namespace Rey.Engine.Prefabs
 
         public override void Draw(SpriteBatch sb)
         {
+            legs.Draw(sb);
             this.body.Draw(sb);
 
-            base.Draw(sb);
+            //base.Draw(sb);
+            
 
-            // sb.Draw(this.body.Sprite.Texture, this.body.Transform.Position, Color.White);
+            sb.Draw(this.Sprite.Texture, this.Transform.Position, Color.White);
         }
     }
 }

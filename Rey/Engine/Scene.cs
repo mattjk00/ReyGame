@@ -493,6 +493,7 @@ namespace Rey.Engine
                     doorTouchCount++;
                 if (doorTouchCount >= 2) // if the player is touching a bunch of tiles, trigger a message to the scene
                 {
+                    doorTouchCount = 0;
                     this.HandleTileTrigger(doorTile);
                 }
             }

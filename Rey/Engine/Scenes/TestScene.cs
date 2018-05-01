@@ -247,7 +247,7 @@ namespace Rey.Engine.Scenes
         protected override void HandleTileTrigger(Tile tile)
         {
             // if it is a door
-            if (tile.TileType == TileType.Door && tile.Data != "")
+            if (tile.TileType == TileType.Door && tile.Data != "" && tile.Data != null)
             {
                 // transition
                 this.mapPath = "Assets/" + tile.Data.Split(';')[0] + ".guat"; // format the map path
