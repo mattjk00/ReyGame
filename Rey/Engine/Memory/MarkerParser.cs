@@ -11,7 +11,7 @@ namespace Rey.Engine.Memory
     public class MarkerParser
     {
         /// <summary>
-        /// Returns a list of enemies to be loaded
+        /// Returns a list of enemies to b e loaded
         /// </summary>
         /// <param name="markers"></param>
         /// <returns></returns>
@@ -28,6 +28,9 @@ namespace Rey.Engine.Memory
                 {
                     case "bat_head":
                         newEnemy = new Bat();
+                        break;
+                    case "fish_demon":
+                        newEnemy = new BabyFishDemon();
                         break;
                 }
                 newEnemy.Transform.Position = enemyMarker.Position;

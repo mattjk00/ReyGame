@@ -35,21 +35,23 @@ namespace Rey.Engine
 
         public Item() { } 
 
-        public Item(string name, ItemType itemType, EquipmentType equipmentType, Texture2D texture)
+        public Item(string name, ItemType itemType, EquipmentType equipmentType, Texture2D texture, EntityStats entityStats)
         {
             this.Name = name;
             this.ItemType = itemType;
             this.EquipmentType = equipmentType;
             this.Texture = texture;
+            this.Stats = entityStats;
         }
 
-        public Item(string name, ItemType itemType, EquipmentType equipmentType, Texture2D texture, Texture2D altTexture)
+        public Item(string name, ItemType itemType, EquipmentType equipmentType, Texture2D texture, Texture2D altTexture, EntityStats entityStats)
         {
             this.Name = name;
             this.ItemType = itemType;
             this.EquipmentType = equipmentType;
             this.Texture = texture;
             this.AltTexture = altTexture;
+            this.Stats = entityStats;
         }
     }
 }

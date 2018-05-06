@@ -74,6 +74,7 @@
     <Compile Include="Engine\Prefabs\UI\Inventory\EquipmentFrame.cs" />
     <Compile Include="Engine\Prefabs\UI\Inventory\Inventory.cs" />
     <Compile Include="Engine\Prefabs\UI\NPCTalkingFrame.cs" />
+    <Compile Include="Engine\Prefabs\UI\StatsFrame.cs" />
     <Compile Include="Engine\Prefabs\Weather.cs" />
     <Compile Include="Engine\ProjectileManager.cs" />
     <Compile Include="Engine\Scene.cs" />

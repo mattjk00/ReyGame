@@ -23,6 +23,7 @@ namespace Rey.Engine.Scenes
         GameObject upperWall;
 
         Inventory inventory;
+        StatsFrame statsFrame;
     
         // weather for the scene
         Weather weather; 
@@ -96,12 +97,14 @@ namespace Rey.Engine.Scenes
             this.AddGameObject(upperWall);
 
             this.inventory = new Inventory();
+            this.statsFrame = new StatsFrame();
 
             TestUIFrame testUIframe = new TestUIFrame();
             this.AddFrame(testUIframe);
 
             this.AddFrame(inventory);
             this.AddFrame(npcTalkingFrame);
+            this.AddFrame(statsFrame);
 
              //weather = new Weather();
             //this.AddGameObject(weather);
@@ -118,6 +121,8 @@ namespace Rey.Engine.Scenes
 
         public TestScene():base() { }
 
+
+
         public override void Update(Camera2D camera)
         {
             if (this.State == SceneState.Normal || this.State == SceneState.NPCTalking)
@@ -126,6 +131,8 @@ namespace Rey.Engine.Scenes
             // double check to stop the npc talking
             if (this.State == SceneState.Normal)
                 this.npcTalkingFrame.Active = false;
+
+            this.UpdateStats();
         }
 
         void LoadMap(bool fullReset, string atDoor = "")
@@ -261,5 +268,21 @@ namespace Rey.Engine.Scenes
                     this.LoadMap(true);
             }
         }
+
+        // check the inventory to see what the player's stats should be
+        void UpdateStats()
+        {
+            // sum all the stats
+            var stats = new StatsBoost();
+            if (GameData.EquippedHelmet.Stats != null)
+                stats = EntityStats.SumStatsB(GameData.EquippedHelmet.Stats, stats);
+            if (GameData.EquippedChest.Stats != null) 
+                stats = EntityStats.SumStatsB(GameData.EquippedChest.Stats, stats);
+
+            // boost the player's stats
+            this.player.EntityStats.Boosts = stats;
+        }
+
+        
     }
 }
