@@ -26,7 +26,7 @@ namespace Rey.Engine.UI
         public bool LockedPosition { get; set; } = false;
         public List<UIObject> objects = new List<UIObject>();
         public bool Active { get; set; } = true;
-        
+        public bool Loaded { get; private set; } = false;
 
         public virtual void Update()
         {
@@ -43,25 +43,29 @@ namespace Rey.Engine.UI
                 InputHelper.MouseOnUI = true; // mouse is on a ui
             }
 
-            // update the ui objects
-            foreach (UIObject ui in this.objects)
+            try
             {
-                //ui.Update();
-                ui.UpdateUI(mouse, oldMouse, this);
-
-                // if the ui object is locked
-                /*if (this.LockedPosition == true)
+                // update the ui objects
+                foreach (UIObject ui in this.objects)
                 {
-                    // iterate over the bounding boxes in the frame
-                    for (int i = 0; i < ui.BoundingBoxes.Count; i++)
+                    //ui.Update();
+                    ui.UpdateUI(mouse, oldMouse, this);
+
+                    // if the ui object is locked
+                    /*if (this.LockedPosition == true)
                     {
-                        // convert the bounding box so it can be clicked on by the sxcreen
-                        var r = ui.BoundingBoxes[i]; // cache
-                        var pos = InputHelper.ConvertToWindowPoint(r.Location.ToVector2());
-                        ui.BoundingBoxes[i] = new Rectangle((int)pos.X, (int)pos.Y, r.Width, r.Height);
-                    }
-                }*/
+                        // iterate over the bounding boxes in the frame
+                        for (int i = 0; i < ui.BoundingBoxes.Count; i++)
+                        {
+                            // convert the bounding box so it can be clicked on by the sxcreen
+                            var r = ui.BoundingBoxes[i]; // cache
+                            var pos = InputHelper.ConvertToWindowPoint(r.Location.ToVector2());
+                            ui.BoundingBoxes[i] = new Rectangle((int)pos.X, (int)pos.Y, r.Width, r.Height);
+                        }
+                    }*/
+                }
             }
+            catch (InvalidOperationException ioe) { }
             // update old mouse
             oldMouse = mouse;
         }
@@ -83,7 +87,7 @@ namespace Rey.Engine.UI
 
         public virtual void Load()
         {
-
+            this.Loaded = true;
         }
 
         public UIObject Find(string name)

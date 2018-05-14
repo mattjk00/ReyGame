@@ -34,11 +34,12 @@ namespace Rey.Engine.Scenes
 
         // the path to the guat map
         private string mapPath = "Assets/village.guat";
-
+        private string lastDoor = "";
         
 
         
         NPCTalkingFrame npcTalkingFrame = new NPCTalkingFrame();
+        DeathFrame deathFrame = new DeathFrame();
 
         public override void Load()
         {
@@ -48,6 +49,10 @@ namespace Rey.Engine.Scenes
             }
             catch (FileNotFoundException fnfe)
             { }
+
+            // reset lists
+            this.gameObjects = new List<GameObject>();
+            this.frames = new List<UI.Frame>();
 
             //this.Name = "test";
 
@@ -105,6 +110,7 @@ namespace Rey.Engine.Scenes
             this.AddFrame(inventory);
             this.AddFrame(npcTalkingFrame);
             this.AddFrame(statsFrame);
+            this.AddFrame(deathFrame);
 
              //weather = new Weather();
             //this.AddGameObject(weather);
@@ -132,17 +138,27 @@ namespace Rey.Engine.Scenes
             if (this.State == SceneState.Normal)
                 this.npcTalkingFrame.Active = false;
 
+            // check death frame
+            if (player.EntityStats.HP > 0)
+                this.deathFrame.Active = false;
+            else
+                this.deathFrame.Active = true;
+
             this.UpdateStats();
         }
 
-        void LoadMap(bool fullReset, string atDoor = "")
+        public void LoadMap(bool fullReset, string atDoor = "")
         {
             var map = Map.LoadFromFile(this.mapPath);
+
+            //whacky
+            if (atDoor == "LAST")
+                atDoor = lastDoor;
 
             this.ClearTiles();
             if (fullReset) // use if not the first loading
                 this.gameObjects.RemoveAll(x => x.Name != "player");
-
+            
             // load tiles
             foreach (Tile tile in map.Tiles)
             {
@@ -169,8 +185,12 @@ namespace Rey.Engine.Scenes
             var playerStart = map.Markers.Find(x => x.MarkerType == MarkerType.PlayerSpawnPoint);
             if (playerStart != null && atDoor == "")
                 player.Transform.Position = playerStart.StartingPosition;
-            else if (atDoor != "") // if loading in at a door
+            else if (atDoor != "" || (atDoor == "" && lastDoor != "")) // if loading in at a door
             {
+                if (atDoor == "")
+                    atDoor = lastDoor;
+                else
+                    lastDoor = atDoor;
                 // find the specific door with the specific given door data name
                 var door = map.Tiles.Find(x => x.TileType == TileType.Door && x.Data.Split(';')[1] == atDoor);
                 if (door != null)
@@ -186,6 +206,14 @@ namespace Rey.Engine.Scenes
             var npcs = MarkerParser.ParseNPCs(map.Markers);
             foreach (NPC npc in npcs)
                 this.AddGameObject(npc);
+
+            // reset player
+            player.Reset();
+
+            statsFrame.player = player;
+
+            // reload
+            base.Load();
 
             /*Pickup pickup = new Pickup();
             pickup.Transform.Position = player.Transform.Position;

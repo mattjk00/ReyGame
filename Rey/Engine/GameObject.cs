@@ -103,8 +103,9 @@ namespace Rey.Engine
         // updates a given index to the default
         public void UpdateDefaultBox(int index)
         {
-            this.BoundingBoxes[index] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X), (int)(this.Transform.Position.Y - this.Transform.Origin.Y),
-                this.Sprite.Texture.Width, this.Sprite.Texture.Height);
+            if (this.Sprite.Texture != null)
+                this.BoundingBoxes[index] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X), (int)(this.Transform.Position.Y - this.Transform.Origin.Y),
+                    this.Sprite.Texture.Width, this.Sprite.Texture.Height);
         }
 
         /// <summary>

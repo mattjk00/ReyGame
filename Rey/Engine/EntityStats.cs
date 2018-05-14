@@ -47,10 +47,10 @@ namespace Rey.Engine
         {
             this.HP = 10;
             this.MaxHP = 10;
-            this.AttackLevel = 1;
+            this.AttackLevel = 5;
             this.DefenceLevel = 1;
             this.AttackSpeed = 25;
-            this.MagicSpeed = 35;
+            this.MagicSpeed = 65;
         }
 
         public EntityStats(int hp, int maxhp, int attacklvl, int deflvl, int attackspd, int magicspd)

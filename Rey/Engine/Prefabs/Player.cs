@@ -220,7 +220,7 @@ namespace Rey.Engine.Prefabs
             // if the player is ready to attack
             if (this.magicAttackTimer == 0 && this.AttackState == PlayerAttackState.None && InputHelper.MouseOnUI == false)
             {
-                this.projectileManager.ShootNew(this.Transform.Position, InputHelper.MousePosition); // shoot a new projectile
+                this.projectileManager.ShootNew(this.Transform.Position, InputHelper.MousePosition, this.EntityStats); // shoot a new projectile
                 this.AttackState = PlayerAttackState.MagicAttack;
                 this.LandedMeleeHit = false;
             }
@@ -233,7 +233,7 @@ namespace Rey.Engine.Prefabs
         {
             // handle the timer stuff
             this.magicAttackTimer++;
-            if (this.magicAttackTimer >= this.EntityStats.MagicSpeed)
+            if (this.magicAttackTimer >= 100 - this.EntityStats.FullStats.MagicSpeed)
             {
                 this.magicAttackTimer = 0;
                 this.AttackState = PlayerAttackState.None;
@@ -384,7 +384,8 @@ namespace Rey.Engine.Prefabs
         /// <returns></returns>
         public int GetHit(EntityStats enemyStats)
         {
-            int damageDealt = enemyStats.AttackLevel;
+            Random rand = new Random();
+            int damageDealt = enemyStats.AttackLevel - (int)((float)this.EntityStats.FullStats.DefenceLevel / 10) + rand.Next(0, enemyStats.AttackLevel/2);
             //this.Sprite.Color = Color.Red;
             this.EntityStats.HP -= damageDealt; // deal damage to the enemy
             return damageDealt;
@@ -393,7 +394,7 @@ namespace Rey.Engine.Prefabs
         void HandleDeath()
         {
             //this.Sprite.Color = new Color(this.Sprite.Color.R, this.Sprite.Color.G, this.Sprite.Color.B, this.Sprite.Color.A - 100);
-            this.Sprite.Color = Color.Beige;
+            //this.Sprite.Color = Color.Beige;
         }
 
         public void Bounce(Vector2 bv)
@@ -423,6 +424,9 @@ namespace Rey.Engine.Prefabs
             this.magicAttackTimer = 0;
             this.LandedMeleeHit = false;
             this.projectileManager.Projectiles.Clear();
+            if (this.EntityStats != null)
+                this.EntityStats.HP = this.EntityStats.MaxHP;
+            this.Sprite.Color = new Color(255, 255, 255, 255);
             //this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
         }
     }

@@ -84,44 +84,48 @@ namespace Rey.Engine.UI
 
             if (this.IsActive)
             {
-                // check all bounding boxes
-                foreach (Rectangle boundingBox in this.BoundingBoxes)
+                try
                 {
-                    
-                    // if the button and the mouse intersect
-                    if (boundingBox.Intersects(mouseBox))
+                    // check all bounding boxes
+                    foreach (Rectangle boundingBox in this.BoundingBoxes)
                     {
-                        // trigger the hover method
-                        if (this.isMouseOn == false)
-                        {
-                            this.OnHover();
-                            this.isMouseOn = true;
-                        }
 
-                        // if clicked
-                        if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released)
+                        // if the button and the mouse intersect
+                        if (boundingBox.Intersects(mouseBox))
                         {
-                            // trigger the click event
-                            this.OnClick();
+                            // trigger the hover method
+                            if (this.isMouseOn == false)
+                            {
+                                this.OnHover();
+                                this.isMouseOn = true;
+                            }
+
+                            // if clicked
+                            if (mouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released)
+                            {
+                                // trigger the click event
+                                this.OnClick();
+                            }
+                            // if right clicked
+                            if (mouse.RightButton == ButtonState.Pressed && oldMouse.RightButton == ButtonState.Released)
+                            {
+                                // trigger the click event
+                                this.OnRightClick();
+                            }
                         }
-                        // if right clicked
-                        if (mouse.RightButton == ButtonState.Pressed && oldMouse.RightButton == ButtonState.Released)
+                        else
                         {
-                            // trigger the click event
-                            this.OnRightClick();
-                        }
-                    }
-                    else
-                    {
-                        // if the mouse leaves the button, trigger the on mouse leave event
-                        if (this.isMouseOn == true)
-                        {
-                            this.OnMouseLeave();
-                            this.isMouseOn = false;
+                            // if the mouse leaves the button, trigger the on mouse leave event
+                            if (this.isMouseOn == true)
+                            {
+                                this.OnMouseLeave();
+                                this.isMouseOn = false;
+                            }
                         }
                     }
                 }
-
-            }        }
+                catch (InvalidOperationException ioe) { }
+                }
+            }        
     }
 }

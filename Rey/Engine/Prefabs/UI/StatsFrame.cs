@@ -53,9 +53,12 @@ namespace Rey.Engine.Prefabs.UI
             // get the plyer
             player = SceneManager.GetCurrentScene().gameObjects.Find(x => x.GetType() == typeof(Player)) as Player;
 
-            attackLevelLbl.Text = "Attack: " + player.EntityStats.FullStats.AttackLevel;
-            defenceLevelLbl.Text = "Defence: " + player.EntityStats.FullStats.DefenceLevel;
-            magicSpeedLbl.Text = "Magic Speed: " + player.EntityStats.FullStats.MagicSpeed;
+            if (player != null)
+            {
+                attackLevelLbl.Text = "Attack: " + player.EntityStats.FullStats.AttackLevel;
+                defenceLevelLbl.Text = "Defence: " + player.EntityStats.FullStats.DefenceLevel;
+                magicSpeedLbl.Text = "Magic Speed: " + player.EntityStats.FullStats.MagicSpeed;
+            }
         }
     }
 }

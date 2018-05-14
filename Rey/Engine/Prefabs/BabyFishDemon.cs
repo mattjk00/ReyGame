@@ -26,6 +26,7 @@ namespace Rey.Engine.Prefabs
             this.EntityStats.MaxHP = 25;
             this.EntityStats.AttackSpeed = 50;
             this.EntityStats.Aggressive = true;
+            this.EntityStats.AttackLevel = 1;
             this.ChooseNewTargetAndInterval();
             this.BoundingBoxes.Add(new Rectangle(0, 0, 0, 0));
 
@@ -69,7 +70,8 @@ namespace Rey.Engine.Prefabs
             if (shadow.Sprite.Texture != null)
                 sb.Draw(shadow.Sprite.Texture, shadow.Transform.Position, shadow.Sprite.Color);
 
-            sb.Draw(this.Sprite.Texture, this.Transform.Position, this.Sprite.Color);
+            if (this.Sprite.Texture != null)
+                sb.Draw(this.Sprite.Texture, this.Transform.Position, this.Sprite.Color);
 
             this.aura.Draw(sb);
         }

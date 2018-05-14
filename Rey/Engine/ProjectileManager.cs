@@ -14,7 +14,7 @@ namespace Rey.Engine
         public List<Projectile> Projectiles { get; private set; } = new List<Projectile>();
 
         // creates and sends a new projectile at a position
-        public void ShootNew(Vector2 from, Vector2 to)
+        public void ShootNew(Vector2 from, Vector2 to, EntityStats playerStats)
         {
             // create a projectile and add it to the projectile array
             var proj = new Projectile();
@@ -22,6 +22,8 @@ namespace Rey.Engine
             proj.Load();
             proj.Transform.Position = from;
             proj.LookAt(to);
+            var buffedDamage = (int)((float)proj.Damage * (float)(1 + ((float)playerStats.FullStats.AttackLevel/10)));
+            proj.Damage = buffedDamage;
             this.Projectiles.Add(proj);
         }
 

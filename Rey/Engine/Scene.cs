@@ -89,7 +89,8 @@ namespace Rey.Engine
             foreach (GameObject go in this.gameObjects)
                 go.Load();
             foreach (Frame frame in this.frames)
-                frame.Load();
+                if (frame.Loaded == false)
+                    frame.Load();
             foreach (Tile tile in this.tiles)
                 tile.Load();
 
@@ -161,8 +162,13 @@ namespace Rey.Engine
             }
 
             // draw all tiles
-            foreach (GameObject go in objectBath)
-                go.Draw(sb);
+            try
+            {
+                foreach (GameObject go in objectBath)
+                    go.Draw(sb);
+            }
+            catch (ArgumentNullException nre) { // fu
+            }
 
             foreach (Frame frame in frames.FindAll(f => f.LockedPosition == false && f.Active == true))
                 frame.Draw(sb);
@@ -231,7 +237,7 @@ namespace Rey.Engine
             foreach (var go in this.gameObjects.FindAll(x => x.IsEnemy))
             {
                 Enemy enemy = go as Enemy; // convert the game object to an enemy
-                if (enemy.EntityStats.Aggressive && enemy.State != EnemyState.Dead)
+                if (enemy.EntityStats.Aggressive && enemy.State != EnemyState.Dead && Vector2.Distance(enemy.Transform.Position, player.Transform.Position) < 250)
                     enemy.StartAttack(player); // start the attackl
             }
         }

@@ -32,13 +32,17 @@ namespace Rey.Engine.Prefabs
         {
             base.Draw(sb);
 
-            var percentHealth = (float)(this.entityStats.HP) / (float)(this.entityStats.MaxHP);
-            var barWidth = percentHealth * this.greenbar.Width;
+            if (this.entityStats != null)
+            {
+                var percentHealth = (float)(this.entityStats.HP) / (float)(this.entityStats.MaxHP);
+                var barWidth = percentHealth * this.greenbar.Width;
 
-            // draw the green bar on top
-            sb.Draw(greenbar, this.Transform.Position, 
-                new Rectangle(0, 0, (int)barWidth, greenbar.Height),
-                Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
+
+                // draw the green bar on top
+                sb.Draw(greenbar, this.Transform.Position,
+                    new Rectangle(0, 0, (int)barWidth, greenbar.Height),
+                    Color.White, 0, Vector2.Zero, 1.0f, SpriteEffects.None, 0);
+            }
         }
     }
 }
