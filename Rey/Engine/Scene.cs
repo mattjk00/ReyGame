@@ -196,34 +196,37 @@ namespace Rey.Engine
                 frame.Update();
             }
 
-            
-            foreach (GameObject go in this.gameObjects)
-                go.Update();
-            this.gameObjects.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
-            
-
-            foreach (Tile tile in this.tiles)
-                tile.Update();
-            this.tiles.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
-
-            InputHelper.MouseOnUI = false; // reset it
-
-            if (this.CombatScene)
+            // prevent update when scene is paused
+            if (this.State != SceneState.Paused)
             {
-                this.CheckForWorldCollisions();
-                this.CheckForAttackCollisions();
-                this.CheckToSeeIfAllAreDead();
+                foreach (GameObject go in this.gameObjects)
+                    go.Update();
+                this.gameObjects.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
 
-                player = this.gameObjects.Find(x => x.Name == "player") as Player; // find the player
-                camera.Position = new Vector2(player.Transform.Position.X - 1280/2, player.Transform.Position.Y - 720/2);
-            }
 
-            // if this is true
-            if (SceneManager.StartingNewCombatScene == true)
-            {
-                this.SetTrapdoorState(false);
-                SceneManager.StartingNewCombatScene = false; // let the scene manager know that it is prepared to start new scene
-                
+                foreach (Tile tile in this.tiles)
+                    tile.Update();
+                this.tiles.RemoveAll(x => x.ToBeDestroyed); // remove all objects that should be destroyed
+
+                InputHelper.MouseOnUI = false; // reset it
+
+                if (this.CombatScene)
+                {
+                    this.CheckForWorldCollisions();
+                    this.CheckForAttackCollisions();
+                    this.CheckToSeeIfAllAreDead();
+
+                    player = this.gameObjects.Find(x => x.Name == "player") as Player; // find the player
+                    camera.Position = new Vector2(player.Transform.Position.X - 1280 / 2, player.Transform.Position.Y - 720 / 2);
+                }
+
+                // if this is true
+                if (SceneManager.StartingNewCombatScene == true)
+                {
+                    this.SetTrapdoorState(false);
+                    SceneManager.StartingNewCombatScene = false; // let the scene manager know that it is prepared to start new scene
+
+                }
             }
 
             // fill queue

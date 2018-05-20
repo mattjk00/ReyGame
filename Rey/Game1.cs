@@ -92,8 +92,8 @@ namespace Rey
         protected override void Update(GameTime gameTime)
         {
             mouse = Mouse.GetState();
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            /*if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+                Exit();*/
             
             if (Keyboard.GetState().IsKeyDown(Keys.F1))
             {

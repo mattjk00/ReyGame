@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Rey.Engine.Scenes;
 using System;
 using System.Collections.Generic;
@@ -97,8 +98,13 @@ namespace Rey.Engine
         {
             lastScene = currentScene;
             currentScene = sceneName;
-
-            // load new scene and unload old scene
+            if (InputHelper.Camera != null)
+                InputHelper.Camera.Position = Vector2.Zero;
+            if (sceneName == "test")
+            {
+                testScene.LoadMap(true);
+            }
+                // load new scene and unload old scene
             /*scenes.Find(x => x.Name == currentScene).Load();
             if (DrawLastScene == false)
                 scenes.Find(x => x.Name == lastScene).Unload();*/

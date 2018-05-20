@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Rey.Engine.Memory;
 using Rey.Engine.Prefabs;
 using Rey.Engine.Prefabs.UI;
@@ -40,6 +41,7 @@ namespace Rey.Engine.Scenes
         
         NPCTalkingFrame npcTalkingFrame = new NPCTalkingFrame();
         DeathFrame deathFrame = new DeathFrame();
+        PauseFrame pauseFrame = new PauseFrame();
 
         public override void Load()
         {
@@ -111,6 +113,7 @@ namespace Rey.Engine.Scenes
             this.AddFrame(npcTalkingFrame);
             this.AddFrame(statsFrame);
             this.AddFrame(deathFrame);
+            this.AddFrame(pauseFrame);
 
              //weather = new Weather();
             //this.AddGameObject(weather);
@@ -131,8 +134,16 @@ namespace Rey.Engine.Scenes
 
         public override void Update(Camera2D camera)
         {
-            if (this.State == SceneState.Normal || this.State == SceneState.NPCTalking)
+            // check pause frame state
+            SceneState lastState = this.State;
+            if (this.pauseFrame.Active)
+                this.State = SceneState.Paused;
+
+            if (this.State == SceneState.Normal || this.State == SceneState.NPCTalking || this.State == SceneState.Paused)
                 base.Update(camera);
+
+            // resume state from pause
+            this.State = lastState;
 
             // double check to stop the npc talking
             if (this.State == SceneState.Normal)
@@ -145,6 +156,16 @@ namespace Rey.Engine.Scenes
                 this.deathFrame.Active = true;
 
             this.UpdateStats();
+
+            
+
+
+            // check for input to pause the game
+            if (this.pauseFrame.Active == false)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    this.pauseFrame.Active = true;
+            }
         }
 
         public void LoadMap(bool fullReset, string atDoor = "")

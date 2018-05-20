@@ -71,7 +71,7 @@ namespace Rey.Engine.UI
             base.DrawUI(sb, frame);
             // try to draw text
             if (AssetLoader.Font != null)
-                sb.DrawString(AssetLoader.Font, this.Text, new Vector2(this.Transform.Position.X + AssetLoader.Font.MeasureString(this.Text).X/2, this.Transform.Position.Y + AssetLoader.Font.MeasureString(this.Text).Y / 2), this.TextColor);
+                sb.DrawString(AssetLoader.Font, this.Text, new Vector2(this.Transform.Position.X + this.Sprite.Texture.Width/2 - AssetLoader.Font.MeasureString(this.Text).X/2, this.Transform.Position.Y + this.Sprite.Texture.Height/2 - AssetLoader.Font.MeasureString(this.Text).Y / 2), this.TextColor);
             
         }
     }

@@ -23,20 +23,21 @@ namespace Rey.Engine.Scenes
         {
             //this.Name = "mainmenu";
             this.CombatScene = false;
-            this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/main_menu.png");
+            this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/mainmenu.png");
 
             this.ui = new Frame();
             this.ui.Scrollable = true;
             this.ui.Position = new Vector2(560, 260);
-            this.ui.Width = 150;
+            this.ui.Width = 250;
             this.ui.Height = 200;
             this.ui.Background = AssetLoader.LoadTexture("Assets/Textures/UI/ui_back.png");
 
             // the start button
             this.startButton = new Button("start");
-            this.startButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal.png", "Assets/Textures/UI/main_menu_button_hover.png");
+            this.startButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal2.png", "Assets/Textures/UI/main_menu_button_hover2.png");
             this.startButton.Text = "Start!";
-            this.startButton.LocalPosition = new Vector2(0, 1);
+            this.startButton.TextColor = Color.Black;
+            this.startButton.LocalPosition = new Vector2(25, 10);
             this.startButton.OnClick += () =>
             {
                 SceneManager.TransitionToScene("test");
@@ -44,9 +45,10 @@ namespace Rey.Engine.Scenes
 
             // the quit button
             this.quitButton = new Button("quit");
-            this.quitButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal.png", "Assets/Textures/UI/main_menu_button_hover.png");
+            this.quitButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal2.png", "Assets/Textures/UI/main_menu_button_hover2.png");
             this.quitButton.Text = "Quit!";
-            this.quitButton.LocalPosition = new Vector2(0, 60);
+            this.quitButton.TextColor = Color.Black;
+            this.quitButton.LocalPosition = new Vector2(25, 70);
             this.quitButton.OnClick += () =>
             {
                 SceneManager.Quit = true;

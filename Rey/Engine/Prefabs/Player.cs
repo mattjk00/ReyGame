@@ -88,7 +88,7 @@ namespace Rey.Engine.Prefabs
             this.weapon.LocalPosition = new Vector2(13, 62);
             this.weapon.Transform.Origin = new Vector2(5, this.weapon.Sprite.Texture.Height / 2);
 
-            this.legs.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/legs_animation.png");
+            this.legs.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/legs_animation2.png");
             this.legs.LocalPosition = new Vector2(0, 55);
 
             this.head.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/default_head.png");
