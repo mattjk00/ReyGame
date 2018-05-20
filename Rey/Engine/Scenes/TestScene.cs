@@ -34,7 +34,7 @@ namespace Rey.Engine.Scenes
         public TestScene(string name) : base(name) { }
 
         // the path to the guat map
-        private string mapPath = "Assets/village.guat";
+        private string mapPath = "Assets/villages.guat";
         private string lastDoor = "";
         
 
@@ -143,7 +143,8 @@ namespace Rey.Engine.Scenes
                 base.Update(camera);
 
             // resume state from pause
-            this.State = lastState;
+            if (this.State == SceneState.Paused)
+                this.State = lastState;
 
             // double check to stop the npc talking
             if (this.State == SceneState.Normal)
@@ -171,6 +172,9 @@ namespace Rey.Engine.Scenes
         public void LoadMap(bool fullReset, string atDoor = "")
         {
             var map = Map.LoadFromFile(this.mapPath);
+
+            var doors = map.Tiles.FindAll(x => x.TileType == TileType.Door);
+            
 
             //whacky
             if (atDoor == "LAST")
@@ -213,7 +217,7 @@ namespace Rey.Engine.Scenes
                 else
                     lastDoor = atDoor;
                 // find the specific door with the specific given door data name
-                var door = map.Tiles.Find(x => x.TileType == TileType.Door && x.Data.Split(';')[1] == atDoor);
+                var door = doors.Find(x => x.Data != null && x.Data.Contains(atDoor));
                 if (door != null)
                     player.Transform.Position = new Vector2(door.Transform.Position.X, door.Transform.Position.Y + player.Sprite.Texture.Height);
             }

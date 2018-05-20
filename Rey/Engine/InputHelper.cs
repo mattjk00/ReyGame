@@ -17,6 +17,7 @@ namespace Rey.Engine
         public static GraphicsDevice GD;
         public static GraphicsDeviceManager GDM;
         public static bool MouseOnUI = false;
+        public static Random Random = new Random();
 
         public static Vector2 ConvertToWindowPoint(Vector2 p)
         {

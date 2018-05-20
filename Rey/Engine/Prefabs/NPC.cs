@@ -63,6 +63,8 @@ namespace Rey.Engine.Prefabs
             this.legs.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/legs_animation.png");
             this.legs.LocalPosition = new Vector2(-10, 90);
 
+            
+
             if (scriptFile != "")
             {
                 this.Script = System.IO.File.ReadAllLines("Assets/Textures/NPCs/scripts/" + scriptFile).ToList();
@@ -116,21 +118,21 @@ namespace Rey.Engine.Prefabs
             {
                 // reset variables
                 walkTimer = 0;
-                intervalWalk = random.Next(15, 25);
+                intervalWalk = InputHelper.Random.Next(15, 25);
 
                 var targetX = 0;
                 var targetY = 0;
 
                 // control the next target so that where he moves is evened out
                 if (lastTarget.X >= 0)
-                    targetX = random.Next(-50, 5);
+                    targetX = InputHelper.Random.Next(-50, 5);
                 else
-                    targetX = random.Next(-5, 50);
+                    targetX = InputHelper.Random.Next(-5, 50);
 
                 if (lastTarget.Y >= 0)
-                    targetY = random.Next(-51, 4);
+                    targetY = InputHelper.Random.Next(-51, 4);
                 else
-                    targetY = random.Next(-4, 51);
+                    targetY = InputHelper.Random.Next(-4, 51);
 
                 target = new Vector2(this.Transform.Position.X + targetX, this.Transform.Position.Y + targetY); // choose the new target
                 this.State = NPCState.Walking;
