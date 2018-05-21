@@ -62,6 +62,7 @@
     <Compile Include="Engine\Prefabs\Bat.cs" />
     <Compile Include="Engine\Prefabs\Enemy.cs" />
     <Compile Include="Engine\Prefabs\Healthbar.cs" />
+    <Compile Include="Engine\Prefabs\MushroomMinion.cs" />
     <Compile Include="Engine\Prefabs\NPC.cs" />
     <Compile Include="Engine\Prefabs\Pickup.cs" />
     <Compile Include="Engine\Prefabs\Player.cs" />

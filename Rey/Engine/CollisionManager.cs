@@ -27,6 +27,7 @@ namespace Rey.Engine
                     // if it's a bat just check the regular bounding box
                     case "bat":
                     case "babyfishdemon":
+                    case "mushroomminion":
                         if (player.BoundingBoxes[1].Intersects(enemy.BoundingBoxes[0]))
                             this.HandleEnemyGettingHitByMelee(player, enemy, new Vector2(2, 0));
                         break;
@@ -47,6 +48,7 @@ namespace Rey.Engine
                 // if it's a bat just check the regular bounding box
                 case "bat":
                 case "babyfishdemon":
+                case "mushroomminion":
                     if (projectile.BoundingBoxes[0].Intersects(enemy.BoundingBoxes[0]))
                         HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(5, 0));
                     break;
@@ -76,6 +78,16 @@ namespace Rey.Engine
             else
                 enemy.Bounce(bounce);
             projectile.ToBeDestroyed = true; // destroy the projectile
+        }
+
+        public void HandleEnemyProjectileHittingPlayer(Player player, Projectile projectile)
+        {
+            // if hitting the player
+            if (projectile.BoundingBoxes[0].Intersects(player.BoundingBoxes[0]))
+            {
+                projectile.ToBeDestroyed = true;
+                player.GetHit(projectile.Damage);
+            }
         }
 
         /// <summary>

@@ -357,10 +357,17 @@ namespace Rey.Engine
                     {
                         this.collisionManager.HandlePlayerProjectileAttackEnemyCollision(player, proj, gameObject as Enemy);
                     }
+                    var enemy = gameObject as Enemy; // convert to an enemy
+                    foreach (Projectile enemyProj in enemy.projectileManager.Projectiles)
+                    {
+                        this.collisionManager.HandleEnemyProjectileHittingPlayer(player, enemyProj);
+                    }
                 }
 
                 
             }
+
+            
         }
 
         void CheckForWorldCollisions()

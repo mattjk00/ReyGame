@@ -13,6 +13,7 @@ namespace Rey.Engine.Prefabs
         Idle,
         Chasing,
         MeleeAttacking,
+        MagicAttacking,
         Dead
     }
 
@@ -41,6 +42,7 @@ namespace Rey.Engine.Prefabs
         protected float movementTimer = 0;
         protected float interval = 1000;
         protected Player playerTarget; // the targeted player
+        public ProjectileManager projectileManager { get; protected set; } = new ProjectileManager();
 
         // for idle movement
         protected bool moving = false;
@@ -92,6 +94,14 @@ namespace Rey.Engine.Prefabs
             else if (this.State == EnemyState.Dead)
                 this.HandleDeath();
 
+            this.EssentialUpdate();
+        }
+
+        /// <summary>
+        /// The essential stuff, nothing to do with combat
+        /// </summary>
+        protected virtual void EssentialUpdate()
+        {
             this.UpdateDefaultBox(0);
             // update the sword bounding box
             if (this.direction == Direction.MovingRight)

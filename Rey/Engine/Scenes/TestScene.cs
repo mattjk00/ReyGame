@@ -93,6 +93,7 @@ namespace Rey.Engine.Scenes
             this.AddGameObject(player);
 
             
+            
 
             fadeScreen = new GameObject("fade");
             fadeScreen.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/UI/fade.png");
@@ -244,6 +245,10 @@ namespace Rey.Engine.Scenes
             pickup.Transform.Position = player.Transform.Position;
             pickup.PickupItem = ItemData.ironHelmet;
             this.AddGameObject(pickup);*/
+            MushroomMinion mush = new MushroomMinion();
+            mush.Transform.Position = new Vector2(500, 500);
+            mush.Load();
+            this.AddGameObject(mush);
         }
 
         /// <summary>

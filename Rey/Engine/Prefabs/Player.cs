@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using Rey.Engine.Behaviors;
+using System.Timers;
 
 public enum Direction
 {
@@ -145,6 +146,7 @@ namespace Rey.Engine.Prefabs
             this.shadow.Update(this);
             this.projectileManager.Update();
             this.healthbar.Update(this);
+            this.SlowHeal(); // slow heal
 
             // animate the legs if the velocity is greater than 1
             if (Math.Abs(this.Transform.VelX) > 1 || Math.Abs(this.Transform.VelY) > 1)
@@ -220,7 +222,7 @@ namespace Rey.Engine.Prefabs
             // if the player is ready to attack
             if (this.magicAttackTimer == 0 && this.AttackState == PlayerAttackState.None && InputHelper.MouseOnUI == false)
             {
-                this.projectileManager.ShootNew(this.Transform.Position, InputHelper.MousePosition, this.EntityStats); // shoot a new projectile
+                this.projectileManager.ShootNew(this.Transform.Position, InputHelper.MousePosition, 16, 4, this.EntityStats); // shoot a new projectile
                 this.AttackState = PlayerAttackState.MagicAttack;
                 this.LandedMeleeHit = false;
             }
@@ -391,6 +393,20 @@ namespace Rey.Engine.Prefabs
             return damageDealt;
         }
 
+        /// <summary>
+        /// For use from projectiles
+        /// </summary>
+        /// <param name="rawDamage"></param>
+        /// <returns></returns>
+        public int GetHit(int rawDamage)
+        {
+            Random rand = new Random();
+            int damageDealt = rawDamage - (int)((float)this.EntityStats.FullStats.DefenceLevel / 10) + rand.Next(0, rawDamage / 2);
+            //this.Sprite.Color = Color.Red;
+            this.EntityStats.HP -= damageDealt; // deal damage to the enemy
+            return damageDealt;
+        }
+
         void HandleDeath()
         {
             //this.Sprite.Color = new Color(this.Sprite.Color.R, this.Sprite.Color.G, this.Sprite.Color.B, this.Sprite.Color.A - 100);
@@ -410,6 +426,28 @@ namespace Rey.Engine.Prefabs
             this.AttackState = PlayerAttackState.Dead;
             this.Sprite.Color = new Color(255, 0, 0, 80);
             this.Transform.Rotation = MathHelper.ToRadians(90);
+        }
+
+        int healTimer = 0;
+        /// <summary>
+        /// A slow heal
+        /// </summary>
+        void SlowHeal()
+        {
+            // only heal if below the max hp and above 0
+            if (this.EntityStats.HP < this.EntityStats.MaxHP && this.EntityStats.HP > 0)
+            {
+                healTimer++;
+                int interval = 700 - (100 * EntityStats.FullStats.DefenceLevel);
+                if (interval < 200)
+                    interval = 200;
+                if (healTimer > interval)
+                {
+                    this.EntityStats.HP += 1;
+
+                    healTimer = 0;
+                }
+            }
         }
 
         /// <summary>

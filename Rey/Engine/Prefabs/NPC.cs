@@ -60,7 +60,7 @@ namespace Rey.Engine.Prefabs
             this.body.Load();
 
             // load the legs
-            this.legs.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/legs_animation.png");
+            this.legs.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/legs_animation2.png");
             this.legs.LocalPosition = new Vector2(-10, 90);
 
             
