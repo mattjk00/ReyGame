@@ -351,6 +351,8 @@ namespace Rey.Engine.Scenes
                 stats = EntityStats.SumStatsB(GameData.EquippedHelmet.Stats, stats);
             if (GameData.EquippedChest.Stats != null) 
                 stats = EntityStats.SumStatsB(GameData.EquippedChest.Stats, stats);
+            if (GameData.EquippedLegs.Stats != null)
+                stats = EntityStats.SumStatsB(GameData.EquippedLegs.Stats, stats);
 
             // boost the player's stats
             this.player.EntityStats.Boosts = stats;

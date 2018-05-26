@@ -56,6 +56,10 @@ namespace Rey.Engine.UI
                                 newItem = GameData.EquippedChest;
                                 GameData.EquippedChest = this.Item;
                                 break;
+                            case EquipmentType.Legs:
+                                newItem = GameData.EquippedLegs;
+                                GameData.EquippedLegs = this.Item;
+                                break;
                         }
                         GameData.backpack[index] = newItem; // remove the equipped item from the backpack because it is now on the player
                     }
@@ -85,12 +89,18 @@ namespace Rey.Engine.UI
                 if (this.Item.ID != null)
                 {
                     // scale the item correctly
-                    Vector2 itemScale = new Vector2(
-                            (float)this.Sprite.Texture.Width / (float)this.Item.Texture.Width,
-                            (float)this.Sprite.Texture.Height / (float)this.Item.Texture.Height
-                        ) * 0.8f;
-                    sb.Draw(this.Item.Texture, this.Transform.Position + new Vector2(5, 5), null, Color.White, 0, Vector2.Zero, itemScale, SpriteEffects.None, 0);
-                }
+                    if (this.Item.EquipmentType != EquipmentType.Legs)
+                    {
+                        Vector2 itemScale = new Vector2(
+                                (float)this.Sprite.Texture.Width / (float)this.Item.Texture.Width,
+                                (float)this.Sprite.Texture.Height / (float)this.Item.Texture.Height
+                            ) * 0.8f;
+                        sb.Draw(this.Item.Texture, this.Transform.Position + new Vector2(5, 5), null, Color.White, 0, Vector2.Zero, itemScale, SpriteEffects.None, 0);
+                    }
+                    else
+                    { 
+                        sb.Draw(this.Item.Texture, this.Transform.Position + new Vector2(5, 5), new Rectangle(0, 0, 50, 50), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);                    }
+                    }
         }
     }
 }

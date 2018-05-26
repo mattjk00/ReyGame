@@ -55,6 +55,8 @@ namespace Rey.Engine.Prefabs
         Texture2D currentMagicAttackBody;
         Texture2D currentBody;
 
+        Texture2D defaultLegs;
+
         public ProjectileManager projectileManager { get; protected set; } = new ProjectileManager();
 
         public Rectangle MovementBox { get; protected set; } = new Rectangle();
@@ -89,7 +91,9 @@ namespace Rey.Engine.Prefabs
             this.weapon.LocalPosition = new Vector2(13, 62);
             this.weapon.Transform.Origin = new Vector2(5, this.weapon.Sprite.Texture.Height / 2);
 
-            this.legs.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/legs_animation2.png");
+            
+            defaultLegs = AssetLoader.LoadTexture("Assets/Textures/player/legs_animation2.png");
+            this.legs.Sprite.Texture = defaultLegs;
             this.legs.LocalPosition = new Vector2(0, 55);
 
             this.head.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/player/default_head.png");
@@ -137,6 +141,12 @@ namespace Rey.Engine.Prefabs
            
 
             base.Update(); // important so velocity works
+
+            // update legs based on what's equipped
+            if (GameData.EquippedLegs.ID != null)
+                legs.Sprite.Texture = GameData.EquippedLegs.Texture;
+            else
+                legs.Sprite.Texture = this.defaultLegs;
 
             // maybe put this in the child class??
             this.arm.Update(this);
@@ -387,7 +397,7 @@ namespace Rey.Engine.Prefabs
         public int GetHit(EntityStats enemyStats)
         {
             Random rand = new Random();
-            int damageDealt = enemyStats.AttackLevel - (int)((float)this.EntityStats.FullStats.DefenceLevel / 10) + rand.Next(0, enemyStats.AttackLevel/2);
+            int damageDealt = (enemyStats.AttackLevel - (int)((float)this.EntityStats.FullStats.DefenceLevel / 10) + rand.Next(0, enemyStats.AttackLevel/2)) + 1;
             //this.Sprite.Color = Color.Red;
             this.EntityStats.HP -= damageDealt; // deal damage to the enemy
             return damageDealt;
@@ -401,7 +411,7 @@ namespace Rey.Engine.Prefabs
         public int GetHit(int rawDamage)
         {
             Random rand = new Random();
-            int damageDealt = rawDamage - (int)((float)this.EntityStats.FullStats.DefenceLevel / 10) + rand.Next(0, rawDamage / 2);
+            int damageDealt = (rawDamage - (int)((float)this.EntityStats.FullStats.DefenceLevel / 10) + rand.Next(0, rawDamage / 2)) + 1;
             //this.Sprite.Color = Color.Red;
             this.EntityStats.HP -= damageDealt; // deal damage to the enemy
             return damageDealt;

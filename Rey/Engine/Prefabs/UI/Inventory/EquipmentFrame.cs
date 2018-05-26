@@ -13,6 +13,7 @@ namespace Rey.Engine.Prefabs.UI.Inventory
     {
         Button helmetButton = new Button("helmet");
         Button chestButton = new Button("chest");
+        Button legsButton = new Button("legs");
 
         public override void Load()
         {
@@ -49,6 +50,19 @@ namespace Rey.Engine.Prefabs.UI.Inventory
             chestButton.LocalPosition = new Vector2(100, 125);
             this.AddObject(chestButton);
 
+            legsButton.LoadTextures("Assets/Textures/ui/equipment_slot.png", "Assets/Textures/ui/equipment_slot_hover.png");
+            legsButton.OnClick += () =>
+            {
+                // unequip the helmet
+                if (GameData.EquippedLegs.ID != null)
+                {
+                    GameData.AddItemToBackpack(GameData.EquippedLegs);
+                    GameData.EquippedLegs = new Item();
+                }
+            };
+            legsButton.LocalPosition = new Vector2(100, 200);
+            this.AddObject(legsButton);
+
             base.Load();
         }
 
@@ -70,6 +84,13 @@ namespace Rey.Engine.Prefabs.UI.Inventory
                 sb.Draw(GameData.EquippedChest.Texture, chestButton.Transform.Position, null, Color.White, 0, Vector2.Zero,
                     InputHelper.ScaleTexture(GameData.EquippedChest.Texture, 50, 50), SpriteEffects.None, 0);
                 sb.DrawString(AssetLoader.Font, GameData.EquippedChest.Name, chestButton.Transform.Position - new Vector2(0, 15), Color.Silver);
+            }
+
+
+            if (GameData.EquippedLegs.ID != null)
+            {
+                sb.Draw(GameData.EquippedLegs.Texture, legsButton.Transform.Position, new Rectangle(0, 0, 50, 50), Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                sb.DrawString(AssetLoader.Font, GameData.EquippedLegs.Name, legsButton.Transform.Position - new Vector2(0, 15), Color.Silver);
             }
         }
     }

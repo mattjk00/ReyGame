@@ -24,12 +24,12 @@ namespace Rey.Engine
             ItemData.New(ItemData.mushroomChest),
             ItemData.New(ItemData.mushroomHelmet),
             ItemData.New(ItemData.trainingChest),
-            new Item(),
-            new Item(),
-            new Item(),
-            new Item(),
-            new Item(),
-            new Item(),
+            ItemData.New(ItemData.ironLegs),
+            ItemData.New(ItemData.ironChest),
+            ItemData.New(ItemData.mushroomLegs),
+            ItemData.New(ItemData.darkMageChest),
+            ItemData.New(ItemData.darkMageHelmet),
+            ItemData.New(ItemData.darkMageLegs),
             new Item(),
             new Item(),
             new Item(),
@@ -68,6 +68,7 @@ namespace Rey.Engine
 
         public static Item EquippedHelmet = new Item();
         public static Item EquippedChest = new Item();
+        public static Item EquippedLegs = new Item();
     }
 
     public enum EnemyIDs
