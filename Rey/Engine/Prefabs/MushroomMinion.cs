@@ -142,7 +142,7 @@ namespace Rey.Engine.Prefabs
                 this.magicTimer = 0;
 
                 // shoot a thing
-                this.projectileManager.ShootNew(this.Transform.Position, this.playerTarget.Transform.Position, 8, 1, this.EntityStats);
+                this.projectileManager.ShootNew(this.Transform.Position, this.playerTarget.Transform.Position, 8, 3, this.EntityStats, ProjectileType.Mushroom);
             
         }
     }

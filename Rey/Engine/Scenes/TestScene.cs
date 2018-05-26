@@ -204,8 +204,23 @@ namespace Rey.Engine.Scenes
                 /*if (tile.Name == "ocean1" || tile.Name == "wood_base" || tile.Name == "wood_wall")
                     tile.SetType(TileType.Block);*/
                 tile.SetMapCoords(50);
+
+
+
                 if (tile.Name != null && tile.Name != "delete")
-                    this.AddTile(tile);
+                {
+                    // check for an animation tile and add it
+                    if (tile.Sprite.Texture.Width > 50)
+                    {
+                        var animtile = new AnimationTile(tile.Name, tile.Transform.Position, tile.Sprite.Texture, tile.TileType);
+                        animtile.SetMapCoords(50);
+                        this.AddTile(animtile);
+                    }
+                    else
+                    {
+                        this.AddTile(tile);
+                    }
+                }
             }
             // try to find the player's starting position
             var playerStart = map.Markers.Find(x => x.MarkerType == MarkerType.PlayerSpawnPoint);

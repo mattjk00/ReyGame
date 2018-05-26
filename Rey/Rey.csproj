@@ -58,6 +58,7 @@
     <Compile Include="Engine\Memory\Map.cs" />
     <Compile Include="Engine\Memory\MapMarker.cs" />
     <Compile Include="Engine\Memory\MarkerParser.cs" />
+    <Compile Include="Engine\Prefabs\AnimationTile.cs" />
     <Compile Include="Engine\Prefabs\BabyFishDemon.cs" />
     <Compile Include="Engine\Prefabs\Bat.cs" />
     <Compile Include="Engine\Prefabs\Enemy.cs" />
