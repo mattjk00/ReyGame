@@ -35,6 +35,9 @@ namespace Rey.Engine.Memory
                     case "mushroom":
                         newEnemy = new MushroomMinion();
                         break;
+                    case "gargoyle_head":
+                        newEnemy = new Gargoyle();
+                        break;
                 }
                 newEnemy.Transform.Position = enemyMarker.Position;
                 enemies.Add(newEnemy);

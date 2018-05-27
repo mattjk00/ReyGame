@@ -10,8 +10,8 @@ namespace Rey.Engine.Prefabs
 {
     public class Bat : Enemy
     {
-        private ChildObject legs = new ChildObject();
-        private ChildAnimation body = new ChildAnimation(99, 60, 2, 3);
+        protected ChildObject legs = new ChildObject();
+        protected ChildAnimation body = new ChildAnimation(99, 60, 2, 3);
 
         public override void Load()
         {

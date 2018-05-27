@@ -28,6 +28,7 @@ namespace Rey.Engine
                     case "bat":
                     case "babyfishdemon":
                     case "mushroomminion":
+                    case "gargoyle":
                         if (player.BoundingBoxes[1].Intersects(enemy.BoundingBoxes[0]))
                             this.HandleEnemyGettingHitByMelee(player, enemy, new Vector2(2, 0));
                         break;
@@ -48,6 +49,7 @@ namespace Rey.Engine
                 // if it's a bat just check the regular bounding box
                 case "bat":
                 case "babyfishdemon":
+                case "gargoyle":
                     if (projectile.BoundingBoxes[0].Intersects(enemy.BoundingBoxes[0]))
                     {
                         HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(5, 0));
