@@ -260,10 +260,10 @@ namespace Rey.Engine.Scenes
             pickup.Transform.Position = player.Transform.Position;
             pickup.PickupItem = ItemData.ironHelmet;
             this.AddGameObject(pickup);*/
-            MushroomMinion mush = new MushroomMinion();
+            /*MushroomMinion mush = new MushroomMinion();
             mush.Transform.Position = new Vector2(500, 500);
             mush.Load();
-            this.AddGameObject(mush);
+            this.AddGameObject(mush);*/
         }
 
         /// <summary>

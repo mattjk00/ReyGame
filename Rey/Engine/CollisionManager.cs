@@ -40,7 +40,7 @@ namespace Rey.Engine
         /// </summary>
         /// <param name="player"></param>
         /// <param name="enemy"></param>
-        public void HandlePlayerProjectileAttackEnemyCollision(Player player, Projectile projectile, Enemy enemy)
+        public void HandlePlayerProjectileAttackEnemyCollision(Player player, Projectile projectile, Enemy enemy, ParticleManager particleManager)
         {
             // if player weapon intersects enemy bounding box
             switch (enemy.Name)
@@ -49,11 +49,17 @@ namespace Rey.Engine
                 case "bat":
                 case "babyfishdemon":
                     if (projectile.BoundingBoxes[0].Intersects(enemy.BoundingBoxes[0]))
+                    {
                         HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(5, 0));
+                        particleManager.Burst(enemy.Transform.Position, new Vector2(2, 2), Color.Red, 25);
+                    }
                     break;
                 case "mushroomminion":
                     if (projectile.BoundingBoxes[0].Intersects(enemy.BoundingBoxes[0]))
+                    {
                         HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(1, 0));
+                        particleManager.Burst(enemy.Transform.Position, new Vector2(2, 2), Color.Red, 25);
+                    }
                     break;
             }
         }
@@ -83,13 +89,14 @@ namespace Rey.Engine
             projectile.ToBeDestroyed = true; // destroy the projectile
         }
 
-        public void HandleEnemyProjectileHittingPlayer(Player player, Projectile projectile)
+        public void HandleEnemyProjectileHittingPlayer(Player player, Projectile projectile, ParticleManager particleManager)
         {
             // if hitting the player
             if (projectile.BoundingBoxes[0].Intersects(player.BoundingBoxes[0]))
             {
                 projectile.ToBeDestroyed = true;
                 player.GetHit(projectile.Damage);
+                particleManager.Burst(player.Transform.Position, new Vector2(2, 2), Color.Red, 25);
             }
         }
 

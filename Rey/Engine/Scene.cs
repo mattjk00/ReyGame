@@ -33,6 +33,8 @@ namespace Rey.Engine
         private Player player;
         public SceneState State { get; set; } = SceneState.Normal;
 
+        public ParticleManager ParticleManager { get; private set; } = new ParticleManager();
+
         private List<GameObject> addQ = new List<GameObject>(); // queue to add go's
 
         public Scene() { this.gameObjects = new List<GameObject>();  }
@@ -170,6 +172,8 @@ namespace Rey.Engine
             catch (ArgumentNullException nre) { // fu
             }
 
+            ParticleManager.Draw(sb);
+
             foreach (Frame frame in frames.FindAll(f => f.LockedPosition == false && f.Active == true))
                 frame.Draw(sb);
             
@@ -228,6 +232,8 @@ namespace Rey.Engine
 
                 }
             }
+
+            ParticleManager.Update();
 
             // fill queue
             this.HandleQueue();
@@ -315,6 +321,7 @@ namespace Rey.Engine
                         {
                             enemy.LandedMeleeHit = true;
                             player.GetHit(enemy.EntityStats);
+                            
                             if (player.Transform.Position.X > enemy.Transform.Position.X)
                             {
                                 player.Bounce(new Vector2(4, 0)); // bounces player based on direction of incoming hit
@@ -331,6 +338,7 @@ namespace Rey.Engine
                     {
                         enemy.LandedMeleeHit = true;
                         player.GetHit(enemy.EntityStats);
+                        this.ParticleManager.Burst(player.Transform.Position, new Vector2(2, 2), Color.Red, 25);
                         if (player.Transform.Position.X > enemy.Transform.Position.X)
                         {
                             player.Bounce(new Vector2(4, 0)); // bounces player based on direction of incoming hit
@@ -354,13 +362,13 @@ namespace Rey.Engine
 
                     // check in the projectiles being fired by the player
                     foreach (Projectile proj in player.projectileManager.Projectiles)
-                    {
-                        this.collisionManager.HandlePlayerProjectileAttackEnemyCollision(player, proj, gameObject as Enemy);
+                    {             
+                        this.collisionManager.HandlePlayerProjectileAttackEnemyCollision(player, proj, gameObject as Enemy, ParticleManager);
                     }
                     var enemy = gameObject as Enemy; // convert to an enemy
                     foreach (Projectile enemyProj in enemy.projectileManager.Projectiles)
                     {
-                        this.collisionManager.HandleEnemyProjectileHittingPlayer(player, enemyProj);
+                        this.collisionManager.HandleEnemyProjectileHittingPlayer(player, enemyProj, ParticleManager);
                     }
                 }
 

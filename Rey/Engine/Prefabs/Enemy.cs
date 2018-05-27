@@ -174,8 +174,11 @@ namespace Rey.Engine.Prefabs
         // starts an attack
         public void StartAttack(Player player)
         {
-            this.playerTarget = player;
-            this.State = EnemyState.Chasing;
+            if (this.State != EnemyState.Dead)
+            {
+                this.playerTarget = player;
+                this.State = EnemyState.Chasing;
+            }
         }
 
         /// <summary>
@@ -321,10 +324,12 @@ namespace Rey.Engine.Prefabs
         /// </summary>
         protected virtual void Die()
         {
+
             this.State = EnemyState.Dead;
             this.Sprite.Color = new Color(255, 0, 0, 80);
             this.Transform.Rotation = MathHelper.ToRadians(90);
             this.DropItems(); // drop items
+            
         }
 
         /// <summary>

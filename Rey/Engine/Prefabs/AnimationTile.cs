@@ -20,7 +20,7 @@ namespace Rey.Engine.Prefabs
         {
             this.FrameCount = (texture.Width / 50) - 1;
             this.FrameSize = new Vector2(50, 50);
-            this.AnimationSpeed = 10;
+            this.AnimationSpeed = 5;
             this.Box = new Rectangle(this.Transform.Position.ToPoint(), new Point(50, 50));
         }
 

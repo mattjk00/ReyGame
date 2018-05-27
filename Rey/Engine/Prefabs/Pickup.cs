@@ -31,8 +31,19 @@ namespace Rey.Engine.Prefabs
             base.Update();
 
             Bounce();
-            this.Transform.Origin = new Vector2(this.Sprite.Texture.Width / 2, this.Sprite.Texture.Height / 2);
-            this.Box = new Rectangle((int)this.Transform.Position.X, (int)this.Transform.Position.Y, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
+            
+
+            if (this.PickupItem.EquipmentType == EquipmentType.Legs)
+            {
+                this.Transform.Bounds = new Rectangle(0, 0, this.Sprite.Texture.Width/7, this.Sprite.Texture.Height);
+                this.Box = new Rectangle((int)this.Transform.Position.X, (int)this.Transform.Position.Y, (int)(this.Sprite.Texture.Width / 7), this.Sprite.Texture.Height);
+                this.Transform.Origin = new Vector2((int)(this.Sprite.Texture.Width / 7)/2, this.Sprite.Texture.Height / 2);
+            }
+            else
+            {
+                this.Transform.Origin = new Vector2(this.Sprite.Texture.Width / 2, this.Sprite.Texture.Height / 2);
+                this.Box = new Rectangle((int)this.Transform.Position.X, (int)this.Transform.Position.Y, this.Sprite.Texture.Width, this.Sprite.Texture.Height);
+            }
         }
 
         void Bounce()

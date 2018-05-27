@@ -43,8 +43,8 @@ namespace Rey.Engine.Prefabs
             // drop table
             this.DropTable.Add(ItemData.New(ItemData.mushroomHelmet), 0.33f);
             this.DropTable.Add(ItemData.New(ItemData.mushroomChest), 0.33f);
+            this.DropTable.Add(ItemData.New(ItemData.mushroomLegs), 0.23f);
 
-            
         }
 
         public override void Update()
