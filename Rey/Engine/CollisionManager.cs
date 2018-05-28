@@ -28,6 +28,7 @@ namespace Rey.Engine
                     case "bat":
                     case "babyfishdemon":
                     case "mushroomminion":
+                    case "skulldemon":
                     case "gargoyle":
                         if (player.BoundingBoxes[1].Intersects(enemy.BoundingBoxes[0]))
                             this.HandleEnemyGettingHitByMelee(player, enemy, new Vector2(2, 0));
@@ -57,6 +58,7 @@ namespace Rey.Engine
                     }
                     break;
                 case "mushroomminion":
+                case "skulldemon":
                     if (projectile.BoundingBoxes[0].Intersects(enemy.BoundingBoxes[0]))
                     {
                         HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(1, 0));

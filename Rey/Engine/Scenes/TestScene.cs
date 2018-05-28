@@ -250,6 +250,8 @@ namespace Rey.Engine.Scenes
 
             // reset player
             player.Reset();
+            if (player.EntityStats != null)
+                player.EntityStats.HP = player.EntityStats.FullStats.MaxHP;
 
             statsFrame.player = player;
 

@@ -43,7 +43,7 @@ namespace Rey.Engine.Prefabs
         
         public Direction direction = Direction.MovingRight;
         public PlayerAttackState AttackState { get; set; } // the attacking state of the player
-        public EntityStats EntityStats { get; set; } // the player's stats
+        public EntityStats EntityStats { get; set; } = new EntityStats();// the player's stats
         public bool LandedMeleeHit { get; set; } // used to tell if the player has landed a melee hit in the swing
 
         // timers for attacking
@@ -68,7 +68,7 @@ namespace Rey.Engine.Prefabs
         public override void Load()
         {
             this.Name = "player";
-            this.EntityStats = new EntityStats();
+            //this.EntityStats = new EntityStats();
             this.lastKeyboard = Keyboard.GetState();
 
             this.defaultBody = AssetLoader.LoadTexture("Assets/Textures/Player/default_body.png"); // load the player texture
@@ -445,7 +445,7 @@ namespace Rey.Engine.Prefabs
         void SlowHeal()
         {
             // only heal if below the max hp and above 0
-            if (this.EntityStats.HP < this.EntityStats.MaxHP && this.EntityStats.HP > 0)
+            if (this.EntityStats.HP < this.EntityStats.FullStats.MaxHP && this.EntityStats.FullStats.HP > 0)
             {
                 healTimer++;
                 int interval = 700 - (100 * EntityStats.FullStats.DefenceLevel);
@@ -473,7 +473,7 @@ namespace Rey.Engine.Prefabs
             this.LandedMeleeHit = false;
             this.projectileManager.Projectiles.Clear();
             if (this.EntityStats != null)
-                this.EntityStats.HP = this.EntityStats.MaxHP;
+                this.EntityStats.HP = this.EntityStats.FullStats.MaxHP;
             this.Sprite.Color = new Color(255, 255, 255, 255);
             //this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
         }

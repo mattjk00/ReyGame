@@ -41,7 +41,7 @@ namespace Rey.Engine
         public static readonly Item ironChest = new Item("Iron Chest", ItemType.Gear,
            EquipmentType.Chest, AssetLoader.LoadTexture("Assets/Textures/armor/iron_chest.png"),
            AssetLoader.LoadTexture("Assets/Textures/armor/iron_magic_body.png"),
-           new EntityStats(0, 3, 5, 15, 0, -10));
+           new EntityStats(0, 3, 7, 15, 0, -5));
         public static readonly Item darkMageChest = new Item("Dark Mage Chest", ItemType.Gear,
            EquipmentType.Chest, AssetLoader.LoadTexture("Assets/Textures/armor/dark_chest.png"),
            AssetLoader.LoadTexture("Assets/Textures/armor/dark_magic_body.png"),
@@ -50,7 +50,7 @@ namespace Rey.Engine
         // legs
         public static readonly Item ironLegs = new Item("Iron Legs", ItemType.Gear,
             EquipmentType.Legs, AssetLoader.LoadTexture("Assets/Textures/armor/iron_legs.png"),
-            new EntityStats(0, 2, 1, 4, 1, -4));
+            new EntityStats(0, 2, 2, 4, 1, 0));
         public static readonly Item mushroomLegs = new Item("Mushroom Legs", ItemType.Gear,
             EquipmentType.Legs, AssetLoader.LoadTexture("Assets/Textures/armor/mushroom_legs.png"),
             new EntityStats(0, 0, 1, -3, 0, 4));

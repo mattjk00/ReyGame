@@ -38,6 +38,9 @@ namespace Rey.Engine.Memory
                     case "gargoyle_head":
                         newEnemy = new Gargoyle();
                         break;
+                    case "skull":
+                        newEnemy = new SkullDemon();
+                        break;
                 }
                 newEnemy.Transform.Position = enemyMarker.Position;
                 enemies.Add(newEnemy);

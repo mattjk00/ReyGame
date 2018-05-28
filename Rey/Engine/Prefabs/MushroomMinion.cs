@@ -11,6 +11,8 @@ namespace Rey.Engine.Prefabs
     public class MushroomMinion : Enemy
     {
         int magicTimer = 0;
+        protected int magicSpeed = 1;
+        protected int range = 300; 
 
         public override void Load()
         {
@@ -95,9 +97,9 @@ namespace Rey.Engine.Prefabs
         // handles movement when attacking
         protected void MoveAround()
         {
-            this.magicTimer++;
+            this.magicTimer += magicSpeed;
 
-            if (Vector2.Distance(playerTarget.Transform.Position, this.Transform.Position) > 300)
+            if (Vector2.Distance(playerTarget.Transform.Position, this.Transform.Position) > range)
             {
                 // if the target player is to the right
                 if (this.playerTarget.Transform.Position.X - this.playerTarget.Sprite.Texture.Width - (this.playerTarget.Transform.Origin.X * 2) > this.Transform.Position.X)

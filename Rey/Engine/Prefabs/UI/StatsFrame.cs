@@ -16,6 +16,7 @@ namespace Rey.Engine.Prefabs.UI
         Label attackLevelLbl = new Label("attackLevel");
         Label defenceLevelLbl = new Label("defenceLevel");
         Label magicSpeedLbl = new Label("magicSpeed");
+        Label hpLbl = new Label("hpLabel");
 
         public Player player; // the player in the game
 
@@ -39,9 +40,13 @@ namespace Rey.Engine.Prefabs.UI
             magicSpeedLbl.TextColor = Color.PaleVioletRed;
             magicSpeedLbl.LocalPosition = new Vector2(5, 35);
 
+            hpLbl.TextColor = Color.OrangeRed;
+            hpLbl.LocalPosition = new Vector2(5, 60);
+
             this.AddObject(attackLevelLbl);
             this.AddObject(defenceLevelLbl);
             this.AddObject(magicSpeedLbl);
+            this.AddObject(hpLbl);
 
             base.Load();
         }
@@ -58,6 +63,7 @@ namespace Rey.Engine.Prefabs.UI
                 attackLevelLbl.Text = "Attack: " + player.EntityStats.FullStats.AttackLevel;
                 defenceLevelLbl.Text = "Defence: " + player.EntityStats.FullStats.DefenceLevel;
                 magicSpeedLbl.Text = "Magic Speed: " + player.EntityStats.FullStats.MagicSpeed;
+                hpLbl.Text = player.EntityStats.HP + "/" + player.EntityStats.FullStats.MaxHP;
             }
         }
     }

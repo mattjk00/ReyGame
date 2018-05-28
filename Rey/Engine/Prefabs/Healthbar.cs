@@ -34,7 +34,7 @@ namespace Rey.Engine.Prefabs
 
             if (this.entityStats != null)
             {
-                var percentHealth = (float)(this.entityStats.HP) / (float)(this.entityStats.MaxHP);
+                var percentHealth = (float)(this.entityStats.HP) / (float)(this.entityStats.FullStats.MaxHP);
                 var barWidth = percentHealth * this.greenbar.Width;
 
 
