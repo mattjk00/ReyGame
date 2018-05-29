@@ -65,6 +65,7 @@
     <Compile Include="Engine\Prefabs\Enemy.cs" />
     <Compile Include="Engine\Prefabs\Gargoyle.cs" />
     <Compile Include="Engine\Prefabs\Healthbar.cs" />
+    <Compile Include="Engine\Prefabs\MushroomBoss.cs" />
     <Compile Include="Engine\Prefabs\MushroomMinion.cs" />
     <Compile Include="Engine\Prefabs\NPC.cs" />
     <Compile Include="Engine\Prefabs\Pickup.cs" />

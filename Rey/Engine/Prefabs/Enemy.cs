@@ -104,12 +104,12 @@ namespace Rey.Engine.Prefabs
         {
             this.UpdateDefaultBox(0);
             // update the sword bounding box
-            if (this.direction == Direction.MovingRight)
+            /*if (this.direction == Direction.MovingRight)
                 this.BoundingBoxes[1] = new Rectangle((int)(this.Transform.Position.X + this.Sprite.Texture.Width - this.Transform.Origin.X),
                     (int)(this.Transform.Position.Y - this.Transform.Origin.Y), 55, this.Sprite.Texture.Height);
             else if (this.direction == Direction.MovingLeft)
                 this.BoundingBoxes[1] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X) - 55, (int)(this.Transform.Position.Y - this.Transform.Origin.Y), 55, this.Sprite.Texture.Height);
-
+            */
             if (this.EntityStats.HP <= 0 && this.State != EnemyState.Dead)
                 Die();
 

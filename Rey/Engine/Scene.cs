@@ -339,15 +339,31 @@ namespace Rey.Engine
                         enemy.LandedMeleeHit = true;
                         player.GetHit(enemy.EntityStats);
                         this.ParticleManager.Burst(player.Transform.Position, new Vector2(2, 2), Color.Red, 25);
-                        if (player.Transform.Position.X > enemy.Transform.Position.X)
+
+                        // calculate velocities
+                        float velX1 = 0, velX2 = 0; // velX1: for player, velX2: for monster
+                        if (enemy.GetType() != typeof(MushroomBoss))
                         {
-                            player.Bounce(new Vector2(4, 0)); // bounces player based on direction of incoming hit
-                            enemy.Bounce(new Vector2(-4, 0));
+                            velX1 = 4;
+                            velX2 = 4;
                         }
                         else
                         {
-                            player.Bounce(new Vector2(-4, 0));
-                            enemy.Bounce(new Vector2(4, 0));
+                            velX1 = 25;
+                            velX2 = 0;
+                        }
+
+                        if (player.Transform.Position.X > enemy.Transform.Position.X)
+                        {
+                           
+                            player.Bounce(new Vector2(velX1, 0)); // bounces player based on direction of incoming hit
+                            enemy.Bounce(new Vector2(-velX2, 0));
+                            
+                        }
+                        else
+                        {
+                            player.Bounce(new Vector2(-velX1, 0));
+                            enemy.Bounce(new Vector2(velX2, 0));
                         }
                     }
 

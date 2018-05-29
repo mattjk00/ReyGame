@@ -241,7 +241,14 @@ namespace Rey.Engine.Scenes
             // parse through enemies
             var enemies = MarkerParser.ParseEnemies(map.Markers);
             foreach (Enemy enemy in enemies)
+            {
+                // if it's a boss, start the attack
+                if (enemy.GetType() == typeof(MushroomBoss))
+                    enemy.StartAttack(player); 
                 this.AddGameObject(enemy);
+            }
+
+            
 
             // parse through npcs
             var npcs = MarkerParser.ParseNPCs(map.Markers);

@@ -33,7 +33,7 @@ namespace Rey.Engine
             for (int i = 0; i < count; i++)
             {
                 this.AddParticle(pos + new Vector2(rand.Next(-8, 8), rand.Next(-4, 4)),
-                    velocity + new Vector2(rand.Next(-3, 3), rand.Next(-2, 2)),
+                    velocity + new Vector2(rand.Next(-(int)(velocity.X*2), (int)(velocity.X * 2)), rand.Next(-(int)(velocity.Y * 2), (int)(velocity.Y * 2))),
                     new Color(color.R + rand.Next(-5, 5), color.G + rand.Next(-5, 5), color.B + rand.Next(-5, 5)));
             }
         }

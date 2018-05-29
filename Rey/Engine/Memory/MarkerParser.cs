@@ -41,6 +41,9 @@ namespace Rey.Engine.Memory
                     case "skull":
                         newEnemy = new SkullDemon();
                         break;
+                    case "mushroomboss":
+                        newEnemy = new MushroomBoss();
+                        break;
                 }
                 newEnemy.Transform.Position = enemyMarker.Position;
                 enemies.Add(newEnemy);

@@ -10,9 +10,11 @@ namespace Rey.Engine.Prefabs
 {
     public class MushroomMinion : Enemy
     {
-        int magicTimer = 0;
+        protected int magicTimer = 0;
         protected int magicSpeed = 1;
-        protected int range = 300; 
+        protected int range = 300;
+        protected int shotSpeed = 8; // how fast the shot moves
+        protected int shotDamage = 3; // how much damage it does
 
         public override void Load()
         {
@@ -95,11 +97,12 @@ namespace Rey.Engine.Prefabs
         }
 
         // handles movement when attacking
-        protected void MoveAround()
+        protected virtual void MoveAround()
         {
             this.magicTimer += magicSpeed;
 
-            if (Vector2.Distance(playerTarget.Transform.Position, this.Transform.Position) > range)
+            var distance = Vector2.Distance(playerTarget.Transform.Position, this.Transform.Position);
+            if (distance > range)
             {
                 // if the target player is to the right
                 if (this.playerTarget.Transform.Position.X - this.playerTarget.Sprite.Texture.Width - (this.playerTarget.Transform.Origin.X * 2) > this.Transform.Position.X)
@@ -137,14 +140,14 @@ namespace Rey.Engine.Prefabs
         /// Really Magic Attack
         /// </summary>
         
-        protected void HandleMagicAttack()
+        protected virtual void HandleMagicAttack()
         {
             
 
                 this.magicTimer = 0;
 
                 // shoot a thing
-                this.projectileManager.ShootNew(this.Transform.Position, this.playerTarget.Transform.Position, 8, 3, this.EntityStats, ProjectileType.Mushroom);
+                this.projectileManager.ShootNew(this.Transform.Position, this.playerTarget.Transform.Position, shotSpeed, shotDamage, this.EntityStats, ProjectileType.Mushroom);
             
         }
     }

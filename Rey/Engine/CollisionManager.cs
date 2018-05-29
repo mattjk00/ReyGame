@@ -65,6 +65,14 @@ namespace Rey.Engine
                         particleManager.Burst(enemy.Transform.Position, new Vector2(2, 2), Color.Red, 25);
                     }
                     break;
+                case "mushroomboss":
+                    foreach (Rectangle box in enemy.BoundingBoxes)
+                        if (projectile.BoundingBoxes[0].Intersects(box))
+                        {
+                            HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(0, 0));
+                            particleManager.Burst(projectile.Transform.Position, new Vector2(2, 2), Color.GreenYellow, 100);
+                        }
+                    break;
             }
         }
 
