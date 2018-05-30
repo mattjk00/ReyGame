@@ -1,4 +1,5 @@
-﻿using Rey.Engine.Prefabs;
+﻿using Microsoft.Xna.Framework;
+using Rey.Engine.Prefabs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,6 +73,18 @@ namespace Rey.Engine.Memory
             }
 
             return npcs;
+        }
+
+        public static List<LightSource> ParseLightsources(List<MapMarker> markers)
+        {
+            List<LightSource> ls = new List<LightSource>();
+            // iterate through
+            foreach (MapMarker lsMarker in markers.FindAll(x => x.MarkerType == MarkerType.LightSource))
+            {
+                LightSource newLs = new LightSource(lsMarker.Position, Vector2.One, Color.White);
+                ls.Add(newLs);
+            }
+            return ls;
         }
     }
 }

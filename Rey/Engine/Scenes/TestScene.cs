@@ -181,6 +181,7 @@ namespace Rey.Engine.Scenes
             if (atDoor == "LAST")
                 atDoor = lastDoor;
 
+            this.lightSources.Clear();
             this.ClearTiles();
             if (fullReset) // use if not the first loading
                 this.gameObjects.RemoveAll(x => x.Name != "player");
@@ -255,6 +256,11 @@ namespace Rey.Engine.Scenes
             foreach (NPC npc in npcs)
                 this.AddGameObject(npc);
 
+            // get light sources
+            var lights = MarkerParser.ParseLightsources(map.Markers);
+            foreach (LightSource ls in lights)
+                this.AddLightSource(ls);
+
             // reset player
             player.Reset();
             if (player.EntityStats != null)
@@ -264,6 +270,8 @@ namespace Rey.Engine.Scenes
 
             // reload
             base.Load();
+
+            //this.AddLightSource(new LightSource(Vector2.One, Vector2.One, Color.White));
 
             /*Pickup pickup = new Pickup();
             pickup.Transform.Position = player.Transform.Position;

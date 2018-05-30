@@ -169,7 +169,9 @@ namespace Rey
             GraphicsDevice.SetRenderTarget(lightTarget);
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice, graphics));
-            spriteBatch.Draw(lightMask, new Vector2(playerPos.X - lightMask.Width/2, playerPos.Y - lightMask.Height/2), Color.White);
+            //spriteBatch.Draw(lightMask, new Vector2(playerPos.X - lightMask.Width/2, playerPos.Y - lightMask.Height/2), Color.White);
+            if (SceneManager.GetCurrentScene().UseLightShaders()) // draw the scene's lights if there should be
+                SceneManager.GetCurrentScene().DrawLights(spriteBatch);
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(mainTarget);
@@ -190,10 +192,13 @@ namespace Rey
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-            lightEffect.Parameters["lightMask"].SetValue(lightTarget);
-
-            lightEffect.CurrentTechnique.Passes[0].Apply();
-
+            
+            // draw the light shaders if there is lights in the scene
+            if (SceneManager.GetCurrentScene().UseLightShaders())
+            {
+                lightEffect.Parameters["lightMask"].SetValue(lightTarget);
+                lightEffect.CurrentTechnique.Passes[0].Apply();
+            }
 
             //spriteBatch.Draw(lightTarget, Vector2.Zero, Color.White);
             spriteBatch.Draw(mainTarget, Vector2.Zero, Color.White);

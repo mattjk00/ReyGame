@@ -25,6 +25,7 @@ namespace LevelEditor
 
         ObjectChooserFrame monsterChooser;
         ObjectChooserFrame npcChooser;
+        ObjectChooserFrame lightChooser;
 
         TileChooserFrame tileChooser;
         TileChooserFrame blockChooser;
@@ -58,6 +59,9 @@ namespace LevelEditor
             npcChooser = new ObjectChooserFrame("Textures/npcs");
             npcChooser.Name = "NPCs";
 
+            lightChooser = new ObjectChooserFrame("Textures/lights");
+            lightChooser.Name = "Lights";
+
             tileChooser = new TileChooserFrame("Textures", TileType.Normal);
             tileChooser.Name = "Tiles";
             tileChooser.Load();
@@ -77,6 +81,7 @@ namespace LevelEditor
             tabFrame.AddTab(blockChooser, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
             tabFrame.AddTab(monsterChooser, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
             tabFrame.AddTab(npcChooser, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
+            tabFrame.AddTab(lightChooser, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
 
             tabFrame.AddTab(objChooserFrame, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");
             tabFrame.AddTab(doorChooser, "Textures/ui/tab.png", "Textures/ui/tab_hover.png");

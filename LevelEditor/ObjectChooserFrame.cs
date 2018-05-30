@@ -51,6 +51,8 @@ namespace LevelEditor
                         EditorManager.currentMarker = new MapMarker(button.Name, Vector2.Zero, button.normalTexture, MarkerType.PlayerSpawnPoint);
                     else if (button.Name.Contains("npc"))
                         EditorManager.currentMarker = new MapMarker(button.Name, Vector2.Zero, button.normalTexture, MarkerType.NPCSpawnPoint);
+                    else if (button.Name.Contains("light"))
+                        EditorManager.currentMarker = new MapMarker(button.Name, Vector2.Zero, button.normalTexture, MarkerType.LightSource);
                     else
                         EditorManager.currentMarker = new MapMarker(button.Name, Vector2.Zero, button.normalTexture, MarkerType.SpawnPoint);
                 };

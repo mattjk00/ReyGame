@@ -12,7 +12,8 @@ namespace Rey.Engine.Memory
     {
         PlayerSpawnPoint,
         SpawnPoint,
-        NPCSpawnPoint
+        NPCSpawnPoint,
+        LightSource
     }
 
     [Serializable]

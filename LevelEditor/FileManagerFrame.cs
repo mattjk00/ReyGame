@@ -173,6 +173,8 @@ namespace LevelEditor
                         tileOwner.SetMarker(new MapMarker(marker.Name, tileOwner.StartingPosition, AssetLoader.LoadTexture("textures/monsters/" + marker.Name + ".png"), marker.MarkerType));
                     else if (marker.MarkerType == MarkerType.NPCSpawnPoint)
                         tileOwner.SetMarker(new MapMarker(marker.Name, tileOwner.StartingPosition, AssetLoader.LoadTexture("textures/npcs/" + marker.Name + ".png"), marker.MarkerType));
+                    else if (marker.MarkerType == MarkerType.LightSource)
+                        tileOwner.SetMarker(new MapMarker(marker.Name, tileOwner.StartingPosition, AssetLoader.LoadTexture("textures/lights/" + marker.Name + ".png"), marker.MarkerType));
                 }
             }
         }

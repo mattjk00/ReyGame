@@ -5,6 +5,7 @@ using Rey.Engine.Prefabs;
 using Rey.Engine.UI;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,8 @@ namespace Rey.Engine
         public List<GameObject> gameObjects { get; protected set; }
         public List<Tile> tiles { get; protected set; } = new List<Tile>();
         public List<Frame> frames { get; protected set; } = new List<Frame>();
+        public List<LightSource> lightSources { get; protected set; } = new List<LightSource>();
+        private Texture2D lightMask;
         public Texture2D Background { get; protected set; }
         public string Name { get; protected set; }
         protected CollisionManager collisionManager = new CollisionManager();
@@ -82,6 +85,20 @@ namespace Rey.Engine
             this.tiles.Clear();
         }
 
+        public void AddLightSource(LightSource lightSource)
+        {
+            this.lightSources.Add(lightSource);
+        }
+
+        /// <summary>
+        /// tells the draw engine whether to use the light shaders or not
+        /// </summary>
+        /// <returns></returns>
+        public bool UseLightShaders()
+        {
+            return (this.lightSources.Count > 0);
+        }
+
         /// <summary>
         /// Put loading logic in here
         /// </summary>
@@ -97,6 +114,12 @@ namespace Rey.Engine
                 tile.Load();
 
             player = this.gameObjects.Find(x => x.Name == "player") as Player; // find the player
+
+            try
+            {
+                this.lightMask = AssetLoader.LoadTexture("Assets/Textures/lightmask.png");
+            }
+            catch (FileNotFoundException fnfe) { }
         }
 
         /// <summary>
@@ -188,6 +211,22 @@ namespace Rey.Engine
             // draw the remainder of the frames
             foreach (Frame frame in frames.FindAll(f => f.LockedPosition == true && f.Active == true))
                 frame.Draw(sb);
+        }
+
+        /// <summary>
+        /// Draws the light sources in the scnee
+        /// </summary>
+        /// <param name="sb"></param>
+        public void DrawLights(SpriteBatch sb)
+        {
+            // draw each light source
+            foreach (LightSource light in this.lightSources)
+            {
+                Vector2 newScale = InputHelper.ScaleTexture(lightMask, 1200, 1200);
+                Vector2 origin = new Vector2((lightMask.Width ) / 2, (lightMask.Height ) / 2);
+                sb.Draw(lightMask, light.Position, null, Color.LightBlue * 1.0f, 0, origin,
+                    newScale, SpriteEffects.None, 0);
+            }
         }
 
         /// <summary>
