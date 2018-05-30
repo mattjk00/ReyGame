@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Rey.Engine.Prefabs;
 using Rey.Engine.Scenes;
 using System;
 using System.Collections.Generic;
@@ -123,6 +124,17 @@ namespace Rey.Engine
             transitionScene.LoadNewTransition(sceneName);
         }
 
-       
+        public static Vector2 TryToGetPlayerPosition()
+        {
+            try
+            {
+                var player = GetCurrentScene().gameObjects.First(x => x.GetType() == typeof(Player));
+                return player.Transform.Position;
+            }
+            catch (InvalidOperationException ioe)
+            {
+                return new Vector2(1280/2, 720/2);
+            }
+        }
     }
 }

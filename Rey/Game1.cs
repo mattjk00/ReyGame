@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Rey.Engine;
+using System;
 
 namespace Rey
 {
@@ -20,6 +21,13 @@ namespace Rey
         MouseState mouse;
         KeyboardState keyboard;
         Texture2D vhsFilter;
+
+        // lighting system
+        Texture2D lightMask;
+        Effect lightEffect;
+        RenderTarget2D lightTarget;
+        RenderTarget2D mainTarget;
+        RenderTarget2D uiTarget;
 
         public Game1()
         {
@@ -48,6 +56,12 @@ namespace Rey
             AssetLoader.LoadFont(Content);
 
             vhsFilter = AssetLoader.LoadTexture("Assets/Textures/backgrounds/vhs.png");
+
+            this.graphics.PreferredBackBufferWidth = 1280;//(int)(graphics.GraphicsDevice.DisplayMode.Width * 0.9f);//1280;
+            this.graphics.PreferredBackBufferHeight = 720;//(int)(graphics.GraphicsDevice.DisplayMode.Height * 0.9f);//720;
+            //this.graphics.IsFullScreen = true;
+            this.graphics.ApplyChanges();
+
             
 
             base.Initialize();
@@ -67,10 +81,14 @@ namespace Rey
 
             mouseTexture = AssetLoader.LoadTexture("Assets/Textures/Player/mouse.png");
 
-            this.graphics.PreferredBackBufferWidth = 1280;//(int)(graphics.GraphicsDevice.DisplayMode.Width * 0.9f);//1280;
-            this.graphics.PreferredBackBufferHeight = 720;//(int)(graphics.GraphicsDevice.DisplayMode.Height * 0.9f);//720;
-            //this.graphics.IsFullScreen = true;
-            this.graphics.ApplyChanges();
+            lightMask = AssetLoader.LoadTexture("Assets/Textures/lightmask.png");
+
+            var pp = GraphicsDevice.PresentationParameters; // cache for ease of use
+            lightTarget = new RenderTarget2D(GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+            mainTarget = new RenderTarget2D(GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+            uiTarget = new RenderTarget2D(GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+
+            lightEffect = Content.Load<Effect>("lighteffect");
 
             SceneManager.Load();
         }
@@ -125,7 +143,8 @@ namespace Rey
             /*RenderTarget2D target = new RenderTarget2D(GraphicsDevice, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             GraphicsDevice.SetRenderTarget(target);*/
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null,  camera.GetTransformation(GraphicsDevice, graphics));
+            //[REAL]
+            /*spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null,  camera.GetTransformation(GraphicsDevice, graphics));
             SceneManager.Draw(spriteBatch);
 
             spriteBatch.End();
@@ -137,23 +156,64 @@ namespace Rey
             SceneManager.SecondDraw(spriteBatch);
             //spriteBatch.Draw(vhsFilter, Vector2.Zero, Color.White * 0.1f);
             spriteBatch.Draw(mouseTexture, Mouse.GetState().Position.ToVector2(), Color.White);
+            
 
             //spriteBatch.DrawString(AssetLoader.Font, "(" + InputHelper.MousePosition.X.ToString() + ", " + InputHelper.MousePosition.Y.ToString() + ")", InputHelper.MousePosition, Color.Red);
             //spriteBatch.DrawString(AssetLoader.Font, "(" + Mouse.GetState().Position.X.ToString() + ", " + Mouse.GetState().Position.Y.ToString() + ")", InputHelper.MousePosition, Color.Red);
 
+            spriteBatch.End();*/
+            // [END REAL]
+
+            var playerPos = SceneManager.TryToGetPlayerPosition();
+
+            GraphicsDevice.SetRenderTarget(lightTarget);
+            GraphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice, graphics));
+            spriteBatch.Draw(lightMask, new Vector2(playerPos.X - lightMask.Width/2, playerPos.Y - lightMask.Height/2), Color.White);
             spriteBatch.End();
 
-           /* GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.SetRenderTarget(mainTarget);
+            GraphicsDevice.Clear(Color.Transparent);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice, graphics));
+            SceneManager.Draw(spriteBatch);
+            spriteBatch.End();
 
+            GraphicsDevice.SetRenderTarget(uiTarget);
+            GraphicsDevice.Clear(Color.Transparent);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+            SceneManager.SecondDraw(spriteBatch);
+            spriteBatch.Draw(mouseTexture, Mouse.GetState().Position.ToVector2(), Color.White);
+            //spriteBatch.Draw(mouseTexture, new Vector2(35, 35), Color.White);
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.Black);
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            lightEffect.Parameters["lightMask"].SetValue(lightTarget);
+
+            lightEffect.CurrentTechnique.Passes[0].Apply();
+
+
+            //spriteBatch.Draw(lightTarget, Vector2.Zero, Color.White);
+            spriteBatch.Draw(mainTarget, Vector2.Zero, Color.White);
+            spriteBatch.End();
 
             spriteBatch.Begin();
-            // what to scale the screen by
-            float screenScaleFactorX = (float)graphics.PreferredBackBufferWidth/(float)target.Width;
-            float screenScaleFactorY = (float)graphics.PreferredBackBufferHeight/(float)target.Height;
-            spriteBatch.Draw(target, Vector2.Zero, new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Color.White, 0, Vector2.Zero, 
-                new Vector2(1, 1), 
-                SpriteEffects.None, 0);
-            spriteBatch.End();*/
+            spriteBatch.Draw(uiTarget, Vector2.Zero, Color.White);
+            spriteBatch.End();
+
+            /* GraphicsDevice.SetRenderTarget(null);
+
+
+             spriteBatch.Begin();
+             // what to scale the screen by
+             float screenScaleFactorX = (float)graphics.PreferredBackBufferWidth/(float)target.Width;
+             float screenScaleFactorY = (float)graphics.PreferredBackBufferHeight/(float)target.Height;
+             spriteBatch.Draw(target, Vector2.Zero, new Rectangle(0, 0, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Color.White, 0, Vector2.Zero, 
+                 new Vector2(1, 1), 
+                 SpriteEffects.None, 0);
+             spriteBatch.End();*/
 
             base.Draw(gameTime);
         }

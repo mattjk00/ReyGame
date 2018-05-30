@@ -24,7 +24,7 @@ namespace Rey.Engine.Prefabs
 
         Texture2D boundingBoxTexture;
 
-        MBossAttackMode AttackMode { get; set; } = MBossAttackMode.SingleSlowFire;
+        MBossAttackMode AttackMode { get; set; } = MBossAttackMode.SingleFastFire;
 
         private int randomMagicTimer = 0;
 
