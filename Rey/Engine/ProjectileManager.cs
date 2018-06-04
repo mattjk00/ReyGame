@@ -12,7 +12,8 @@ namespace Rey.Engine
     public enum ProjectileType
     {
         Wind,
-        Mushroom
+        Mushroom,
+        SporeBomb
     }
 
     public class ProjectileManager
@@ -44,6 +45,8 @@ namespace Rey.Engine
         {
             if (projectileType == ProjectileType.Mushroom)
                 return AssetLoader.LoadTexture("Assets/Textures/Projectiles/mushroom_strike.png");
+            else if (projectileType == ProjectileType.SporeBomb)
+                return AssetLoader.LoadTexture("Assets/Textures/Projectiles/spore_bomb.png");
             else
                 return AssetLoader.LoadTexture("Assets/Textures/Projectiles/wind_strike.png");
         }

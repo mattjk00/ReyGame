@@ -173,7 +173,8 @@ namespace LevelEditor
                 var stile = tile as EditorTile;
                 
                 stile.Transform.Position = this.mapPosition + stile.StartingPosition;
-                sb.Draw(stile.Sprite.Texture, stile.Transform.Position, Color.White);
+                if (stile.Sprite.Texture != null)
+                    sb.Draw(stile.Sprite.Texture, stile.Transform.Position, Color.White);
                 if (stile.marker != null)
                 {
                     sb.Draw(stile.marker.Texture, stile.Transform.Position, Color.White);

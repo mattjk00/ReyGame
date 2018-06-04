@@ -377,7 +377,7 @@ namespace Rey.Engine
                     {
                         enemy.LandedMeleeHit = true;
                         player.GetHit(enemy.EntityStats);
-                        this.ParticleManager.Burst(player.Transform.Position, new Vector2(2, 2), Color.Red, 25);
+                        this.ParticleManager.Burst(player.Transform.Position, new Vector2(2, 2), Color.Red, 25, Vector2.One);
 
                         // calculate velocities
                         float velX1 = 0, velX2 = 0; // velX1: for player, velX2: for monster

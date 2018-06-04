@@ -42,7 +42,7 @@ namespace LevelEditor
             // set a mouse box
             Rectangle mouseBox = new Rectangle(mouse.Position, new Point(2, 2));
 
-            if (this.clickTimer >= 50) // slows down clicking
+            if (this.clickTimer >= 50 && this.BoundingBoxes.Count > 0) // slows down clicking
             {
                 this.clickTimer = 50;
                 // same thing as above but an alternative for holding down the mouse

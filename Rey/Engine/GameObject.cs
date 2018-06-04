@@ -96,9 +96,10 @@ namespace Rey.Engine
         // adds a default bounding box based on sprite size
         public void AddDefaultBoundingBox()
         {
-            this.BoundingBoxes.Add(
-                new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X), (int)(this.Transform.Position.Y - this.Transform.Origin.Y),
-                    this.Sprite.Texture.Width, this.Sprite.Texture.Height));
+            if (this.Sprite.Texture != null)
+                this.BoundingBoxes.Add(
+                    new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X), (int)(this.Transform.Position.Y - this.Transform.Origin.Y),
+                        this.Sprite.Texture.Width, this.Sprite.Texture.Height));
         }
         // updates a given index to the default
         public void UpdateDefaultBox(int index)

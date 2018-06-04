@@ -54,7 +54,7 @@ namespace Rey.Engine
                     if (projectile.BoundingBoxes[0].Intersects(enemy.BoundingBoxes[0]))
                     {
                         HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(5, 0));
-                        particleManager.Burst(enemy.Transform.Position, new Vector2(2, 2), Color.Red, 25);
+                        particleManager.Burst(enemy.Transform.Position, new Vector2(3, 3), Color.Red, 25, Vector2.One);
                     }
                     break;
                 case "mushroomminion":
@@ -62,7 +62,7 @@ namespace Rey.Engine
                     if (projectile.BoundingBoxes[0].Intersects(enemy.BoundingBoxes[0]))
                     {
                         HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(1, 0));
-                        particleManager.Burst(enemy.Transform.Position, new Vector2(2, 2), Color.Red, 25);
+                        particleManager.Burst(enemy.Transform.Position, new Vector2(3, 3), Color.Red, 25, Vector2.One);
                     }
                     break;
                 case "mushroomboss":
@@ -70,7 +70,7 @@ namespace Rey.Engine
                         if (projectile.BoundingBoxes[0].Intersects(box))
                         {
                             HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(0, 0));
-                            particleManager.Burst(projectile.Transform.Position, new Vector2(2, 2), Color.GreenYellow, 100);
+                            particleManager.Burst(projectile.Transform.Position, new Vector2(3, 3), Color.GreenYellow, 100, Vector2.One);
                         }
                     break;
             }
@@ -108,7 +108,7 @@ namespace Rey.Engine
             {
                 projectile.ToBeDestroyed = true;
                 player.GetHit(projectile.Damage);
-                particleManager.Burst(player.Transform.Position, new Vector2(2, 2), Color.Red, 25);
+                particleManager.Burst(player.Transform.Position, new Vector2(2, 2), Color.Red, 25, Vector2.One);
             }
         }
 

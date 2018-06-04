@@ -10,8 +10,9 @@ namespace Rey.Engine.Prefabs
 {
     enum MBossAttackMode
     {
-        SingleSlowFire,
-        SingleFastFire
+        SingleSlowFire = 0,
+        SingleFastFire = 1,
+        SporeBomb = 2
     }
 
     public class MushroomBoss : MushroomMinion
@@ -24,9 +25,11 @@ namespace Rey.Engine.Prefabs
 
         Texture2D boundingBoxTexture;
 
-        MBossAttackMode AttackMode { get; set; } = MBossAttackMode.SingleFastFire;
+        MBossAttackMode AttackMode { get; set; } = MBossAttackMode.SporeBomb;
 
         private int randomMagicTimer = 0;
+
+        private int modeTimer = 0;
 
         public override void Load()
         {
@@ -87,7 +90,7 @@ namespace Rey.Engine.Prefabs
             this.DropTable.Add(ItemData.New(ItemData.mushroomChest), 1);
             this.DropTable.Add(ItemData.New(ItemData.mushroomLegs), 1);
 
-
+            CycleModes();
         }
 
         public override void Update()
@@ -98,6 +101,8 @@ namespace Rey.Engine.Prefabs
                 this.State = EnemyState.Chasing;
             this.hood.Update(this);
             this.legs.Update(this);
+
+            this.CycleModes();
 
             // check to destroy hood
             if (this.EntityStats.HP < this.EntityStats.FullStats.MaxHP / 2 && !hoodDestroyed)
@@ -118,6 +123,17 @@ namespace Rey.Engine.Prefabs
                     this.BoundingBoxes.RemoveAt(1); // i think  
                     this.hood.Sprite.Color = new Color(0, 0, 0, 0);
                 }
+            }
+        }
+
+        void CycleModes()
+        {
+            this.modeTimer++;
+
+            if (this.modeTimer > 500)
+            {
+                this.modeTimer = 0;
+                this.AttackMode = (MBossAttackMode)rand.Next(0, 3);
             }
         }
 
@@ -144,7 +160,7 @@ namespace Rey.Engine.Prefabs
         Random rand = new Random();
         protected override void MoveAround()
         {
-            if (this.AttackMode == MBossAttackMode.SingleSlowFire)
+            if (this.AttackMode == MBossAttackMode.SingleSlowFire || this.AttackMode == MBossAttackMode.SporeBomb)
             {
                 this.magicTimer += magicSpeed;
                 this.randomMagicTimer += magicSpeed;
@@ -155,20 +171,37 @@ namespace Rey.Engine.Prefabs
                 this.randomMagicTimer += magicSpeed * 3;
             }
 
-            
+
 
             // shoot the playa
-            if (this.magicTimer > this.EntityStats.AttackSpeed)
+            if (this.AttackMode != MBossAttackMode.SporeBomb)
             {
-                this.HandleMagicAttack();
-            }
+                if (this.magicTimer > this.EntityStats.AttackSpeed)
+                {
+                    this.HandleMagicAttack();
+                }
 
-            if (this.randomMagicTimer > this.EntityStats.AttackSpeed/2)
+                if (this.randomMagicTimer > this.EntityStats.AttackSpeed / 2)
+                {
+                    this.randomMagicTimer = 0;
+                    this.projectileManager.ShootNew(this.Transform.Position, new Vector2(rand.Next(0, 2000), rand.Next(0, 2000)), shotSpeed, shotDamage, this.EntityStats, ProjectileType.Mushroom);
+                }
+            }
+            else
             {
-                this.randomMagicTimer = 0;
-                this.projectileManager.ShootNew(this.Transform.Position, new Vector2(rand.Next(0, 2000), rand.Next(0, 2000)), shotSpeed, shotDamage, this.EntityStats, ProjectileType.Mushroom);
-            }
+                // handle spore bomb
+                if (this.magicTimer > this.EntityStats.AttackSpeed)
+                {
+                    var offx = 250;
+                    var offy = 250;
+                    if (playerTarget.Transform.Velocity.X < 0)
+                        offx = -250;
+                    if (playerTarget.Transform.Velocity.Y < 0)
+                        offy = -250;
 
+                    this.projectileManager.ShootNew(this.Transform.Position, playerTarget.Transform.Position + new Vector2(offx, offy), 3, 2, this.EntityStats, ProjectileType.SporeBomb);
+                }
+            }
             /*if (this.AttackMode == MBossAttackMode.SingleFastFire && this.magicTimer > this.EntityStats.AttackSpeed / 2)
                 this.HandleMagicAttack();*/
         }
