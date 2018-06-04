@@ -15,10 +15,12 @@ namespace Rey.Engine
         public static GraphicsDeviceManager Graphics { get; set; }
         public static SpriteFont Font { get; set; }
         private static Dictionary<string, Texture2D> cache = new Dictionary<string, Texture2D>(); // caches loaded textures
+        public static Texture2D BoundingBoxTexture;
 
         public static void LoadFont(ContentManager content)
         {
             Font = content.Load<SpriteFont>("gameFont");
+            BoundingBoxTexture = AssetLoader.LoadTexture("Assets/Textures/ui/bb.png");
         }
         /// <summary>
         /// Loads a texture from a file rather than XNB

@@ -21,6 +21,7 @@ namespace Rey.Engine
         public bool IsEnemy { get; protected set; } // Is this game object an enemy?
         public bool ToBeDestroyed { get; set; } // the status of the game object
         public List<Behavior> Behaviors { get; set; } = new List<Behavior>(); // Scripts for the object
+        protected bool hasDefaultBox = false;
 
         public GameObject()
         {
@@ -93,14 +94,38 @@ namespace Rey.Engine
                 be.Draw(this, sb);
         }
 
+        protected void DrawBoundingBoxes(SpriteBatch sb)
+        {
+            foreach (Rectangle rect in this.BoundingBoxes)
+            {
+                sb.Draw(AssetLoader.BoundingBoxTexture, rect.Location.ToVector2(), null, Color.Green, 0, Vector2.Zero,
+                    InputHelper.ScaleTexture(AssetLoader.BoundingBoxTexture, rect.Width, rect.Height),
+                    SpriteEffects.None, 0);
+
+                
+            }
+        }
+
+        protected void DrawBox(SpriteBatch sb, Rectangle rect)
+        {
+            sb.Draw(AssetLoader.BoundingBoxTexture, rect.Location.ToVector2(), null, Color.Red, 0, Vector2.Zero,
+                    InputHelper.ScaleTexture(AssetLoader.BoundingBoxTexture, rect.Width, rect.Height),
+                    SpriteEffects.None, 0);
+        }
+
         // adds a default bounding box based on sprite size
         public void AddDefaultBoundingBox()
         {
-            if (this.Sprite.Texture != null)
+            if (this.Sprite.Texture != null && this.hasDefaultBox == false)
+            {
                 this.BoundingBoxes.Add(
                     new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X), (int)(this.Transform.Position.Y - this.Transform.Origin.Y),
                         this.Sprite.Texture.Width, this.Sprite.Texture.Height));
+                this.hasDefaultBox = true;
+            }
         }
+
+
         // updates a given index to the default
         public void UpdateDefaultBox(int index)
         {

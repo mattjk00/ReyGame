@@ -70,7 +70,7 @@ namespace Rey.Engine
                         if (projectile.BoundingBoxes[0].Intersects(box))
                         {
                             HandleEnemyGettingHitByProjectile(player, projectile, enemy, new Vector2(0, 0));
-                            particleManager.Burst(projectile.Transform.Position, new Vector2(3, 3), Color.GreenYellow, 100, Vector2.One);
+                            particleManager.Burst(projectile.Transform.Position, new Vector2(3, 3), Color.DarkSlateBlue, 100, Vector2.One);
                         }
                     break;
             }

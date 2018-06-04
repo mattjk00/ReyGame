@@ -79,7 +79,7 @@ namespace Rey.Engine.Prefabs
             this.AddDefaultBoundingBox();
 
             // this.Transform.Position = new Vector2(1280 / 2, 720 / 2);
-            this.BoundingBoxes.Add(new Rectangle(0, 0, 0, 0));
+            //this.BoundingBoxes.Add(new Rectangle(0, 0, 0, 0));
             this.Transform.Origin = new Vector2(this.Sprite.Texture.Width / 2, this.Sprite.Texture.Height / 2);
             this.IsEnemy = false;
 
@@ -138,7 +138,9 @@ namespace Rey.Engine.Prefabs
                 this.HandleMagicAttack();
             else if (this.AttackState == PlayerAttackState.Dead)
                 this.HandleDeath();
-           
+
+            if (this.EntityStats.HP > this.EntityStats.FullStats.MaxHP)
+                this.EntityStats.HP = this.EntityStats.FullStats.MaxHP;
 
             base.Update(); // important so velocity works
 
@@ -172,11 +174,11 @@ namespace Rey.Engine.Prefabs
 
             this.UpdateDefaultBox(0);
             // update the sword bounding box
-            if (this.direction == Direction.MovingRight)
+            /*if (this.direction == Direction.MovingRight)
                 this.BoundingBoxes[1] = new Rectangle((int)(this.Transform.Position.X + this.Sprite.Texture.Width - this.Transform.Origin.X),
                     (int)(this.Transform.Position.Y - this.Transform.Origin.Y), 45, this.Sprite.Texture.Height);
             else if (this.direction == Direction.MovingLeft)
-                this.BoundingBoxes[1] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X) - 45, (int)(this.Transform.Position.Y - this.Transform.Origin.Y), 45, this.Sprite.Texture.Height);
+                this.BoundingBoxes[1] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X) - 45, (int)(this.Transform.Position.Y - this.Transform.Origin.Y), 45, this.Sprite.Texture.Height);*/
         }
 
         // Handle user input
@@ -367,6 +369,9 @@ namespace Rey.Engine.Prefabs
             this.projectileManager.Draw(sb);
 
             DrawWornEquipment(sb);
+
+            this.DrawBoundingBoxes(sb);
+            this.DrawBox(sb, this.MovementBox);
         }
 
         /// <summary>

@@ -380,6 +380,8 @@ namespace Rey.Engine.Prefabs
             }
             this.arm.Draw(sb);
             //base.Draw(sb);
+
+            
         }
     }
 }

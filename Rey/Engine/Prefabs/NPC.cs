@@ -89,10 +89,10 @@ namespace Rey.Engine.Prefabs
             this.body.Update(this);
             this.legs.Update(this);
 
-            
+
 
             // CHANGE LATEr
-            this.MovementBox = this.BoundingBoxes[0];
+            this.MovementBox = new Rectangle((int)this.Transform.Position.X - this.MovementBoxOffset, (int)this.Transform.Position.Y + 125, 50, 5);
 
             // Call correct function for the state
             if (State == NPCState.Idle)
@@ -179,6 +179,9 @@ namespace Rey.Engine.Prefabs
             
 
             sb.Draw(this.Sprite.Texture, this.Transform.Position, Color.White);
+
+            this.DrawBoundingBoxes(sb);
+            this.DrawBox(sb, this.MovementBox);
         }
     }
 }

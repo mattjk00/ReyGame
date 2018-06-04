@@ -83,6 +83,8 @@ namespace Rey.Engine.Prefabs
             this.Transform.Scale = new Vector2(xScale, yScale);
 
             sb.Draw(this.Sprite.Texture, this.Transform.Position, new Rectangle(0, 0, 50, 50), this.Sprite.Color, 0, Vector2.Zero, this.Transform.Scale, SpriteEffects.None, 0);
+
+            
         }
 
         public void SetType(TileType tt)

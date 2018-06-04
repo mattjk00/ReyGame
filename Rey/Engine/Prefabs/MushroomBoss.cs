@@ -12,7 +12,8 @@ namespace Rey.Engine.Prefabs
     {
         SingleSlowFire = 0,
         SingleFastFire = 1,
-        SporeBomb = 2
+        SporeBomb = 2,
+        SpawnBats = 3
     }
 
     public class MushroomBoss : MushroomMinion
@@ -25,7 +26,7 @@ namespace Rey.Engine.Prefabs
 
         Texture2D boundingBoxTexture;
 
-        MBossAttackMode AttackMode { get; set; } = MBossAttackMode.SporeBomb;
+        MBossAttackMode AttackMode { get; set; } = MBossAttackMode.SpawnBats;
 
         private int randomMagicTimer = 0;
 
@@ -90,7 +91,10 @@ namespace Rey.Engine.Prefabs
             this.DropTable.Add(ItemData.New(ItemData.mushroomChest), 1);
             this.DropTable.Add(ItemData.New(ItemData.mushroomLegs), 1);
 
-            CycleModes();
+
+            
+                CycleModes();
+            
         }
 
         public override void Update()
@@ -102,7 +106,11 @@ namespace Rey.Engine.Prefabs
             this.hood.Update(this);
             this.legs.Update(this);
 
-            this.CycleModes();
+            this.modeTimer++;
+            if (this.modeTimer > 500)
+            {
+                this.CycleModes();
+            }
 
             // check to destroy hood
             if (this.EntityStats.HP < this.EntityStats.FullStats.MaxHP / 2 && !hoodDestroyed)
@@ -128,13 +136,8 @@ namespace Rey.Engine.Prefabs
 
         void CycleModes()
         {
-            this.modeTimer++;
-
-            if (this.modeTimer > 500)
-            {
-                this.modeTimer = 0;
-                this.AttackMode = (MBossAttackMode)rand.Next(0, 3);
-            }
+            this.modeTimer = 0;
+            this.AttackMode = (MBossAttackMode)rand.Next(0, 4);
         }
 
         public override void Draw(SpriteBatch sb)
@@ -160,7 +163,7 @@ namespace Rey.Engine.Prefabs
         Random rand = new Random();
         protected override void MoveAround()
         {
-            if (this.AttackMode == MBossAttackMode.SingleSlowFire || this.AttackMode == MBossAttackMode.SporeBomb)
+            if (this.AttackMode == MBossAttackMode.SingleSlowFire || this.AttackMode == MBossAttackMode.SporeBomb || this.AttackMode == MBossAttackMode.SpawnBats)
             {
                 this.magicTimer += magicSpeed;
                 this.randomMagicTimer += magicSpeed;
@@ -174,7 +177,7 @@ namespace Rey.Engine.Prefabs
 
 
             // shoot the playa
-            if (this.AttackMode != MBossAttackMode.SporeBomb)
+            if (this.AttackMode == MBossAttackMode.SingleSlowFire || this.AttackMode == MBossAttackMode.SingleFastFire)
             {
                 if (this.magicTimer > this.EntityStats.AttackSpeed)
                 {
@@ -187,19 +190,38 @@ namespace Rey.Engine.Prefabs
                     this.projectileManager.ShootNew(this.Transform.Position, new Vector2(rand.Next(0, 2000), rand.Next(0, 2000)), shotSpeed, shotDamage, this.EntityStats, ProjectileType.Mushroom);
                 }
             }
-            else
+            else if (this.AttackMode == MBossAttackMode.SporeBomb)
             {
                 // handle spore bomb
                 if (this.magicTimer > this.EntityStats.AttackSpeed)
                 {
-                    var offx = 250;
-                    var offy = 250;
+                    //this.magicTimer = 0;
+                    var offx = 200;
+                    var offy = 200;
                     if (playerTarget.Transform.Velocity.X < 0)
-                        offx = -250;
+                        offx = -200;
                     if (playerTarget.Transform.Velocity.Y < 0)
-                        offy = -250;
+                        offy = -200;
 
-                    this.projectileManager.ShootNew(this.Transform.Position, playerTarget.Transform.Position + new Vector2(offx, offy), 3, 2, this.EntityStats, ProjectileType.SporeBomb);
+                    if (Math.Abs(playerTarget.Transform.Velocity.X) < 1)
+                        offx = 0;
+                    if (Math.Abs(playerTarget.Transform.Velocity.Y) < 1)
+                        offy = 0;
+
+                    this.projectileManager.ShootNew(this.Transform.Position, playerTarget.Transform.Position + new Vector2(offx, offy), 4, 2, this.EntityStats, ProjectileType.SporeBomb);
+                }
+            }
+            else if (this.AttackMode == MBossAttackMode.SpawnBats)
+            {
+                if (this.magicTimer > this.EntityStats.AttackSpeed)
+                {
+                    this.magicTimer = 0;
+                    var bat = new MushroomMinion();
+                    bat.Load();
+                    bat.Transform.Position = this.Transform.Position + new Vector2(rand.Next(-300, 300), rand.Next(-200, 200));
+                    
+                    SceneManager.GetCurrentScene().AddGameObject(bat);
+                    this.CycleModes();//move on
                 }
             }
             /*if (this.AttackMode == MBossAttackMode.SingleFastFire && this.magicTimer > this.EntityStats.AttackSpeed / 2)
