@@ -21,6 +21,7 @@ namespace Rey.Engine.UI
         // handles what to do when the inventory is clicked
         void HandleClick()
         {
+            SceneManager.SoundManager.PlaySound("ui", 0.1f, 0.5f, 0.0f);
             if (this.Item.ID != null)
             {
                 // if a piece of gear

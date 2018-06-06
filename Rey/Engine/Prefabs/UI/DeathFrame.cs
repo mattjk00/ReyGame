@@ -13,6 +13,7 @@ namespace Rey.Engine.Prefabs.UI
     public class DeathFrame : Frame
     {
         Button restartButton = new Button("restart");
+        Label messageLbl = new Label("message");
 
         public override void Load()
         {
@@ -20,15 +21,16 @@ namespace Rey.Engine.Prefabs.UI
             this.LockedPosition = true;
 
             // set the size
-            this.Width = AssetLoader.Graphics.PreferredBackBufferWidth / 2;
-            this.Height = AssetLoader.Graphics.PreferredBackBufferHeight / 2;
-            this.Position = new Vector2(AssetLoader.Graphics.PreferredBackBufferWidth/4, AssetLoader.Graphics.PreferredBackBufferHeight/4);
+            this.Width = 500;
+            this.Height = 500;
+            this.Position = new Vector2(1280/2-250, 720/2-250);
 
-            this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/death_background.png");
+            this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/ui_back3.png");
 
-            restartButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal.png", "Assets/Textures/UI/main_menu_button_hover.png");
+            restartButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal2.png", "Assets/Textures/UI/main_menu_button_hover2.png");
             restartButton.Text = "Restart?";
             restartButton.LocalPosition = new Vector2(25, 200);
+            restartButton.TextColor = Color.Black;
             restartButton.OnClick += () => 
             {
                 // try this out
@@ -38,6 +40,12 @@ namespace Rey.Engine.Prefabs.UI
                 scene.LoadMap(true, "LAST"); // load scene at last door
             };
             this.AddObject(restartButton);
+
+            messageLbl.Text = "Rey has died!";
+            messageLbl.LocalPosition = new Vector2(25, 50);
+            messageLbl.TextColor = Color.Red;
+            messageLbl.TextScale = 1.0f;
+            this.AddObject(messageLbl);
 
             base.Load();
         }

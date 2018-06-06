@@ -35,6 +35,9 @@ namespace Rey.Engine
             proj.Speed = speed;
             proj.Sprite.Color = new Color(random.Next(200, 255), random.Next(200, 255), 255);
             this.Projectiles.Add(proj);
+
+            if (projectileType != ProjectileType.SporeBomb)
+                SceneManager.SoundManager.PlaySound("magic", 0.2f, (float)random.NextDouble(), 0.0f);
         }
 
         /// <summary>

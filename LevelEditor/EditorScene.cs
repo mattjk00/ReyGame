@@ -133,6 +133,8 @@ namespace LevelEditor
             EditorManager.currentTile = new Tile(grassButton.Name, Vector2.Zero, grassButton.normalTexture, TileType.Normal);
         }
 
+        int rotateTimer = 0;
+
         public override void Update(Camera2D camera)
         {
             keyboard = Keyboard.GetState();
@@ -163,6 +165,20 @@ namespace LevelEditor
                 this.mapPosition.Y -= scrollSpeed;
             }
 
+            rotateTimer++;
+            if (rotateTimer > 25)
+            {
+                rotateTimer = 0;
+                if (keyboard.IsKeyDown(Keys.Right))
+                {
+                    EditorManager.currentTile.Transform.Rotation += MathHelper.ToRadians(90);
+                }
+                if (keyboard.IsKeyDown(Keys.Left))
+                {
+                    EditorManager.currentTile.Transform.Rotation -= MathHelper.ToRadians(90);
+                }
+            }
+
             base.Update(camera);
         }
 
@@ -174,7 +190,7 @@ namespace LevelEditor
                 
                 stile.Transform.Position = this.mapPosition + stile.StartingPosition;
                 if (stile.Sprite.Texture != null)
-                    sb.Draw(stile.Sprite.Texture, stile.Transform.Position, Color.White);
+                    sb.Draw(stile.Sprite.Texture, stile.Transform.Position + new Vector2(stile.Sprite.Texture.Width / 2, stile.Sprite.Texture.Height / 2), null, Color.White, stile.Transform.Rotation, new Vector2(stile.Sprite.Texture.Width/2, stile.Sprite.Texture.Height/2), Vector2.One, SpriteEffects.None, 0);
                 if (stile.marker != null)
                 {
                     sb.Draw(stile.marker.Texture, stile.Transform.Position, Color.White);
@@ -193,7 +209,8 @@ namespace LevelEditor
                 frame.Draw(sb);
 
             // helper
-            sb.Draw(EditorManager.currentTile.Sprite.Texture, InputHelper.MousePosition, Color.White * 0.3f);
+            
+            sb.Draw(EditorManager.currentTile.Sprite.Texture, InputHelper.MousePosition + new Vector2(EditorManager.currentTile.Sprite.Texture.Width / 2, EditorManager.currentTile.Sprite.Texture.Height / 2), null, Color.White * 0.3f, EditorManager.currentTile.Transform.Rotation, new Vector2(EditorManager.currentTile.Sprite.Texture.Width / 2, EditorManager.currentTile.Sprite.Texture.Height / 2), Vector2.One, SpriteEffects.None, 0);
         }
     }
 }

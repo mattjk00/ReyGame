@@ -33,6 +33,7 @@ namespace Rey.Engine.Prefabs.UI.Inventory
                     GameData.AddItemToBackpack(GameData.EquippedHelmet);
                     GameData.EquippedHelmet = new Item();
                 }
+                SceneManager.SoundManager.PlaySound("ui", 0.15f, 1.0f, 0.0f);
             };
             helmetButton.LocalPosition = new Vector2(100, 50);
             this.AddObject(helmetButton);
@@ -46,6 +47,7 @@ namespace Rey.Engine.Prefabs.UI.Inventory
                     GameData.AddItemToBackpack(GameData.EquippedChest);
                     GameData.EquippedChest = new Item();
                 }
+                SceneManager.SoundManager.PlaySound("ui", 0.15f, 1.0f, 0.0f);
             };
             chestButton.LocalPosition = new Vector2(100, 125);
             this.AddObject(chestButton);
@@ -59,6 +61,7 @@ namespace Rey.Engine.Prefabs.UI.Inventory
                     GameData.AddItemToBackpack(GameData.EquippedLegs);
                     GameData.EquippedLegs = new Item();
                 }
+                SceneManager.SoundManager.PlaySound("ui", 0.15f, 1.0f, 0.0f);
             };
             legsButton.LocalPosition = new Vector2(100, 200);
             this.AddObject(legsButton);

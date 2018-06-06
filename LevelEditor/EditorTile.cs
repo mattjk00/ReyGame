@@ -127,6 +127,7 @@ namespace LevelEditor
                 this.On = true;
                 this.Sprite.Texture = EditorManager.currentTile.Sprite.Texture;
                 this.TileType = EditorManager.currentTile.TileType;
+                this.Transform.Rotation = EditorManager.currentTile.Transform.Rotation;
                 this.Name = EditorManager.currentTileName;
             }
             else

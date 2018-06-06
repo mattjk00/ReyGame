@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Rey.Engine
 {
@@ -22,6 +23,11 @@ namespace Rey.Engine
             Font = content.Load<SpriteFont>("gameFont");
             BoundingBoxTexture = AssetLoader.LoadTexture("Assets/Textures/ui/bb.png");
         }
+
+        /*public static SoundEffect LoadSound(string sound, ContentManager content)
+        {
+            return content.Load<SoundEffect>(sound);
+        }*/
         /// <summary>
         /// Loads a texture from a file rather than XNB
         /// </summary>

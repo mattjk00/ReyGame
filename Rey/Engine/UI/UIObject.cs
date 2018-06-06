@@ -26,6 +26,7 @@ namespace Rey.Engine.UI
 
         public bool LockedPosition { get; set; }
 
+
         public UIObject(string name)
         {
             // add some default delegates
@@ -52,6 +53,17 @@ namespace Rey.Engine.UI
             if ((this.Transform.Position.Y + this.Sprite.Texture.Height < frame.Position.Y + frame.Height && this.Transform.Position.Y > frame.Position.Y) || frame.Scrollable == false)
                 bounds = this.Transform.Bounds;
             sb.Draw(this.Sprite.Texture, this.Transform.Position, bounds, this.Sprite.Color);
+        }
+
+        public virtual void DrawUI(SpriteBatch sb, Frame frame, int w, int h)
+        {
+            Rectangle bounds = new Rectangle(0, 0, 0, 0);
+
+
+
+            if ((this.Transform.Position.Y + this.Sprite.Texture.Height < frame.Position.Y + frame.Height && this.Transform.Position.Y > frame.Position.Y) || frame.Scrollable == false)
+                bounds = this.Transform.Bounds;
+            sb.Draw(this.Sprite.Texture, this.Transform.Position, bounds, this.Sprite.Color, 0, Vector2.Zero, InputHelper.ScaleTexture(this.Sprite.Texture, w, h), SpriteEffects.None, 0);
         }
 
         /// <summary>

@@ -91,6 +91,7 @@
     <Compile Include="Engine\Scenes\MainMenuScene.cs" />
     <Compile Include="Engine\Scenes\TestScene.cs" />
     <Compile Include="Engine\Scenes\TransitionScene.cs" />
+    <Compile Include="Engine\SoundManager.cs" />
     <Compile Include="Engine\Sprite.cs" />
     <Compile Include="Engine\Transform.cs" />
     <Compile Include="Engine\UI\Button.cs" />

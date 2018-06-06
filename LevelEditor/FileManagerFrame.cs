@@ -102,7 +102,7 @@ namespace LevelEditor
                     var newTile = new Tile(stile.Name, stile.StartingPosition, null, stile.TileType);
                     newTile.Depth = stile.Depth;
                     newTile.Data = stile.Data;
-                    
+                    newTile.Transform.Rotation = stile.Transform.Rotation;
                     exportTiles.Add(newTile);
                 }
             }
@@ -153,6 +153,9 @@ namespace LevelEditor
                 newTile.Depth = tile.Depth;
                 // set data
                 newTile.Data = tile.Data;
+
+                // get rotation
+                newTile.Transform.Rotation = tile.Transform.Rotation;
 
                 // add the new tile
                 if (newTile.Name != "")

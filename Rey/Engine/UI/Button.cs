@@ -64,11 +64,16 @@ namespace Rey.Engine.UI
         {
             //this.UpdateDefaultBox(0);
             base.Update();
+
+            
         }
 
         public override void DrawUI(SpriteBatch sb, Frame frame)
         {
-            base.DrawUI(sb, frame);
+            if (AssetLoader.Font.MeasureString(this.Text).X > this.Sprite.Texture.Width)
+                base.DrawUI(sb, frame, (int)AssetLoader.Font.MeasureString(this.Text).X, this.Sprite.Texture.Height);
+            else
+                base.DrawUI(sb, frame);
             // try to draw text
             if (AssetLoader.Font != null)
                 sb.DrawString(AssetLoader.Font, this.Text, new Vector2(this.Transform.Position.X + this.Sprite.Texture.Width/2 - AssetLoader.Font.MeasureString(this.Text).X/2, this.Transform.Position.Y + this.Sprite.Texture.Height/2 - AssetLoader.Font.MeasureString(this.Text).Y / 2), this.TextColor);

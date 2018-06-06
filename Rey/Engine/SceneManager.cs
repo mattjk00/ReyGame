@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Rey.Engine.Prefabs;
 using Rey.Engine.Scenes;
@@ -24,10 +25,13 @@ namespace Rey.Engine
         static public bool DrawLastScene = false; // if this is true, the scene manager will draw the last scene as well as the current scene. can be used for transitions
         public static bool Quit = false;
 
+        // sound manager
+        public static SoundManager SoundManager { get; private set; } = new SoundManager();
+
         /// <summary>
         /// Create and load some scenes
         /// </summary>
-        public static void Load()
+        public static void Load(ContentManager content)
         {
             
             // load a test scene
@@ -45,6 +49,8 @@ namespace Rey.Engine
             mainMenuScene = new MainMenuScene("mainmenu");
             mainMenuScene.Load();
             scenes.Add(mainMenuScene);
+
+            SoundManager.Load(content);
 
             SetScene("test");
         }

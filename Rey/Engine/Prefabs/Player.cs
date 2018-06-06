@@ -162,7 +162,11 @@ namespace Rey.Engine.Prefabs
 
             // animate the legs if the velocity is greater than 1
             if (Math.Abs(this.Transform.VelX) > 1 || Math.Abs(this.Transform.VelY) > 1)
+            {
                 this.legs.Animate();
+                // play sound
+                this.MakeWalkingSound();
+            }
             else
                 this.legs.SetFrame(6); // stop the animation and set to the default frame if not moving
 
@@ -179,6 +183,17 @@ namespace Rey.Engine.Prefabs
                     (int)(this.Transform.Position.Y - this.Transform.Origin.Y), 45, this.Sprite.Texture.Height);
             else if (this.direction == Direction.MovingLeft)
                 this.BoundingBoxes[1] = new Rectangle((int)(this.Transform.Position.X - this.Transform.Origin.X) - 45, (int)(this.Transform.Position.Y - this.Transform.Origin.Y), 45, this.Sprite.Texture.Height);*/
+        }
+
+        int wSoundTimer = 0; // sound timer for walking
+        void MakeWalkingSound()
+        {
+            wSoundTimer++;
+            if (wSoundTimer > 10)
+            {
+                wSoundTimer = 0;
+                SceneManager.SoundManager.PlaySound("footstep", 0.05f, (float)(new Random().Next(45, 60))/100.0f, 0.0f);
+            }
         }
 
         // Handle user input

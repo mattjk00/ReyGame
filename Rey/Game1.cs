@@ -22,7 +22,7 @@ namespace Rey
         KeyboardState keyboard;
         Texture2D vhsFilter;
 
-        // lighting system
+        // lighting system 
         Texture2D lightMask;
         Effect lightEffect;
         RenderTarget2D lightTarget;
@@ -90,7 +90,7 @@ namespace Rey
 
             lightEffect = Content.Load<Effect>("lighteffect");
 
-            SceneManager.Load();
+            SceneManager.Load(Content);
         }
 
         /// <summary>

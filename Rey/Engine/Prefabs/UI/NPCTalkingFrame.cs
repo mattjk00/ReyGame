@@ -31,9 +31,9 @@ namespace Rey.Engine.Prefabs.UI
             this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/npc_talking.png");
 
             text.Text = "Hello there!!";
-            text.TextScale = 1.2f;
+            text.TextScale = 1.0f;
             text.TextColor = Color.NavajoWhite;
-            text.LocalPosition = new Vector2(this.Width / 2, this.Height / 2);
+            text.LocalPosition = new Vector2(50, 50);
             this.AddObject(text);
 
             nextButton.LoadTextures(AssetLoader.LoadTexture("Assets/Textures/UI/invetory_bar.png"), AssetLoader.LoadTexture("Assets/Textures/UI/invetory_bar_hover.png"));
@@ -43,6 +43,7 @@ namespace Rey.Engine.Prefabs.UI
             nextButton.OnClick += () =>
             {
                 this.talkIndex++;
+                SceneManager.SoundManager.PlaySound("ui", 0.15f, 1.0f, 0.0f);
                 if (this.talkIndex > this.NPC.Script.Count - 1)
                 {
                     // stop the interaction and tell the scene to go back to normal
@@ -50,6 +51,7 @@ namespace Rey.Engine.Prefabs.UI
                     SceneManager.GetCurrentScene().State = SceneState.Normal;
                     this.talkIndex = 0;
                     this.NPC.State = NPCState.Idle;
+                    
                 }
             };
             this.AddObject(nextButton);
