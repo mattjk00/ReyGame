@@ -16,12 +16,15 @@ namespace Rey.Engine.Prefabs
         private int timer = 0;
         private int currentFrame = 0;
 
+       // RenderTarget2D target;
+
         public AnimationTile(string name, Vector2 position, Texture2D texture, TileType typ) :base(name, position, texture, typ)
         {
             this.FrameCount = (texture.Width / 50) - 1;
             this.FrameSize = new Vector2(50, 50);
-            this.AnimationSpeed = 5;
+            this.AnimationSpeed = 15;
             this.Box = new Rectangle(this.Transform.Position.ToPoint(), new Point(50, 50));
+            //this.target = new RenderTarget2D(AssetLoader.Graphics.GraphicsDevice, this.Box.Width, this.Box.Height);
         }
 
         /// <summary>
@@ -70,7 +73,7 @@ namespace Rey.Engine.Prefabs
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(this.Sprite.Texture, this.Transform.Position, this.Transform.Bounds, this.Sprite.Color);
+            sb.Draw(this.Sprite.Texture, this.Transform.Position, this.Transform.Bounds, this.Sprite.Color, this.Transform.Rotation, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
         }
     }
 }

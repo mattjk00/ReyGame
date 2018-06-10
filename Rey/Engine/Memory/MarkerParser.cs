@@ -60,12 +60,18 @@ namespace Rey.Engine.Memory
             foreach (MapMarker npcMarker in markers.FindAll(x => x.MarkerType == MarkerType.NPCSpawnPoint))
             {
                 // create a new npc and set its position
-                NPC newNPC = new NPC();
+                NPC newNPC = new NPC("npc");
                 // get the correct enemy type
                 switch (npcMarker.Name)
                 {
                     case "npc_clarice":
-                        newNPC = new NPC("clarice.guat");
+                        newNPC = new NPC("npc", "clarice.guat");
+                        break;
+                    case "npc_jenkins":
+                        newNPC = new NPC("jenkins", "jenkins.guat");
+                        break;
+                    case "npc_jenkins2":
+                        newNPC = new NPC("jenkins", "jenkins2.guat");
                         break;
                 }
                 newNPC.Transform.Position = npcMarker.Position;

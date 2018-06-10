@@ -48,15 +48,15 @@ namespace Rey.Engine.Prefabs
         };
 
         // default constructor
-        public NPC(string scriptFile = "")
+        public NPC(string textureNames, string scriptFile = "")
         {
             this.Name = "NPC";
             intervalWalk = random.Next(0, 0);
 
-            this.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/NPCs/npc.png");
+            this.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/NPCs/" + textureNames + ".png");
             this.AddDefaultBoundingBox();
 
-            this.body.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/NPCs/npc_body.png");
+            this.body.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/NPCs/" + textureNames +"_body.png");
             this.body.Load();
 
             // load the legs

@@ -19,7 +19,7 @@ namespace Rey.Engine
         public void HandlePlayerAttackEnemyCollision(Player player, Enemy enemy)
         {
             /* Melee Attacks */
-            if (player.AttackState == PlayerAttackState.MeleeAttack && player.LandedMeleeHit == false)
+            /*if (player.AttackState == PlayerAttackState.MeleeAttack && player.LandedMeleeHit == false)
             {
                 // if player weapon intersects bat cumulative bounding box
                 switch (enemy.Name)
@@ -34,7 +34,7 @@ namespace Rey.Engine
                             this.HandleEnemyGettingHitByMelee(player, enemy, new Vector2(2, 0));
                         break;
                 }
-            }
+            }*/
         }
 
         /// <summary>
@@ -99,6 +99,7 @@ namespace Rey.Engine
             else
                 enemy.Bounce(bounce);
             projectile.ToBeDestroyed = true; // destroy the projectile
+            SceneManager.SoundManager.PlaySound("hit", 0.05f, 0.0f, 0.0f);
         }
 
         public void HandleEnemyProjectileHittingPlayer(Player player, Projectile projectile, ParticleManager particleManager)
@@ -109,6 +110,7 @@ namespace Rey.Engine
                 projectile.ToBeDestroyed = true;
                 player.GetHit(projectile.Damage);
                 particleManager.Burst(player.Transform.Position, new Vector2(2, 2), Color.Red, 25, Vector2.One);
+                SceneManager.SoundManager.PlaySound("hit", 0.05f, 0.0f, 0.0f);
             }
         }
 

@@ -14,12 +14,14 @@ namespace Rey.Engine
         private SoundEffect uiEffect;
         private SoundEffect footstepEffect;
         private SoundEffect magicEffect;
+        private SoundEffect hitEffect;
 
         public void Load(ContentManager content)
         {
             uiEffect = content.Load<SoundEffect>("cloth");
             footstepEffect = content.Load<SoundEffect>("footstep");
             magicEffect = content.Load<SoundEffect>("magic");
+            hitEffect = content.Load<SoundEffect>("hit");
         }
 
         /// <summary>
@@ -42,6 +44,9 @@ namespace Rey.Engine
                     break;
                 case "magic":
                     sei = magicEffect.CreateInstance();
+                    break;
+                case "hit":
+                    sei = hitEffect.CreateInstance();
                     break;
             }
             //play sound
