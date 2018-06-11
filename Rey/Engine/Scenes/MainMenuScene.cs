@@ -40,7 +40,8 @@ namespace Rey.Engine.Scenes
             this.startButton.LocalPosition = new Vector2(25, 10);
             this.startButton.OnClick += () =>
             {
-                SceneManager.TransitionToScene("test");
+                MemoryManager.Load();
+                //SceneManager.TransitionToScene("test");
             };
 
             // the quit button

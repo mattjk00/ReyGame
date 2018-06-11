@@ -17,6 +17,12 @@ namespace Rey.Engine
             
             return nitem;
         }
+
+        public static List<Item> AllItems()
+        {
+            return new List<Item> { ironHelmet, mushroomHelmet, darkMageHelmet, mushroomChest, trainingChest, ironChest, darkMageChest, ironLegs, mushroomLegs,
+                darkMageLegs };
+        }
         
         // helmets
         public static readonly Item ironHelmet = new Item("Iron Helmet", ItemType.Gear, 
@@ -41,7 +47,7 @@ namespace Rey.Engine
         public static readonly Item ironChest = new Item("Iron Chest", ItemType.Gear,
            EquipmentType.Chest, AssetLoader.LoadTexture("Assets/Textures/armor/iron_chest.png"),
            AssetLoader.LoadTexture("Assets/Textures/armor/iron_magic_body.png"),
-           new EntityStats(0, 2, 7, 10, 0, -5);
+           new EntityStats(0, 2, 7, 10, 0, -5));
         public static readonly Item darkMageChest = new Item("Dark Mage Chest", ItemType.Gear,
            EquipmentType.Chest, AssetLoader.LoadTexture("Assets/Textures/armor/dark_chest.png"),
            AssetLoader.LoadTexture("Assets/Textures/armor/dark_magic_body.png"),

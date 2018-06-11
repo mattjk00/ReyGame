@@ -42,6 +42,7 @@ namespace Rey.Engine.Scenes
         NPCTalkingFrame npcTalkingFrame = new NPCTalkingFrame();
         DeathFrame deathFrame = new DeathFrame();
         PauseFrame pauseFrame = new PauseFrame();
+        BeatMushroomFrame beatMushroomFrame = new BeatMushroomFrame();
 
         public override void Load()
         {
@@ -77,16 +78,16 @@ namespace Rey.Engine.Scenes
             enemy2.Transform.Position = new Vector2(800, 200);
             this.AddGameObject(enemy2);*/
 
-            Bat bat = new Bat();
-            bat.Transform.Position = new Vector2(0, 0);
+            /*Bat bat = new Bat();
+            bat.Transform.Position = new Vector2(0, 0);*/
             //this.AddGameObject(bat);
 
-            Bat bat2 = new Bat();
-            bat2.Transform.Position = new Vector2(2000, 0);
+            /*Bat bat2 = new Bat();
+            bat2.Transform.Position = new Vector2(2000, 0);*/
             //this.AddGameObject(bat2);
 
-            BabyFishDemon fish = new BabyFishDemon();
-            fish.Transform.Position = new Vector2(100, 720);
+            /*BabyFishDemon fish = new BabyFishDemon();
+            fish.Transform.Position = new Vector2(100, 720);*/
             //this.AddGameObject(fish);
 
             player = new Player();
@@ -100,21 +101,22 @@ namespace Rey.Engine.Scenes
             fadeScreen.Sprite.Color = Color.White * 0; // make the screen invisible
             this.AddGameObject(fadeScreen);
 
-            upperWall = new GameObject("upperwall");
+            /*upperWall = new GameObject("upperwall");
             upperWall.Sprite.Texture = AssetLoader.LoadTexture("Assets/Textures/blocks/stone_block.png");
-            this.AddGameObject(upperWall);
+            this.AddGameObject(upperWall);*/
 
             this.inventory = new Inventory();
             this.statsFrame = new StatsFrame();
 
-            TestUIFrame testUIframe = new TestUIFrame();
-            this.AddFrame(testUIframe);
+            /*TestUIFrame testUIframe = new TestUIFrame();
+            this.AddFrame(testUIframe);*/
 
             this.AddFrame(inventory);
             this.AddFrame(npcTalkingFrame);
             this.AddFrame(statsFrame);
             this.AddFrame(deathFrame);
             this.AddFrame(pauseFrame);
+            this.AddFrame(beatMushroomFrame);
 
              //weather = new Weather();
             //this.AddGameObject(weather);
@@ -139,6 +141,16 @@ namespace Rey.Engine.Scenes
             SceneState lastState = this.State;
             if (this.pauseFrame.Active)
                 this.State = SceneState.Paused;
+
+            // check to see if the mushroom king has died
+            if (this.mapPath.Contains("mushroom_palace"))
+            {
+                var mb = this.gameObjects.Find(x => x.GetType() == typeof(MushroomBoss)) as MushroomBoss;
+                if (mb == null) // if the mushroom boss is null, he is not in the scene and is therefore dead
+                {
+                    this.beatMushroomFrame.Active = true;
+                }
+            }
 
             if (this.State == SceneState.Normal || this.State == SceneState.NPCTalking || this.State == SceneState.Paused)
                 base.Update(camera);
@@ -168,6 +180,26 @@ namespace Rey.Engine.Scenes
                 if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                     this.pauseFrame.Active = true;
             }
+        }
+        
+        /// <summary>
+        /// Sets map path and then loads map
+        /// </summary>
+        /// <param name="fullReset"></param>
+        /// <param name="mapPath"></param>
+        /// <param name="atDoor"></param>
+        public void GoToMap(bool fullReset, string mapPath, string atDoor = "")
+        {
+            this.mapPath = mapPath;
+            if (atDoor != "")
+                this.LoadMap(fullReset, atDoor);
+            else
+                this.LoadMap(fullReset);
+        }
+
+        public string GetMapPath()
+        {
+            return this.mapPath;
         }
 
         public void LoadMap(bool fullReset, string atDoor = "")

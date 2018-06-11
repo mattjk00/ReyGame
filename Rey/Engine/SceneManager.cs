@@ -52,7 +52,7 @@ namespace Rey.Engine
 
             SoundManager.Load(content);
 
-            SetScene("test");
+            SetScene("mainmenu");
         }
 
         // Update the currently running scene
@@ -140,6 +140,10 @@ namespace Rey.Engine
             catch (InvalidOperationException ioe)
             {
                 return new Vector2(1280/2, 720/2);
+            }
+            catch (NullReferenceException nre)
+            {
+                return new Vector2(1280 / 2, 720 / 2);
             }
         }
     }

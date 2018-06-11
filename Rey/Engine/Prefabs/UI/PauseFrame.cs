@@ -45,20 +45,27 @@ namespace Rey.Engine.Prefabs.UI
             quitToMenuButton.TextColor = Color.Black;
             quitToMenuButton.OnClick += () => {
                 this.Active = false;
+                MemoryManager.Save();
                 // add save feature
                 SceneManager.TransitionToScene("mainmenu");
                 SceneManager.SoundManager.PlaySound("ui", 0.15f, 1.0f, 0.0f);
+
+                
             };
 
             quitToDesktopButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal2.png", "Assets/Textures/UI/main_menu_button_hover2.png");
             quitToDesktopButton.Text = "Quit to Desktop";
             quitToDesktopButton.LocalPosition = new Vector2(this.Width / 3, 400);
             quitToDesktopButton.TextColor = Color.Black;
-            quitToDesktopButton.OnClick += () => {
+            quitToDesktopButton.OnClick += () =>
+            {
                 this.Active = false;
+                MemoryManager.Save();
                 // add save feature
                 SceneManager.Quit = true;
                 SceneManager.SoundManager.PlaySound("ui", 0.15f, 1.0f, 0.0f);
+
+                
             };
 
             this.AddObject(resumeButton);

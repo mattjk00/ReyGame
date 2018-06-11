@@ -170,8 +170,9 @@ namespace Rey
             GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive, SamplerState.PointClamp, null, null, null, camera.GetTransformation(GraphicsDevice, graphics));
             //spriteBatch.Draw(lightMask, new Vector2(playerPos.X - lightMask.Width/2, playerPos.Y - lightMask.Height/2), Color.White);
+
             if (SceneManager.GetCurrentScene().UseLightShaders()) // draw the scene's lights if there should be
-                SceneManager.GetCurrentScene().DrawLights(spriteBatch);
+                    SceneManager.GetCurrentScene().DrawLights(spriteBatch);
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(mainTarget);

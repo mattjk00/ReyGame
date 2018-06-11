@@ -596,8 +596,8 @@ namespace Rey.Engine
             trapdoor.Open = open;*/ // open the trapdoor
 
             // find the go button and activate it
-            var gobutton = this.frames.Find(x => x.Name == "gameui").Find("gobutton") as Button;
-            gobutton.IsActive = open;
+            /*var gobutton = this.frames.Find(x => x.Name == "gameui").Find("gobutton") as Button;
+            gobutton.IsActive = open;*/
 
             
         }

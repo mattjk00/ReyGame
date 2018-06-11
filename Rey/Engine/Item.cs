@@ -23,6 +23,7 @@ namespace Rey.Engine
     /// <summary>
     /// An item that you can collect in the game, for example food, weapons, armor
     /// </summary>
+    [Serializable]
     public class Item
     {
         public string Name { get; set; }

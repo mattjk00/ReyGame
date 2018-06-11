@@ -55,6 +55,7 @@
     <Compile Include="Engine\InputHelper.cs" />
     <Compile Include="Engine\Item.cs" />
     <Compile Include="Engine\ItemData.cs" />
+    <Compile Include="Engine\MemoryManager.cs" />
     <Compile Include="Engine\Memory\Map.cs" />
     <Compile Include="Engine\Memory\MapMarker.cs" />
     <Compile Include="Engine\Memory\MarkerParser.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Engine\Prefabs\TestUIFrame.cs" />
     <Compile Include="Engine\Prefabs\Tile.cs" />
     <Compile Include="Engine\Prefabs\Trapdoor.cs" />
+    <Compile Include="Engine\Prefabs\UI\BeatMushroomFrame.cs" />
     <Compile Include="Engine\Prefabs\UI\DeathFrame.cs" />
     <Compile Include="Engine\Prefabs\UI\Inventory\BackpackFrame.cs" />
     <Compile Include="Engine\Prefabs\UI\Inventory\EquipmentFrame.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Engine\Prefabs\UI\StatsFrame.cs" />
     <Compile Include="Engine\Prefabs\Weather.cs" />
     <Compile Include="Engine\ProjectileManager.cs" />
+    <Compile Include="Engine\SaveFile.cs" />
     <Compile Include="Engine\Scene.cs" />
     <Compile Include="Engine\SceneManager.cs" />
     <Compile Include="Engine\Scenes\MainMenuScene.cs" />
