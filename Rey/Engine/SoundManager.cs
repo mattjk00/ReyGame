@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,18 @@ namespace Rey.Engine
         private SoundEffect magicEffect;
         private SoundEffect hitEffect;
 
+        private Song themeSong;
+
         public void Load(ContentManager content)
         {
             uiEffect = content.Load<SoundEffect>("cloth");
             footstepEffect = content.Load<SoundEffect>("footstep");
             magicEffect = content.Load<SoundEffect>("magic");
             hitEffect = content.Load<SoundEffect>("hit");
+
+            // themeSong = Content.Load<Song>("");
+            MediaPlayer.IsRepeating = true;
+            
         }
 
         /// <summary>
@@ -57,6 +64,17 @@ namespace Rey.Engine
                 sei.Pan = pan;
                 sei.Play();
             }
+        }
+
+        public void PlaySong(string song, float volume)
+        {
+            switch(song)
+            {
+                case "theme":
+                    MediaPlayer.Play(themeSong);
+                    MediaPlayer.Volume = volume;
+                    break;
+            };
         }
     }
 }
