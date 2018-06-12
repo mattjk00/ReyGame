@@ -23,21 +23,21 @@ namespace Rey.Engine.Scenes
         {
             //this.Name = "mainmenu";
             this.CombatScene = false;
-            this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/mainmenu.png");
+            this.Background = AssetLoader.LoadTexture("Assets/Textures/UI/mainmenu2.png");
 
             this.ui = new Frame();
-            this.ui.Scrollable = true;
-            this.ui.Position = new Vector2(560, 260);
+            this.ui.Scrollable = false;
+            this.ui.Position = new Vector2(1280-500, 720/2 - 200);
             this.ui.Width = 250;
             this.ui.Height = 200;
-            this.ui.Background = AssetLoader.LoadTexture("Assets/Textures/UI/ui_back.png");
+            //this.ui.Background = AssetLoader.LoadTexture("Assets/Textures/UI/ui_back.png");
 
             // the start button
             this.startButton = new Button("start");
             this.startButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal2.png", "Assets/Textures/UI/main_menu_button_hover2.png");
             this.startButton.Text = "Start!";
             this.startButton.TextColor = Color.Black;
-            this.startButton.LocalPosition = new Vector2(25, 10);
+            this.startButton.LocalPosition = new Vector2(45, 10);
             this.startButton.OnClick += () =>
             {
                 MemoryManager.Load();
@@ -49,7 +49,7 @@ namespace Rey.Engine.Scenes
             this.quitButton.LoadTextures("Assets/Textures/UI/main_menu_button_normal2.png", "Assets/Textures/UI/main_menu_button_hover2.png");
             this.quitButton.Text = "Quit!";
             this.quitButton.TextColor = Color.Black;
-            this.quitButton.LocalPosition = new Vector2(25, 70);
+            this.quitButton.LocalPosition = new Vector2(45, 70);
             this.quitButton.OnClick += () =>
             {
                 SceneManager.Quit = true;

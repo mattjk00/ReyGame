@@ -385,8 +385,8 @@ namespace Rey.Engine.Prefabs
 
             DrawWornEquipment(sb);
 
-            this.DrawBoundingBoxes(sb);
-            this.DrawBox(sb, this.MovementBox);
+            //this.DrawBoundingBoxes(sb);
+            //this.DrawBox(sb, this.MovementBox);
         }
 
         /// <summary>

@@ -180,8 +180,8 @@ namespace Rey.Engine.Prefabs
 
             sb.Draw(this.Sprite.Texture, this.Transform.Position, Color.White);
 
-            this.DrawBoundingBoxes(sb);
-            this.DrawBox(sb, this.MovementBox);
+            //this.DrawBoundingBoxes(sb);
+            //this.DrawBox(sb, this.MovementBox);
         }
     }
 }
