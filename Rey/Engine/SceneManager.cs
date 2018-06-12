@@ -33,7 +33,8 @@ namespace Rey.Engine
         /// </summary>
         public static void Load(ContentManager content)
         {
-            
+            SoundManager.Load(content);
+
             // load a test scene
             testScene = new TestScene("test");
             testScene.Load();
@@ -50,7 +51,7 @@ namespace Rey.Engine
             mainMenuScene.Load();
             scenes.Add(mainMenuScene);
 
-            SoundManager.Load(content);
+            
 
             SetScene("mainmenu");
         }

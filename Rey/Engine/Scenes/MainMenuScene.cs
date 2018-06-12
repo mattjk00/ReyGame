@@ -62,6 +62,8 @@ namespace Rey.Engine.Scenes
 
             this.AddFrame(this.ui);
             base.Load();
+
+            SceneManager.SoundManager.PlaySong("theme", 1.0f);
         }
     }
 }

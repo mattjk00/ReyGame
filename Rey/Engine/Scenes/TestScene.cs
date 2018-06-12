@@ -129,6 +129,7 @@ namespace Rey.Engine.Scenes
             base.Load();
             //enemy.SetInterval(1000);
 
+            
         }
 
         public TestScene():base() { }
@@ -207,7 +208,11 @@ namespace Rey.Engine.Scenes
             var map = Map.LoadFromFile(this.mapPath);
 
             var doors = map.Tiles.FindAll(x => x.TileType == TileType.Door);
-            
+
+            if (this.mapPath.Contains("dungeon") || this.mapPath.Contains("mushroom"))
+                SceneManager.SoundManager.PlaySong("theme", 0.8f);
+            else
+                SceneManager.SoundManager.PlaySong("clora", 0.8f);
 
             //whacky
             if (atDoor == "LAST")

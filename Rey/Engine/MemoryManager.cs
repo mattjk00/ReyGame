@@ -87,7 +87,9 @@ namespace Rey.Engine
             SceneManager.SetScene("test");
             var ts = SceneManager.GetCurrentScene() as TestScene;
             ts.GoToMap(true, saveFile.Map);
-            ts.gameObjects.First(x => x.GetType() == typeof(Player)).Transform.Position = saveFile.PlayerPosition;
+            var player = ts.gameObjects.First(x => x.GetType() == typeof(Player)) as Player;
+            player.Transform.Position = saveFile.PlayerPosition;
+            player.EntityStats.HP = player.EntityStats.FullStats.MaxHP; // heal
         }
     }
 }

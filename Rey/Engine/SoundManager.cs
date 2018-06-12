@@ -17,7 +17,16 @@ namespace Rey.Engine
         private SoundEffect magicEffect;
         private SoundEffect hitEffect;
 
-        private Song themeSong;
+        private SoundEffect themeSong;
+        private SoundEffectInstance themeSongInstance;
+
+        private SoundEffect cloraSong;
+        private SoundEffectInstance cloraSongInstance;
+        //private AudioFileReader themeSong = new AudioFileReader("Assets/songs/rey_theme.wav");
+        /*private AudioFileReader cloraSong = new AudioFileReader("Assets/songs/clora_theme.wav");
+        private IWavePlayer player = new WaveOut(WaveCallbackInfo.FunctionCallback());*/
+        private string currentSong = "theme";
+        private float currentVolume = 0.8f;
 
         public void Load(ContentManager content)
         {
@@ -26,9 +35,17 @@ namespace Rey.Engine
             magicEffect = content.Load<SoundEffect>("magic");
             hitEffect = content.Load<SoundEffect>("hit");
 
-            // themeSong = Content.Load<Song>("");
-            MediaPlayer.IsRepeating = true;
-            
+            cloraSong = content.Load<SoundEffect>("clora_theme");
+            cloraSongInstance = cloraSong.CreateInstance();
+            cloraSongInstance.IsLooped = true;
+
+            themeSong = content.Load<SoundEffect>("rey_theme");
+            themeSongInstance = themeSong.CreateInstance();
+            themeSongInstance.IsLooped = true;
+
+            //MediaPlayer.IsRepeating = true;
+            /*player.PlaybackStopped += Player_PlaybackStopped;*/
+
         }
 
         /// <summary>
@@ -68,13 +85,36 @@ namespace Rey.Engine
 
         public void PlaySong(string song, float volume)
         {
-            switch(song)
+            /*player.Stop();
+            //player.Dispose();
+            currentSong = song;
+            currentVolume = volume;*/
+
+            switch (song)
             {
                 case "theme":
-                    MediaPlayer.Play(themeSong);
-                    MediaPlayer.Volume = volume;
+                    if (themeSongInstance != null)
+                    {
+                        cloraSongInstance.Stop();
+                        themeSongInstance.Play();
+                        themeSongInstance.Volume = volume;
+                    }
+                    break;
+                case "clora":
+                    if (cloraSongInstance != null)
+                    {
+                        themeSongInstance.Stop();
+                        cloraSongInstance.Play();
+                        cloraSongInstance.Volume = volume;
+                    }
                     break;
             };
+        }
+
+        public void CloseAudio()
+        {
+            /*player.Stop();
+            player.Dispose();*/
         }
     }
 }

@@ -56,3 +56,15 @@
 /processorParam:Quality=Best
 /build:hit.wav
 
+#begin clora_theme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:clora_theme.wav
+
+#begin rey_theme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:rey_theme.wav
+

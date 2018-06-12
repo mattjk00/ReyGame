@@ -120,6 +120,7 @@ namespace Rey
 
             if (SceneManager.Quit)
             {
+                SceneManager.SoundManager.CloseAudio();
                 Exit();
             }
 

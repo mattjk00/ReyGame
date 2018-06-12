@@ -392,14 +392,14 @@ namespace Rey.Engine
                             velX2 = 0;
                         }
 
-                        if (player.Transform.Position.X > enemy.Transform.Position.X)
+                        if (player.Transform.Position.X > enemy.Transform.Position.X && enemy.EntityStats.HP >= 0)
                         {
                            
                             player.Bounce(new Vector2(velX1, 0)); // bounces player based on direction of incoming hit
                             enemy.Bounce(new Vector2(-velX2, 0));
                             
                         }
-                        else
+                        else if (enemy.EntityStats.HP >= 0)
                         {
                             player.Bounce(new Vector2(-velX1, 0));
                             enemy.Bounce(new Vector2(velX2, 0));
