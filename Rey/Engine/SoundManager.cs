@@ -22,6 +22,9 @@ namespace Rey.Engine
 
         private SoundEffect cloraSong;
         private SoundEffectInstance cloraSongInstance;
+
+        private SoundEffect advSong;
+        private SoundEffectInstance advSongInstance;
         //private AudioFileReader themeSong = new AudioFileReader("Assets/songs/rey_theme.wav");
         /*private AudioFileReader cloraSong = new AudioFileReader("Assets/songs/clora_theme.wav");
         private IWavePlayer player = new WaveOut(WaveCallbackInfo.FunctionCallback());*/
@@ -42,6 +45,10 @@ namespace Rey.Engine
             themeSong = content.Load<SoundEffect>("rey_theme");
             themeSongInstance = themeSong.CreateInstance();
             themeSongInstance.IsLooped = true;
+
+            advSong = content.Load<SoundEffect>("adventure");
+            advSongInstance = advSong.CreateInstance();
+            advSongInstance.IsLooped = true;
 
             //MediaPlayer.IsRepeating = true;
             /*player.PlaybackStopped += Player_PlaybackStopped;*/
@@ -96,6 +103,7 @@ namespace Rey.Engine
                     if (themeSongInstance != null)
                     {
                         cloraSongInstance.Stop();
+                        advSongInstance.Stop();
                         themeSongInstance.Play();
                         themeSongInstance.Volume = volume;
                     }
@@ -104,8 +112,18 @@ namespace Rey.Engine
                     if (cloraSongInstance != null)
                     {
                         themeSongInstance.Stop();
+                        advSongInstance.Stop();
                         cloraSongInstance.Play();
                         cloraSongInstance.Volume = volume;
+                    }
+                    break;
+                case "adventure":
+                    if (advSongInstance != null)
+                    {
+                        themeSongInstance.Stop();
+                        cloraSongInstance.Stop();
+                        advSongInstance.Play();
+                        advSongInstance.Volume = volume;
                     }
                     break;
             };

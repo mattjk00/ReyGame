@@ -68,3 +68,9 @@
 /processorParam:Quality=Best
 /build:rey_theme.wav
 
+#begin adventure.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:adventure.wav
+

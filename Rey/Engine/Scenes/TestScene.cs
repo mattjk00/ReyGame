@@ -209,8 +209,10 @@ namespace Rey.Engine.Scenes
 
             var doors = map.Tiles.FindAll(x => x.TileType == TileType.Door);
 
-            if (this.mapPath.Contains("dungeon") || this.mapPath.Contains("mushroom"))
+            if (this.mapPath.Contains("mudtrap") || this.mapPath.Contains("mushroom"))
                 SceneManager.SoundManager.PlaySong("theme", 0.8f);
+            else if (this.mapPath.Contains("dungeon"))
+                SceneManager.SoundManager.PlaySong("adventure", 0.7f);
             else
                 SceneManager.SoundManager.PlaySong("clora", 0.8f);
 

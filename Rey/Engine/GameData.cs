@@ -26,13 +26,13 @@ namespace Rey.Engine
             ItemData.New(ItemData.trainingChest),
             ItemData.New(ItemData.ironLegs),
             ItemData.New(ItemData.ironChest),
-            ItemData.New(ItemData.mushroomLegs),
+            ItemData.New(ItemData.mushroomLegs),*/
             ItemData.New(ItemData.darkMageChest),
             ItemData.New(ItemData.darkMageHelmet),
-            ItemData.New(ItemData.darkMageLegs),*/
+            ItemData.New(ItemData.darkMageLegs),
+            /*new Item(),
             new Item(),
-            new Item(),
-            new Item(),
+            new Item(),*/
             new Item(),
             new Item(),
             new Item(),
